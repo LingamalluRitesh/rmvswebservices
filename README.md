@@ -32,6 +32,8 @@
    - Project showcase management with live landing page screenshot capturing.
    - Direct client inquiries CRM.
    - Live centralized Brand Settings.
+7. **WhatsApp Business Platform Automation (Official Meta Cloud API v21.0)**:
+   Enterprise-grade automated customer messaging for real-time order lifecycle updates, invoice alerts, threshold-aware delivery tracking with public milestone tracking pages (`/track/:trackingNumber`), lead capture notifications, and CEO monitoring.
 
 ---
 
@@ -50,10 +52,47 @@
   - Pydantic v2 Settings & Validation
   - Argon2 / Bcrypt cryptographic password hashing & PyJWT tokens
   - Headless Chrome screenshot capture integration for project showcases
+- **Messaging & Notifications**:
+  - Meta WhatsApp Business Platform Cloud API (v21.0)
+  - Bi-directional Webhooks with HMAC-SHA256 signature verification (`X-Hub-Signature-256`)
+  - Automated Event Dispatcher with idempotency keys & exponential backoff retry logic
+  - Google libphonenumber validation (`phonenumbers` python library)
 - **Database**:
   - Neon PostgreSQL (Serverless AWS us-east-2 pooler)
 
 ---
+
+## 📱 WhatsApp Business Automation System
+
+RMVS WebServices integrates official Meta WhatsApp Cloud API v21.0 to automate high-priority notifications across core business domains:
+
+### 1. Automation Events Covered
+- **Order Lifecycle**: `order_created`, `order_confirmed`, `order_accepted`, `order_rejected`, `order_processing`, `order_packed`, `order_dispatched`, `order_assigned`, `order_out_for_delivery`, `delivery_eta_updated`, `order_delivered`, `order_cancelled`.
+- **Billing & Invoices**: `invoice_generated`, `invoice_updated`, `payment_reminder`, `payment_received`, `payment_failed`, `refund_completed`.
+- **Delivery & Live Tracking**: Real-time status updates, delivery personnel assignment, and public tracking link (`/track/:trackingNumber`).
+- **Website Inquiries**: Instant WhatsApp alert to business phone (`WHATSAPP_BUSINESS_NOTIFICATION_PHONE`) upon public contact form submissions.
+
+### 2. Configuration & Credentials Setup
+1. In the **CEO Command Suite** (`/ceo` -> **WhatsApp Automation** tab), or via `backend/.env`:
+   ```bash
+   WHATSAPP_PHONE_NUMBER_ID="your_meta_phone_number_id"
+   WHATSAPP_BUSINESS_ACCOUNT_ID="your_waba_id"
+   WHATSAPP_ACCESS_TOKEN="EAA..."
+   WHATSAPP_WEBHOOK_VERIFY_TOKEN="rmvs_secure_webhook_token_2026"
+   WHATSAPP_APP_SECRET="your_meta_app_secret"
+   WHATSAPP_BUSINESS_NOTIFICATION_PHONE="+919876543210"
+   WHATSAPP_TEST_MODE=true  # Set to false in production for live Meta API calls
+   ```
+2. **Meta Webhook Setup**:
+   - **Callback URL**: `https://rmvs-backend.onrender.com/api/v1/webhooks/whatsapp`
+   - **Verify Token**: Must match `WHATSAPP_WEBHOOK_VERIFY_TOKEN`.
+   - **Webhook Fields**: Subscribe to `messages`. Status receipts (`sent`, `delivered`, `read`, `failed`) and user replies (`STOP` for opt-out, `START` for opt-in) will update the system automatically.
+3. **CEO Dashboard Controls**:
+   - **Live Metrics**: Total sent, delivery rate, failures, and active pending queue.
+   - **Credentials Management**: Safe key updates with masked token view.
+   - **Templates Catalog**: View, enable/disable, and edit parameter mappings.
+   - **Message Audit Log**: Paginated, filterable event history with one-click manual retry for failed dispatches.
+   - **Live Test Sender**: Send simulated or live test templates to any verified mobile number directly from the dashboard.
 
 ## 🚀 Getting Started
 

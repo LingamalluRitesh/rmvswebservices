@@ -16,6 +16,8 @@ import { DeveloperProfilePage } from './pages/public/DeveloperProfilePage';
 import { ProjectsDirectory } from './pages/public/ProjectsDirectory';
 import { ProjectDetailPage } from './pages/public/ProjectDetailPage';
 import { ContactPage } from './pages/public/ContactPage';
+import { OrderTrackingPage } from './pages/public/OrderTrackingPage';
+import { WhatsAppFloatingButton } from './components/common/WhatsAppFloatingButton';
 
 // Auth Pages
 import { LoginPage } from './pages/auth/LoginPage';
@@ -46,6 +48,11 @@ const AppShell: React.FC = () => {
           <Route path="/projects/:slug" element={<ProjectDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
 
+          {/* Delivery & Order Tracking Routes */}
+          <Route path="/track" element={<OrderTrackingPage />} />
+          <Route path="/track/:trackingNumber" element={<OrderTrackingPage />} />
+          <Route path="/orders/track/:trackingNumber" element={<OrderTrackingPage />} />
+
           {/* Auth Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -69,6 +76,7 @@ const AppShell: React.FC = () => {
         </Routes>
       </main>
       <Footer />
+      <WhatsAppFloatingButton />
     </div>
   );
 };

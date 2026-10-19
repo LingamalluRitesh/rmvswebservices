@@ -262,3 +262,10 @@ class ActivityLog(Base):
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
 
     user = relationship("User", back_populates="activity_logs", lazy="selectin")
+
+# Orders, Invoices, Deliveries and WhatsApp Business Automation Models
+from app.models.orders import Order, Invoice, Delivery
+from app.models.whatsapp import (
+    WhatsAppConfig, WhatsAppTemplate, CustomerWhatsAppPreference,
+    WhatsAppMessageLog, WhatsAppWebhookEvent
+)

@@ -457,3 +457,17 @@ class DashboardStatsOut(BaseModel):
 class DeveloperApprovalRequest(BaseModel):
     action: str # approve, reject, suspend, restore
     reason: Optional[str] = None
+
+# --- WhatsApp Business Automation & Orders Schemas ---
+from app.schemas.whatsapp import (
+    WhatsAppConfigOut, WhatsAppConfigUpdate, WhatsAppTestMessageRequest,
+    WhatsAppTemplateOut, WhatsAppTemplateCreate, WhatsAppTemplateUpdate,
+    CustomerWhatsAppPreferenceOut, CustomerWhatsAppPreferenceUpdate,
+    WhatsAppMessageLogOut, WhatsAppStatsOut
+)
+from app.schemas.orders import (
+    OrderBase, OrderCreate, OrderStatusUpdate, OrderOut,
+    InvoiceCreate, InvoiceStatusUpdate, InvoiceOut,
+    DeliveryCreate, DeliveryStatusUpdate, DeliveryOut,
+    PublicTrackingOut
+)

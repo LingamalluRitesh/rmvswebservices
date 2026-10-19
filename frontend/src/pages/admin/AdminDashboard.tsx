@@ -4,12 +4,14 @@ import {
   ShieldCheck, CheckCircle2, RefreshCw, Users,
   FolderGit2, MessageSquare, Edit3, Trash2, ExternalLink, X, Plus,
   AlertCircle, Settings as SettingsIcon,
-  Activity, Key, UserPlus, Clock, Check
+  Activity, Key, UserPlus, Clock, Check, Smartphone, Package
 } from 'lucide-react';
 import api from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
 import { useSettings } from '../../context/SettingsContext';
 import type { DashboardStats, ClientInquiry, User, Project, CompanySettings, ActivityLog } from '../../types';
+import { WhatsAppAutomationTab } from '../../components/admin/WhatsAppAutomationTab';
+import { OrdersManagementTab } from '../../components/admin/OrdersManagementTab';
 
 export const AdminDashboard: React.FC = () => {
   const { user: currentUser } = useAuth();
@@ -22,7 +24,7 @@ export const AdminDashboard: React.FC = () => {
   const [inquiries, setInquiries] = useState<ClientInquiry[]>([]);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'team' | 'projects' | 'clients' | 'inquiries' | 'brand' | 'activity'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'whatsapp' | 'orders' | 'team' | 'projects' | 'clients' | 'inquiries' | 'brand' | 'activity'>('overview');
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -390,6 +392,8 @@ export const AdminDashboard: React.FC = () => {
         <div className="flex flex-wrap items-center gap-2 border-b border-black/[0.06] pb-4">
           {[
             { id: 'overview', label: 'Overview & Analytics', icon: Activity },
+            { id: 'whatsapp', label: 'WhatsApp Automation', icon: Smartphone },
+            { id: 'orders', label: 'Orders & Deliveries', icon: Package },
             { id: 'team', label: `Engineering Team (${developers.length})`, icon: Users },
             { id: 'projects', label: `Projects (${allProjects.length})`, icon: FolderGit2 },
             { id: 'clients', label: `Clients (${clientsList.length})`, icon: ShieldCheck },
@@ -487,6 +491,16 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {/* ── TAB: WHATSAPP AUTOMATION ── */}
+        {activeTab === 'whatsapp' && (
+          <WhatsAppAutomationTab showNotification={showNotification} />
+        )}
+
+        {/* ── TAB: ORDERS & DELIVERIES ── */}
+        {activeTab === 'orders' && (
+          <OrdersManagementTab showNotification={showNotification} onViewWhatsAppLogs={() => setActiveTab('whatsapp')} />
         )}
 
         {/* ── TAB 2: TEAM MANAGEMENT & REGISTRATIONS ── */}

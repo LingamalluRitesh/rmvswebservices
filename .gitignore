@@ -79,3 +79,5 @@ Desktop.ini
 
 # Temporary scrap / raw downloads
 pin_page.html
+.pytest_cache/
+

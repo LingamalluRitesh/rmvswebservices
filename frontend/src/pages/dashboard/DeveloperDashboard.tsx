@@ -8,6 +8,7 @@ import {
 import api from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
 import type { ClientInquiry, Project } from '../../types';
+import { CustomerWhatsAppPreferenceCard } from '../../components/dashboard/CustomerWhatsAppPreferenceCard';
 
 export const DeveloperDashboard: React.FC = () => {
   const { user, refreshUser } = useAuth();
@@ -475,6 +476,9 @@ export const DeveloperDashboard: React.FC = () => {
             )}
           </div>
         )}
+
+        {/* ── WhatsApp Preferences Section ── */}
+        <CustomerWhatsAppPreferenceCard />
 
       </div>
 
