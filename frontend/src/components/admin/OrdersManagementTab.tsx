@@ -134,9 +134,9 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/10 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/25 pb-5">
         <div>
-          <h3 className="font-instrument italic text-2xl text-slate-950">Orders, Invoicing & Delivery Milestones</h3>
+          <h3 className="font-instrument italic text-2xl text-white">Orders, Invoicing & Delivery Milestones</h3>
           <p className="text-slate-500 text-xs mt-1">
             Updating an order or delivery automatically sends the corresponding approved WhatsApp notification to the customer.
           </p>
@@ -144,14 +144,14 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsNewOrderOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm"
           >
             <Plus size={13} />
             <span>Create Order</span>
           </button>
           <button
             onClick={loadOrders}
-            className="p-2 rounded-full liquid-glass border border-black/10 text-slate-700 hover:text-black"
+            className="p-2 rounded-full liquid-glass border border-blue-500/25 text-slate-700 hover:text-black"
           >
             <RefreshCw size={13} className={isLoading ? 'animate-spin' : ''} />
           </button>
@@ -163,9 +163,9 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
         {/* Orders List */}
         <div className="lg:col-span-2 space-y-4">
           {orders.length === 0 ? (
-            <div className="liquid-glass rounded-3xl p-12 text-center border border-black/[0.08] bg-white/70">
+            <div className="liquid-glass rounded-3xl p-12 text-center border border-blue-500/25 bg-[#0a1228]/85 text-white">
               <Package size={32} className="mx-auto text-slate-400 mb-3" />
-              <p className="text-slate-950 font-instrument italic text-xl">No Orders Yet</p>
+              <p className="text-white font-instrument italic text-xl">No Orders Yet</p>
               <p className="text-slate-500 text-xs mt-1">Create an order to initiate the automated WhatsApp lifecycle.</p>
             </div>
           ) : (
@@ -177,18 +177,18 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                   onClick={() => loadOrderDetails(ord.id)}
                   className={`liquid-glass rounded-3xl p-6 border transition-all cursor-pointer ${
                     isSelected
-                      ? 'border-black ring-1 ring-black bg-white shadow-md'
-                      : 'border-black/[0.08] bg-white/70 hover:border-black/20 hover:bg-white'
+                      ? 'border-cyan-400/60 ring-1 ring-cyan-400/30 bg-blue-950/40 shadow-lg'
+                      : 'border-blue-500/25 bg-[#0a1228]/85 text-white hover:border-cyan-400/40 hover:bg-[#0e1938]'
                   }`}
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/[0.06] pb-3 mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-blue-500/15 pb-3 mb-4">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-sm text-slate-950">{ord.order_number}</span>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase bg-slate-100 text-slate-700">
+                      <span className="font-mono font-bold text-sm text-white">{ord.order_number}</span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase bg-[#070e22] text-slate-300 text-slate-700">
                         {ord.status}
                       </span>
                     </div>
-                    <span className="font-mono text-xs font-semibold text-slate-900">
+                    <span className="font-mono text-xs font-semibold text-slate-100">
                       ₹{ord.total_amount?.toLocaleString()} {ord.currency}
                     </span>
                   </div>
@@ -196,7 +196,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                   <div className="grid sm:grid-cols-3 gap-3 text-xs mb-4">
                     <div>
                       <p className="text-slate-400 text-[10px] uppercase font-mono">Client</p>
-                      <p className="font-medium text-slate-900 mt-0.5">{ord.customer_name}</p>
+                      <p className="font-medium text-slate-100 mt-0.5">{ord.customer_name}</p>
                       <p className="font-mono text-slate-500 text-[11px]">{ord.customer_phone}</p>
                     </div>
                     <div>
@@ -212,7 +212,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                   </div>
 
                   {/* Quick WhatsApp Action Triggers */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-3 border-t border-black/[0.06]">
+                  <div className="flex flex-wrap items-center gap-1.5 pt-3 border-t border-blue-500/15">
                     <span className="text-[10px] font-mono text-slate-400 uppercase mr-1">Trigger WhatsApp Event:</span>
                     {ord.status === 'created' && (
                       <button
@@ -272,13 +272,13 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
         {/* Selected Order Detail Sidebar */}
         <div className="space-y-4">
           {selectedOrder ? (
-            <div className="liquid-glass rounded-3xl p-6 border border-black/[0.08] bg-white shadow-sm space-y-5 sticky top-24">
-              <div className="border-b border-black/10 pb-3 flex items-center justify-between">
+            <div className="liquid-glass rounded-3xl p-6 border border-blue-500/25 bg-[#0a1228]/95 shadow-xl space-y-5 sticky top-24">
+              <div className="border-b border-blue-500/25 pb-3 flex items-center justify-between">
                 <div>
-                  <h4 className="font-instrument italic text-xl text-slate-950">{selectedOrder.order_number}</h4>
+                  <h4 className="font-instrument italic text-xl text-white">{selectedOrder.order_number}</h4>
                   <p className="text-slate-400 font-mono text-[10px]">Lifecycle Management</p>
                 </div>
-                <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-slate-100 font-semibold uppercase">
+                <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-[#070e22] text-slate-300 font-semibold uppercase">
                   {selectedOrder.status}
                 </span>
               </div>
@@ -288,15 +288,15 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                 <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Associated Invoices</p>
                 {selectedOrder.invoices && selectedOrder.invoices.length > 0 ? (
                   selectedOrder.invoices.map((inv: any) => (
-                    <div key={inv.id} className="p-3 rounded-2xl bg-slate-50 border border-black/[0.06] flex items-center justify-between text-xs">
+                    <div key={inv.id} className="p-3 rounded-2xl bg-[#070e22] text-slate-300 border border-blue-500/15 flex items-center justify-between text-xs">
                       <div>
-                        <p className="font-semibold text-slate-900 font-mono">{inv.invoice_number}</p>
+                        <p className="font-semibold text-slate-100 font-mono">{inv.invoice_number}</p>
                         <p className="text-slate-500 font-mono text-[11px]">₹{inv.amount?.toLocaleString()} • {inv.status}</p>
                       </div>
                       {inv.status !== 'paid' && (
                         <button
                           onClick={() => handleSendPaymentReminder(inv.id)}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-black text-white text-[10px] font-medium hover:bg-slate-800"
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-[10px] font-medium hover:bg-slate-800"
                           title="Sends automated WhatsApp payment reminder"
                         >
                           <Send size={10} />
@@ -312,12 +312,12 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
 
               {/* Delivery Tracking Section */}
               {selectedOrder.delivery && (
-                <div className="space-y-2 pt-2 border-t border-black/[0.06]">
+                <div className="space-y-2 pt-2 border-t border-blue-500/15">
                   <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Live Delivery Tracking</p>
-                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-black/[0.06] text-xs space-y-2">
+                  <div className="p-3.5 rounded-2xl bg-[#070e22] text-slate-300 border border-blue-500/15 text-xs space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-slate-900 font-semibold">{selectedOrder.delivery.tracking_number}</span>
-                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-white border border-black/10">
+                      <span className="font-mono text-slate-100 font-semibold">{selectedOrder.delivery.tracking_number}</span>
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#070e22] text-cyan-300 border border-blue-500/30">
                         {selectedOrder.delivery.status}
                       </span>
                     </div>
@@ -335,10 +335,10 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
               )}
 
               {/* Audit Shortcut */}
-              <div className="pt-2 border-t border-black/10">
+              <div className="pt-2 border-t border-blue-500/25">
                 <button
                   onClick={onViewWhatsAppLogs}
-                  className="w-full py-2.5 rounded-full liquid-glass border border-black/10 text-slate-800 text-xs font-medium hover:bg-slate-50 transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 rounded-full liquid-glass border border-blue-500/25 text-slate-800 text-xs font-medium hover:bg-[#070e22] text-slate-300 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <span>View WhatsApp Audit Trail</span>
                   <ChevronRight size={13} />
@@ -346,7 +346,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
               </div>
             </div>
           ) : (
-            <div className="liquid-glass rounded-3xl p-8 border border-black/[0.08] bg-white/70 text-center text-slate-400 text-xs font-mono">
+            <div className="liquid-glass rounded-3xl p-8 border border-blue-500/25 bg-[#0a1228]/85 text-white text-center text-slate-400 text-xs font-mono">
               Select an order from the list to view billing, tracking, and customer contact actions.
             </div>
           )}
@@ -356,9 +356,9 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
       {/* CREATE ORDER MODAL */}
       {isNewOrderOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in">
-          <div className="liquid-glass rounded-3xl p-6 border border-black/15 bg-white shadow-2xl max-w-lg w-full space-y-5">
-            <div className="flex items-center justify-between border-b border-black/10 pb-3">
-              <h4 className="font-instrument italic text-xl text-slate-950">Create New Project Order</h4>
+          <div className="liquid-glass rounded-3xl p-6 border border-blue-500/30 bg-[#0a1228] shadow-2xl text-white border border-blue-500/30 max-w-lg w-full space-y-5">
+            <div className="flex items-center justify-between border-b border-blue-500/25 pb-3">
+              <h4 className="font-instrument italic text-xl text-white">Create New Project Order</h4>
               <button
                 onClick={() => setIsNewOrderOpen(false)}
                 className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-black"
@@ -377,7 +377,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                     value={newOrderForm.customer_name}
                     onChange={(e) => setNewOrderForm({ ...newOrderForm, customer_name: e.target.value })}
                     placeholder="e.g. Vikram Sharma"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs focus:outline-none"
                   />
                 </div>
                 <div>
@@ -388,7 +388,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                     value={newOrderForm.customer_phone}
                     onChange={(e) => setNewOrderForm({ ...newOrderForm, customer_phone: e.target.value })}
                     placeholder="+919876543210"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs font-mono focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs font-mono focus:outline-none"
                   />
                 </div>
               </div>
@@ -401,7 +401,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                   value={newOrderForm.customer_email}
                   onChange={(e) => setNewOrderForm({ ...newOrderForm, customer_email: e.target.value })}
                   placeholder="vikram@enterprise.com"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs focus:outline-none"
                 />
               </div>
 
@@ -413,7 +413,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                     required
                     value={newOrderForm.service_type}
                     onChange={(e) => setNewOrderForm({ ...newOrderForm, service_type: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs focus:outline-none"
                   />
                 </div>
                 <div>
@@ -423,7 +423,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                     required
                     value={newOrderForm.total_amount}
                     onChange={(e) => setNewOrderForm({ ...newOrderForm, total_amount: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs focus:outline-none"
                   />
                 </div>
               </div>
@@ -434,7 +434,7 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                   rows={2}
                   value={newOrderForm.notes}
                   onChange={(e) => setNewOrderForm({ ...newOrderForm, notes: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs focus:outline-none resize-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs focus:outline-none resize-none"
                 />
               </div>
 
@@ -442,13 +442,13 @@ export const OrdersManagementTab: React.FC<Props> = ({ showNotification, onViewW
                 <button
                   type="button"
                   onClick={() => setIsNewOrderOpen(false)}
-                  className="px-4 py-2 rounded-full liquid-glass border border-black/10 text-slate-700 text-xs"
+                  className="px-4 py-2 rounded-full liquid-glass border border-blue-500/25 text-slate-700 text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-full bg-black text-white text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm"
+                  className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm"
                 >
                   Create &amp; Dispatch Alert
                 </button>

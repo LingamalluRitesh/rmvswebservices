@@ -197,8 +197,8 @@ export const DeviceAvatarUploader: React.FC<DeviceAvatarUploaderProps> = ({
 
           {/* Loading indicator */}
           {isProcessing && (
-            <div className="absolute inset-0 bg-white/70 rounded-2xl sm:rounded-3xl flex items-center justify-center">
-              <RefreshCw size={22} className="animate-spin text-black" />
+            <div className="absolute inset-0 bg-[#060b19]/80 rounded-2xl sm:rounded-3xl flex items-center justify-center">
+              <RefreshCw size={22} className="animate-spin text-cyan-400" />
             </div>
           )}
         </div>
@@ -211,7 +211,7 @@ export const DeviceAvatarUploader: React.FC<DeviceAvatarUploaderProps> = ({
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isProcessing}
-              className="px-4 py-2 rounded-xl bg-black hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm active:scale-95 disabled:opacity-50"
             >
               <Upload size={14} />
               <span>Select from Device</span>
@@ -222,10 +222,10 @@ export const DeviceAvatarUploader: React.FC<DeviceAvatarUploaderProps> = ({
               type="button"
               onClick={() => cameraInputRef.current?.click()}
               disabled={isProcessing}
-              className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold flex items-center gap-1.5 transition-all active:scale-95 border border-black/5"
+              className="px-3.5 py-2 rounded-xl bg-[#070e22] hover:bg-[#0e1938] text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-all active:scale-95 border border-blue-500/30"
               title="Take a photo with device camera"
             >
-              <Smartphone size={14} />
+              <Smartphone size={14} className="text-cyan-400" />
               <span>Camera</span>
             </button>
 
@@ -235,7 +235,7 @@ export const DeviceAvatarUploader: React.FC<DeviceAvatarUploaderProps> = ({
                 type="button"
                 onClick={handleRemovePhoto}
                 disabled={isProcessing}
-                className="px-3 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-medium flex items-center gap-1.5 transition-all border border-rose-200"
+                className="px-3 py-2 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-medium flex items-center gap-1.5 transition-all border border-rose-500/30"
                 title="Remove custom photo"
               >
                 <Trash2 size={13} />
@@ -247,14 +247,14 @@ export const DeviceAvatarUploader: React.FC<DeviceAvatarUploaderProps> = ({
             <button
               type="button"
               onClick={() => setShowUrlInput(!showUrlInput)}
-              className="px-3 py-2 rounded-xl bg-transparent hover:bg-slate-100 text-slate-600 text-xs font-medium flex items-center gap-1.5 transition-all"
+              className="px-3 py-2 rounded-xl bg-transparent hover:bg-[#070e22] text-slate-400 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-all"
             >
               <LinkIcon size={13} />
               <span>{showUrlInput ? 'Hide URL' : 'Use URL'}</span>
             </button>
           </div>
 
-          <p className="text-[11px] text-slate-500 leading-relaxed">
+          <p className="text-[11px] text-slate-400 leading-relaxed">
             Choose any photo (PNG, JPG, WebP) directly from your phone, laptop, or camera. It will be center-cropped, auto-optimized, and synchronized across all devices.
           </p>
 

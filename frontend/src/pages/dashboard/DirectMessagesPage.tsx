@@ -97,24 +97,24 @@ export const DirectMessagesPage: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-[#060b19] text-slate-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
         {/* Page Header */}
         <div className="mb-6">
           <p className="text-slate-400 text-xs tracking-wider uppercase mb-1 font-mono">Inbox</p>
-          <h1 className="font-instrument italic text-4xl text-slate-950">Direct Messages</h1>
+          <h1 className="font-instrument italic text-4xl text-white">Direct Messages</h1>
         </div>
 
         {/* Two-panel layout */}
         <div className="flex gap-4 h-[78vh]">
 
           {/* ── Sidebar ── */}
-          <div className="w-80 liquid-glass rounded-2xl p-4 flex flex-col border border-black/[0.08] shadow-sm bg-white/70 shrink-0">
+          <div className="w-80 liquid-glass rounded-2xl p-4 flex flex-col border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white shrink-0">
             {/* Sidebar header */}
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-black/[0.06]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-blue-500/15">
               <div className="flex items-center gap-2">
                 <MessageSquare size={15} className="text-slate-400" />
-                <span className="text-slate-900 text-sm font-semibold">Conversations</span>
+                <span className="text-slate-100 text-sm font-semibold">Conversations</span>
               </div>
               <span className="text-slate-400 text-xs tracking-wider uppercase font-mono">
                 {conversations.length} active
@@ -140,8 +140,8 @@ export const DirectMessagesPage: React.FC = () => {
                       onClick={() => setActiveConv(c)}
                       className={`w-full text-left p-3 rounded-xl flex items-center gap-3 transition-all border ${
                         isSelected
-                          ? 'bg-slate-100/90 border-black/15 shadow-2xs'
-                          : 'hover:bg-slate-50 border-transparent'
+                          ? 'bg-[#070e22] text-slate-300/90 border-blue-500/30 shadow-2xs'
+                          : 'hover:bg-[#070e22] text-slate-300 border-transparent'
                       }`}
                     >
                       {partner?.avatar_url ? (
@@ -151,14 +151,14 @@ export const DirectMessagesPage: React.FC = () => {
                           className="w-10 h-10 rounded-xl object-cover ring-1 ring-black/[0.08] shrink-0"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-xl bg-slate-200 border border-black/[0.08] flex items-center justify-center text-xs font-bold text-slate-800 shrink-0 shadow-2xs">
+                        <div className="w-10 h-10 rounded-xl bg-slate-200 border border-blue-500/25 flex items-center justify-center text-xs font-bold text-slate-800 shrink-0 shadow-2xs">
                           {partner?.full_name?.charAt(0) || 'U'}
                         </div>
                       )}
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-1 mb-0.5">
-                          <span className="text-slate-900 text-xs font-semibold truncate">
+                          <span className="text-slate-100 text-xs font-semibold truncate">
                             {partner?.full_name || 'Member'}
                           </span>
                           {partner?.is_verified && (
@@ -177,11 +177,11 @@ export const DirectMessagesPage: React.FC = () => {
           </div>
 
           {/* ── Chat Panel ── */}
-          <div className="flex-1 liquid-glass rounded-2xl flex flex-col border border-black/[0.08] shadow-sm bg-white/70 overflow-hidden">
+          <div className="flex-1 liquid-glass rounded-2xl flex flex-col border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white overflow-hidden">
             {activeConv ? (
               <>
                 {/* Chat header */}
-                <div className="px-5 py-4 border-b border-black/[0.06] flex items-center gap-3 shrink-0 bg-slate-50/50">
+                <div className="px-5 py-4 border-b border-blue-500/15 flex items-center gap-3 shrink-0 bg-[#070e22] text-slate-300/50">
                   {activeConv.other_members[0]?.avatar_url ? (
                     <img
                       src={activeConv.other_members[0].avatar_url}
@@ -189,12 +189,12 @@ export const DirectMessagesPage: React.FC = () => {
                       className="w-9 h-9 rounded-xl object-cover ring-1 ring-black/[0.08]"
                     />
                   ) : (
-                    <div className="w-9 h-9 rounded-xl bg-slate-200 border border-black/[0.08] flex items-center justify-center text-xs font-bold text-slate-800 shadow-2xs">
+                    <div className="w-9 h-9 rounded-xl bg-slate-200 border border-blue-500/25 flex items-center justify-center text-xs font-bold text-slate-800 shadow-2xs">
                       {activeConv.other_members[0]?.full_name?.charAt(0) || 'U'}
                     </div>
                   )}
                   <div>
-                    <h3 className="text-slate-950 text-sm font-semibold flex items-center gap-1.5">
+                    <h3 className="text-white text-sm font-semibold flex items-center gap-1.5">
                       <span>{activeConv.other_members[0]?.full_name || 'Direct Chat'}</span>
                       {activeConv.other_members[0]?.is_verified && (
                         <CheckCircle2 size={12} className="text-emerald-600" />
@@ -219,7 +219,7 @@ export const DirectMessagesPage: React.FC = () => {
                 </div>
 
                 {/* Messages list */}
-                <div className="flex-1 overflow-y-auto p-5 space-y-3 bg-white">
+                <div className="flex-1 overflow-y-auto p-5 space-y-3 bg-[#060b19]">
                   {messages.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-center">
                       <MessageSquare size={36} className="text-slate-200 mb-3" />
@@ -239,7 +239,7 @@ export const DirectMessagesPage: React.FC = () => {
                             className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed max-w-[70%] ${
                               isMe
                                 ? 'bg-slate-900 text-white shadow-2xs ml-auto'
-                                : 'bg-slate-100 text-slate-900 mr-auto border border-black/[0.04]'
+                                : 'bg-[#070e22] text-slate-300 text-slate-100 mr-auto border border-black/[0.04]'
                             }`}
                           >
                             {m.content}
@@ -258,14 +258,14 @@ export const DirectMessagesPage: React.FC = () => {
                 </div>
 
                 {/* Message composer */}
-                <div className="p-4 border-t border-black/[0.06] bg-slate-50/50 shrink-0">
+                <div className="p-4 border-t border-blue-500/15 bg-[#070e22] text-slate-300/50 shrink-0">
                   <form onSubmit={handleSendMessage} className="flex items-center gap-3">
                     <input
                       type="text"
                       value={messageInput}
                       onChange={(e) => setMessageInput(e.target.value)}
                       placeholder="Type a message..."
-                      className="flex-1 bg-white border border-black/10 rounded-xl text-slate-900 placeholder-slate-400 focus:border-black/30 focus:outline-none px-4 py-3 text-sm shadow-2xs"
+                      className="flex-1 bg-[#070e22] border border-blue-500/30 rounded-xl text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none px-4 py-3 text-sm shadow-sm"
                     />
                     <button
                       type="submit"

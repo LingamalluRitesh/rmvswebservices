@@ -276,11 +276,11 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
   return (
     <div className="space-y-6">
       {/* Sub-Header & Navigation */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/10 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/25 pb-5">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <h3 className="font-instrument italic text-2xl text-slate-950">WhatsApp Business Automation</h3>
+            <h3 className="font-instrument italic text-2xl text-white">WhatsApp Business Automation</h3>
           </div>
           <p className="text-slate-500 text-xs mt-1">
             Official Meta Cloud API (v21.0) • Order updates, billing alerts, delivery tracking, and contact leads
@@ -289,14 +289,14 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setTestModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm"
           >
             <Send size={13} />
             <span>Send Test WhatsApp</span>
           </button>
           <button
             onClick={loadAllWhatsApp}
-            className="p-2 rounded-full liquid-glass border border-black/10 text-slate-700 hover:text-black hover:bg-slate-50 transition-colors"
+            className="p-2 rounded-full liquid-glass border border-blue-500/25 text-slate-700 hover:text-black hover:bg-[#070e22] text-slate-300 transition-colors"
             title="Refresh metrics"
           >
             <RefreshCw size={13} className={isLoading ? 'animate-spin' : ''} />
@@ -305,7 +305,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 p-1.5 liquid-glass rounded-2xl border border-black/10 bg-slate-50/60 max-w-fit">
+      <div className="flex gap-2 p-1.5 liquid-glass rounded-2xl border border-blue-500/25 bg-[#070e22] text-slate-300/60 max-w-fit">
         {[
           { id: 'overview', label: 'Dashboard & Metrics', icon: MessageSquare },
           { id: 'config', label: 'Meta API Credentials', icon: Settings },
@@ -317,7 +317,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
             onClick={() => setActiveSubTab(id as any)}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium transition-all ${
               activeSubTab === id
-                ? 'bg-black text-white shadow-xs font-semibold'
+                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-xs font-semibold'
                 : 'text-slate-600 hover:text-black hover:bg-black/[0.04]'
             }`}
           >
@@ -333,7 +333,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
       {activeSubTab === 'overview' && (
         <div className="space-y-6">
           {/* Integration Status Banner */}
-          <div className="liquid-glass rounded-3xl p-6 border border-black/[0.08] bg-white/70 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="liquid-glass rounded-3xl p-6 border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
                 config?.is_enabled
@@ -344,7 +344,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="font-instrument italic text-xl text-slate-950">
+                  <h4 className="font-instrument italic text-xl text-white">
                     {config?.is_enabled
                       ? (config?.test_mode ? 'Test Simulation Mode (Active)' : 'Meta Cloud API Live (Connected)')
                       : 'Automation Disabled'}
@@ -373,7 +373,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
             </div>
             <button
               onClick={() => setActiveSubTab('config')}
-              className="px-5 py-2.5 rounded-full liquid-glass border border-black/10 text-slate-800 text-xs font-medium hover:bg-slate-50 transition-colors shrink-0"
+              className="px-5 py-2.5 rounded-full liquid-glass border border-blue-500/25 text-slate-800 text-xs font-medium hover:bg-[#070e22] text-slate-300 transition-colors shrink-0"
             >
               Configure Credentials &rarr;
             </button>
@@ -382,14 +382,14 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
           {/* Stats Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
-              { label: 'Total Dispatched', val: stats?.total_messages ?? 0, icon: MessageSquare, color: 'text-slate-900' },
+              { label: 'Total Dispatched', val: stats?.total_messages ?? 0, icon: MessageSquare, color: 'text-slate-100' },
               { label: 'Delivered', val: stats?.total_delivered ?? 0, icon: CheckCircle2, color: 'text-emerald-600' },
               { label: 'Read by Customer', val: stats?.total_read ?? 0, icon: Eye, color: 'text-blue-600' },
               { label: 'Test Simulated', val: stats?.total_simulated ?? 0, icon: Smartphone, color: 'text-amber-600' },
               { label: 'Failed', val: stats?.total_failed ?? 0, icon: AlertTriangle, color: 'text-rose-600' },
-              { label: 'Delivery Rate', val: `${stats?.delivery_rate_percent ?? 100}%`, icon: Shield, color: 'text-slate-900' },
+              { label: 'Delivery Rate', val: `${stats?.delivery_rate_percent ?? 100}%`, icon: Shield, color: 'text-slate-100' },
             ].map(({ label, val, icon: Icon, color }) => (
-              <div key={label} className="liquid-glass rounded-2xl p-4 border border-black/[0.08] bg-white/70 shadow-xs">
+              <div key={label} className="liquid-glass rounded-2xl p-4 border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-xs">
                 <div className="flex items-center justify-between text-slate-400 mb-2">
                   <span className="text-[11px] font-mono uppercase tracking-wider">{label}</span>
                   <Icon size={14} className={color} />
@@ -401,24 +401,24 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
 
           {/* Integration Architecture Overview */}
           <div className="grid lg:grid-cols-3 gap-6">
-            <div className="liquid-glass rounded-3xl p-6 border border-black/[0.08] bg-white/70 shadow-sm space-y-4">
-              <h4 className="font-instrument italic text-xl text-slate-950">Webhook Endpoint Details</h4>
+            <div className="liquid-glass rounded-3xl p-6 border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-sm space-y-4">
+              <h4 className="font-instrument italic text-xl text-white">Webhook Endpoint Details</h4>
               <p className="text-slate-500 text-xs leading-relaxed">
                 Configure your Meta Developer App to route incoming status updates and replies to this secure webhook:
               </p>
               <div className="space-y-3 font-mono text-xs">
-                <div className="p-3 rounded-xl bg-slate-50 border border-black/[0.06]">
+                <div className="p-3 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/15">
                   <p className="text-slate-400 text-[10px] uppercase">Callback URL</p>
-                  <p className="text-slate-900 font-semibold break-all mt-0.5">https://rmvs-backend.onrender.com/api/v1/webhooks/whatsapp</p>
+                  <p className="text-slate-100 font-semibold break-all mt-0.5">https://rmvs-backend.onrender.com/api/v1/webhooks/whatsapp</p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-black/[0.06] flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/15 flex items-center justify-between">
                   <div>
                     <p className="text-slate-400 text-[10px] uppercase">Verify Token</p>
-                    <p className="text-slate-900 font-semibold mt-0.5">{config?.webhook_verify_token}</p>
+                    <p className="text-slate-100 font-semibold mt-0.5">{config?.webhook_verify_token}</p>
                   </div>
                   <button
                     onClick={handleCopyVerifyToken}
-                    className="p-1.5 rounded-lg liquid-glass border border-black/10 text-slate-700 hover:text-black"
+                    className="p-1.5 rounded-lg liquid-glass border border-blue-500/25 text-slate-700 hover:text-black"
                     title="Copy Verify Token"
                   >
                     {copiedVerifyToken ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
@@ -427,9 +427,9 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
               </div>
             </div>
 
-            <div className="lg:col-span-2 liquid-glass rounded-3xl p-6 border border-black/[0.08] bg-white/70 shadow-sm space-y-4">
+            <div className="lg:col-span-2 liquid-glass rounded-3xl p-6 border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                <h4 className="font-instrument italic text-xl text-slate-950">Active Automation Triggers</h4>
+                <h4 className="font-instrument italic text-xl text-white">Active Automation Triggers</h4>
                 <button onClick={() => setActiveSubTab('templates')} className="text-xs text-slate-600 hover:text-black font-mono">
                   View All Templates &rarr;
                 </button>
@@ -441,8 +441,8 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                   { title: 'Fulfillment & Logistics', events: ['Delivery Agent Assigned', 'Out for Delivery Alert', 'ETA Changed (>= 30 min)', 'Delivery Exception Alert'] },
                   { title: 'Website Contact Leads', events: ['New Client Inquiry Lead Alert to CEO / Executive WhatsApp'] }
                 ].map(({ title, events }) => (
-                  <div key={title} className="p-3.5 rounded-2xl bg-slate-50/70 border border-black/[0.06] space-y-1.5">
-                    <p className="font-semibold text-slate-900 font-mono text-[11px] uppercase tracking-wider">{title}</p>
+                  <div key={title} className="p-3.5 rounded-2xl bg-[#070e22] text-slate-300 border border-blue-500/15 space-y-1.5">
+                    <p className="font-semibold text-slate-100 font-mono text-[11px] uppercase tracking-wider">{title}</p>
                     <ul className="text-slate-600 space-y-1">
                       {events.map((ev) => (
                         <li key={ev} className="flex items-center gap-1.5 text-[11px]">
@@ -463,9 +463,9 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
       {/* 2. CONFIGURATION & CREDENTIALS */}
       {/* ============================================================== */}
       {activeSubTab === 'config' && (
-        <form onSubmit={handleSaveConfig} className="liquid-glass rounded-3xl p-8 border border-black/[0.08] bg-white/70 shadow-sm space-y-6 max-w-4xl">
+        <form onSubmit={handleSaveConfig} className="liquid-glass rounded-3xl p-8 border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-sm space-y-6 max-w-4xl">
           <div>
-            <h4 className="font-instrument italic text-2xl text-slate-950">Meta Cloud API Credentials & Settings</h4>
+            <h4 className="font-instrument italic text-2xl text-white">Meta Cloud API Credentials & Settings</h4>
             <p className="text-slate-500 text-xs mt-1">
               Configure credentials from your Meta Business Manager and Meta Developer Console.
               Tokens are encrypted at rest and never echoed in client responses.
@@ -474,9 +474,9 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
 
           <div className="grid sm:grid-cols-2 gap-6 pt-2">
             {/* Toggles */}
-            <div className="p-4 rounded-2xl bg-slate-50/80 border border-black/[0.06] flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-[#070e22] text-slate-300/80 border border-blue-500/15 flex items-center justify-between">
               <div>
-                <p className="text-slate-900 text-sm font-semibold">Enable Automation</p>
+                <p className="text-slate-100 text-sm font-semibold">Enable Automation</p>
                 <p className="text-slate-500 text-xs">Allow automatic WhatsApp message transmission</p>
               </div>
               <input
@@ -487,9 +487,9 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
               />
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-50/80 border border-black/[0.06] flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-[#070e22] text-slate-300/80 border border-blue-500/15 flex items-center justify-between">
               <div>
-                <p className="text-slate-900 text-sm font-semibold">Test Mode (Simulation)</p>
+                <p className="text-slate-100 text-sm font-semibold">Test Mode (Simulation)</p>
                 <p className="text-slate-500 text-xs">Logs mock delivery without Meta API charges</p>
               </div>
               <input
@@ -508,7 +508,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 value={configForm.phone_number_id}
                 onChange={(e) => setConfigForm({ ...configForm, phone_number_id: e.target.value })}
                 placeholder="e.g. 105938472910482"
-                className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 text-slate-900 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -519,7 +519,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 value={configForm.waba_id}
                 onChange={(e) => setConfigForm({ ...configForm, waba_id: e.target.value })}
                 placeholder="e.g. 948372619401823"
-                className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 text-slate-900 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -533,7 +533,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 value={configForm.access_token}
                 onChange={(e) => setConfigForm({ ...configForm, access_token: e.target.value })}
                 placeholder={config?.has_access_token ? "Leave blank to preserve existing token, or paste new token..." : "EAAG... Permanent System User Token"}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 text-slate-900 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -544,7 +544,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 type="text"
                 value={configForm.webhook_verify_token}
                 onChange={(e) => setConfigForm({ ...configForm, webhook_verify_token: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 text-slate-900 text-sm font-mono focus:border-black/30 focus:outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm font-mono focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -557,7 +557,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 value={configForm.app_secret}
                 onChange={(e) => setConfigForm({ ...configForm, app_secret: e.target.value })}
                 placeholder="For X-Hub-Signature-256 HMAC verification..."
-                className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 text-slate-900 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -569,7 +569,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 value={configForm.business_phone_number}
                 onChange={(e) => setConfigForm({ ...configForm, business_phone_number: e.target.value })}
                 placeholder="+919400900000"
-                className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 text-slate-900 text-sm focus:border-black/30 focus:outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -582,15 +582,15 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 max="1440"
                 value={configForm.delivery_eta_threshold_minutes}
                 onChange={(e) => setConfigForm({ ...configForm, delivery_eta_threshold_minutes: parseInt(e.target.value) || 30 })}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-black/10 text-slate-900 text-sm focus:border-black/30 focus:outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm focus:border-cyan-400 focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="pt-4 border-t border-black/10 flex justify-end">
+          <div className="pt-4 border-t border-blue-500/25 flex justify-end">
             <button
               type="submit"
-              className="px-7 py-3 rounded-full bg-black text-white text-sm font-medium hover:bg-slate-800 transition-colors shadow-sm"
+              className="px-7 py-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-sm font-medium hover:bg-slate-800 transition-colors shadow-sm"
             >
               Save WhatsApp Configuration
             </button>
@@ -605,37 +605,37 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="font-instrument italic text-2xl text-slate-950">Meta Approved Message Templates</h4>
+              <h4 className="font-instrument italic text-2xl text-white">Meta Approved Message Templates</h4>
               <p className="text-slate-500 text-xs">Pre-approved enterprise message templates mapped to business events.</p>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             {templates.map((t) => (
-              <div key={t.id} className="liquid-glass rounded-2xl p-5 border border-black/[0.08] bg-white/70 shadow-2xs space-y-3">
+              <div key={t.id} className="liquid-glass rounded-2xl p-5 border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-2xs space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="font-semibold text-slate-950 text-sm">{t.display_name}</p>
+                      <p className="font-semibold text-white text-sm">{t.display_name}</p>
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         {t.approval_status}
                       </span>
                     </div>
                     <p className="text-slate-400 font-mono text-[11px] mt-0.5">Trigger: {t.event_trigger}</p>
                   </div>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-black/5">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#070e22] text-slate-300 text-slate-600 border border-blue-500/20">
                     {t.category} • {t.language}
                   </span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50/80 border border-black/[0.06] text-xs text-slate-700 font-mono whitespace-pre-line leading-relaxed">
+                <div className="p-3 rounded-xl bg-[#070e22] text-slate-300/80 border border-blue-500/15 text-xs text-slate-700 font-mono whitespace-pre-line leading-relaxed">
                   {t.body_text}
                 </div>
 
                 {t.variables && t.variables.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {t.variables.map((v) => (
-                      <span key={v} className="px-2 py-0.5 rounded-md bg-white border border-black/10 text-[10px] font-mono text-slate-600">
+                      <span key={v} className="px-2 py-0.5 rounded-md bg-[#070e22] border border-blue-500/30 text-[10px] font-mono text-cyan-300">
                         {`{{${v}}}`}
                       </span>
                     ))}
@@ -653,7 +653,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
       {activeSubTab === 'history' && (
         <div className="space-y-4">
           {/* Search & Filters */}
-          <div className="liquid-glass rounded-2xl p-4 border border-black/[0.08] bg-white/70 shadow-2xs flex flex-wrap items-center justify-between gap-3">
+          <div className="liquid-glass rounded-2xl p-4 border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-2xs flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2 flex-1 min-w-[220px]">
               <Search size={14} className="text-slate-400" />
               <input
@@ -662,14 +662,14 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') loadMessages(); }}
                 placeholder="Search by masked phone, name, or event..."
-                className="w-full text-xs bg-transparent text-slate-900 placeholder-slate-400 focus:outline-none"
+                className="w-full text-xs bg-transparent text-slate-100 placeholder-slate-400 focus:outline-none"
               />
             </div>
             <div className="flex items-center gap-2">
               <select
                 value={statusFilter}
                 onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}
-                className="px-3 py-1.5 rounded-xl liquid-glass border border-black/10 text-xs text-slate-800 bg-white focus:outline-none"
+                className="px-3 py-1.5 rounded-xl liquid-glass border border-blue-500/25 text-xs text-white bg-[#070e22] focus:outline-none border border-blue-500/30"
               >
                 <option value="">All Statuses</option>
                 <option value="delivered">Delivered</option>
@@ -682,7 +682,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
               <select
                 value={eventFilter}
                 onChange={(e) => { setEventFilter(e.target.value); setCurrentPage(1); }}
-                className="px-3 py-1.5 rounded-xl liquid-glass border border-black/10 text-xs text-slate-800 bg-white focus:outline-none"
+                className="px-3 py-1.5 rounded-xl liquid-glass border border-blue-500/25 text-xs text-white bg-[#070e22] focus:outline-none border border-blue-500/30"
               >
                 <option value="">All Events</option>
                 <option value="order_created">Order Created</option>
@@ -696,7 +696,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
               </select>
               <button
                 onClick={loadMessages}
-                className="px-4 py-1.5 rounded-xl bg-black text-white text-xs font-medium hover:bg-slate-800 transition-colors"
+                className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-medium hover:bg-slate-800 transition-colors"
               >
                 Search
               </button>
@@ -704,11 +704,11 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
           </div>
 
           {/* Table */}
-          <div className="liquid-glass rounded-3xl border border-black/[0.08] bg-white/70 shadow-sm overflow-hidden">
+          <div className="liquid-glass rounded-3xl border border-blue-500/25 bg-[#0a1228]/85 text-white shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-black/10 bg-slate-50/50 text-slate-400 font-mono uppercase text-[10px] tracking-wider">
+                  <tr className="border-b border-blue-500/25 bg-[#070e22] text-slate-300/50 text-slate-400 font-mono uppercase text-[10px] tracking-wider">
                     <th className="py-3 px-4">Timestamp</th>
                     <th className="py-3 px-4">Recipient</th>
                     <th className="py-3 px-4">Event Trigger</th>
@@ -736,11 +736,11 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                             {m.created_at ? new Date(m.created_at).toLocaleString() : '—'}
                           </td>
                           <td className="py-3 px-4">
-                            <p className="font-medium text-slate-900">{m.recipient_name || 'Customer'}</p>
+                            <p className="font-medium text-slate-100">{m.recipient_name || 'Customer'}</p>
                             <p className="font-mono text-slate-400 text-[11px]">{m.recipient_phone_masked}</p>
                           </td>
                           <td className="py-3 px-4">
-                            <span className="font-mono text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">
+                            <span className="font-mono text-slate-800 bg-[#070e22] text-slate-300 px-2 py-0.5 rounded-md">
                               {m.event_type}
                             </span>
                           </td>
@@ -766,14 +766,14 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                           <td className="py-3 px-4 text-right whitespace-nowrap space-x-2">
                             <button
                               onClick={() => setViewLog(m)}
-                              className="px-2.5 py-1 rounded-lg liquid-glass border border-black/10 text-slate-700 hover:text-black text-[11px]"
+                              className="px-2.5 py-1 rounded-lg liquid-glass border border-blue-500/25 text-slate-700 hover:text-black text-[11px]"
                             >
                               Inspect
                             </button>
                             {isFailed && (
                               <button
                                 onClick={() => handleRetryMessage(m.id)}
-                                className="px-2.5 py-1 rounded-lg bg-black text-white text-[11px] hover:bg-slate-800"
+                                className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-[11px] hover:bg-slate-800"
                               >
                                 Retry
                               </button>
@@ -789,20 +789,20 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between p-4 border-t border-black/10 text-xs">
+              <div className="flex items-center justify-between p-4 border-t border-blue-500/25 text-xs">
                 <p className="text-slate-500 font-mono">Page {currentPage} of {totalPages} ({totalMessages} records)</p>
                 <div className="flex items-center gap-2">
                   <button
                     disabled={currentPage <= 1}
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="px-3 py-1 rounded-lg liquid-glass border border-black/10 disabled:opacity-40"
+                    className="px-3 py-1 rounded-lg liquid-glass border border-blue-500/25 disabled:opacity-40"
                   >
                     Previous
                   </button>
                   <button
                     disabled={currentPage >= totalPages}
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    className="px-3 py-1 rounded-lg liquid-glass border border-black/10 disabled:opacity-40"
+                    className="px-3 py-1 rounded-lg liquid-glass border border-blue-500/25 disabled:opacity-40"
                   >
                     Next
                   </button>
@@ -818,11 +818,11 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
       {/* ============================================================== */}
       {testModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in">
-          <div className="liquid-glass rounded-3xl p-6 border border-black/15 bg-white shadow-2xl max-w-lg w-full space-y-5">
-            <div className="flex items-center justify-between border-b border-black/10 pb-3">
+          <div className="liquid-glass rounded-3xl p-6 border border-blue-500/30 bg-[#0a1228] shadow-2xl text-white border border-blue-500/30 max-w-lg w-full space-y-5">
+            <div className="flex items-center justify-between border-b border-blue-500/25 pb-3">
               <div className="flex items-center gap-2">
                 <Send size={16} className="text-slate-800" />
-                <h4 className="font-instrument italic text-xl text-slate-950">WhatsApp Integration Test Console</h4>
+                <h4 className="font-instrument italic text-xl text-white">WhatsApp Integration Test Console</h4>
               </div>
               <button
                 onClick={() => setTestModalOpen(false)}
@@ -841,7 +841,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                   value={testPhone}
                   onChange={(e) => setTestPhone(e.target.value)}
                   placeholder="+919876543210"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-sm focus:border-black/30 focus:outline-none font-mono"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-sm focus:border-black/30 focus:outline-none font-mono"
                 />
               </div>
 
@@ -851,8 +851,8 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                   onClick={() => setTestMessageType('template')}
                   className={`py-2 px-3 rounded-xl text-xs font-medium border text-center transition-all ${
                     testMessageType === 'template'
-                      ? 'bg-black text-white border-black font-semibold'
-                      : 'liquid-glass text-slate-600 border-black/10 hover:bg-slate-50'
+                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold border-black font-semibold'
+                      : 'liquid-glass text-slate-600 border-blue-500/25 hover:bg-[#070e22] text-slate-300'
                   }`}
                 >
                   Approved Template
@@ -862,8 +862,8 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                   onClick={() => setTestMessageType('text')}
                   className={`py-2 px-3 rounded-xl text-xs font-medium border text-center transition-all ${
                     testMessageType === 'text'
-                      ? 'bg-black text-white border-black font-semibold'
-                      : 'liquid-glass text-slate-600 border-black/10 hover:bg-slate-50'
+                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold border-black font-semibold'
+                      : 'liquid-glass text-slate-600 border-blue-500/25 hover:bg-[#070e22] text-slate-300'
                   }`}
                 >
                   Direct Session Text
@@ -876,7 +876,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                   <select
                     value={testTemplate}
                     onChange={(e) => setTestTemplate(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs focus:border-black/30 focus:outline-none"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs focus:border-black/30 focus:outline-none"
                   >
                     {templates.map((t) => (
                       <option key={t.template_name} value={t.template_name}>
@@ -894,7 +894,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                     value={testCustomText}
                     onChange={(e) => setTestCustomText(e.target.value)}
                     placeholder="Hello from RMVS WebServices WhatsApp Automation test console!"
-                    className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-black/10 text-slate-900 text-xs focus:border-black/30 focus:outline-none resize-none"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 text-slate-100 text-xs focus:border-black/30 focus:outline-none resize-none"
                   />
                 </div>
               )}
@@ -914,14 +914,14 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
                 <button
                   type="button"
                   onClick={() => setTestModalOpen(false)}
-                  className="px-4 py-2 rounded-full liquid-glass border border-black/10 text-slate-700 text-xs"
+                  className="px-4 py-2 rounded-full liquid-glass border border-blue-500/25 text-slate-700 text-xs"
                 >
                   Close
                 </button>
                 <button
                   type="submit"
                   disabled={testSending}
-                  className="px-6 py-2 rounded-full bg-black text-white text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-50"
+                  className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-50"
                 >
                   {testSending ? 'Sending...' : 'Dispatch Test'}
                 </button>
@@ -936,9 +936,9 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
       {/* ============================================================== */}
       {viewLog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in">
-          <div className="liquid-glass rounded-3xl p-6 border border-black/15 bg-white shadow-2xl max-w-lg w-full space-y-4">
-            <div className="flex items-center justify-between border-b border-black/10 pb-3">
-              <h4 className="font-instrument italic text-xl text-slate-950">WhatsApp Transmission Details</h4>
+          <div className="liquid-glass rounded-3xl p-6 border border-blue-500/30 bg-[#0a1228] shadow-2xl text-white border border-blue-500/30 max-w-lg w-full space-y-4">
+            <div className="flex items-center justify-between border-b border-blue-500/25 pb-3">
+              <h4 className="font-instrument italic text-xl text-white">WhatsApp Transmission Details</h4>
               <button
                 onClick={() => setViewLog(null)}
                 className="w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-black hover:bg-black/5"
@@ -949,12 +949,12 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
 
             <div className="space-y-3 font-mono text-xs">
               <div className="grid grid-cols-2 gap-2 text-[11px]">
-                <div className="p-2.5 rounded-xl bg-slate-50">
+                <div className="p-2.5 rounded-xl bg-[#070e22] text-slate-300">
                   <span className="text-slate-400 block">Recipient</span>
                   <span className="font-semibold text-slate-800">{viewLog.recipient_name || 'Customer'}</span>
                   <span className="text-slate-500 block">{viewLog.recipient_phone_masked}</span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-slate-50">
+                <div className="p-2.5 rounded-xl bg-[#070e22] text-slate-300">
                   <span className="text-slate-400 block">Status</span>
                   <span className="font-semibold text-slate-800 uppercase">{viewLog.status}</span>
                   <span className="text-slate-500 block">Retries: {viewLog.retry_count} / {viewLog.max_retries}</span>
@@ -963,7 +963,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
 
               <div>
                 <span className="text-slate-400 text-[10px] uppercase block mb-1">Rendered Message Body</span>
-                <div className="p-3 rounded-xl bg-slate-50 border border-black/[0.06] text-slate-800 whitespace-pre-line leading-relaxed">
+                <div className="p-3 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/15 text-slate-800 whitespace-pre-line leading-relaxed">
                   {viewLog.rendered_body || '—'}
                 </div>
               </div>
@@ -983,7 +983,7 @@ export const WhatsAppAutomationTab: React.FC<Props> = ({ showNotification }) => 
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setViewLog(null)}
-                className="px-5 py-2 rounded-full bg-black text-white text-xs font-medium"
+                className="px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-medium"
               >
                 Done
               </button>

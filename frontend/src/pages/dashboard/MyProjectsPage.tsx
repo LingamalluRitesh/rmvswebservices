@@ -254,16 +254,16 @@ export const MyProjectsPage: React.FC = () => {
   };
 
   const inputCls =
-    'w-full bg-white border border-black/10 rounded-xl text-slate-900 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none px-4 py-3 transition-colors shadow-2xs';
+    'w-full bg-[#070e22] border border-blue-500/30 text-white rounded-xl text-slate-100 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none px-4 py-3 transition-colors shadow-2xs';
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-[#060b19] text-slate-100">
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-10">
 
         {/* ── Header ── */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="font-instrument italic text-3xl sm:text-4xl text-slate-950">
+            <h1 className="font-instrument italic text-3xl sm:text-4xl text-white">
               Projects &amp; Attribution
             </h1>
             <p className="text-slate-600 text-sm mt-1">
@@ -274,7 +274,7 @@ export const MyProjectsPage: React.FC = () => {
           {user && (user.role === 'developer' || user.role === 'super_admin') && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 bg-black text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-slate-800 transition-colors self-start sm:self-auto shrink-0 shadow-sm"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-slate-800 transition-colors self-start sm:self-auto shrink-0 shadow-sm"
             >
               <Plus size={15} />
               <span>Add New Project</span>
@@ -286,20 +286,20 @@ export const MyProjectsPage: React.FC = () => {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-slate-100/70 h-80 rounded-3xl animate-pulse border border-black/[0.05]" />
+              <div key={i} className="bg-[#070e22] text-slate-300/70 h-80 rounded-3xl animate-pulse border border-black/[0.05]" />
             ))}
           </div>
         ) : projects.length === 0 ? (
-          <div className="liquid-glass rounded-3xl text-center py-20 border border-black/[0.08] shadow-sm bg-white/70 p-8">
+          <div className="liquid-glass rounded-3xl text-center py-20 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white p-8">
             <FolderGit2 size={48} className="mx-auto text-slate-300 mb-4" />
-            <h3 className="font-instrument italic text-3xl text-slate-950 mb-2">No Projects Published Yet</h3>
+            <h3 className="font-instrument italic text-3xl text-white mb-2">No Projects Published Yet</h3>
             <p className="text-slate-600 text-sm max-w-sm mx-auto mb-8">
               Your database is completely clean! You can now create and publish your first project with full attribution.
             </p>
             {user && (user.role === 'developer' || user.role === 'super_admin') ? (
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-black text-white rounded-full px-7 py-3 text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm"
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold rounded-full px-7 py-3 text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm"
               >
                 Publish Your First Project
               </button>
@@ -324,15 +324,15 @@ export const MyProjectsPage: React.FC = () => {
                 <div key={proj.id} className="space-y-3">
                   <ProjectCard project={proj} />
                   {/* Modification Action Bar */}
-                  <div className="liquid-glass rounded-2xl p-3 px-5 flex items-center justify-between gap-3 border border-black/[0.08] shadow-2xs bg-white/70">
+                  <div className="liquid-glass rounded-2xl p-3 px-5 flex items-center justify-between gap-3 border border-blue-500/25 shadow-2xs bg-[#0a1228]/85 text-white">
                     <span className="text-xs text-slate-500 font-mono">
-                      Status: <span className="text-slate-900 font-semibold">{proj.status}</span>
+                      Status: <span className="text-slate-100 font-semibold">{proj.status}</span>
                     </span>
                     {canEdit ? (
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => openEditModal(proj)}
-                          className="px-3.5 py-1.5 rounded-full liquid-glass text-xs font-medium text-slate-700 hover:text-black hover:bg-slate-50 border border-black/10 transition-colors flex items-center gap-1.5 shadow-2xs"
+                          className="px-3.5 py-1.5 rounded-full liquid-glass text-xs font-medium text-slate-700 hover:text-black hover:bg-[#070e22] text-slate-300 border border-blue-500/25 transition-colors flex items-center gap-1.5 shadow-2xs"
                         >
                           <Edit3 size={12} />
                           <span>Modify</span>
@@ -361,15 +361,15 @@ export const MyProjectsPage: React.FC = () => {
       {/* ── Create Project Modal ── */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md">
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto liquid-glass rounded-3xl border border-black/[0.08] p-6 sm:p-8 shadow-2xl bg-white/95 text-slate-900">
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto liquid-glass rounded-3xl border border-blue-500/25 p-6 sm:p-8 shadow-2xl bg-[#0a1228] text-white">
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-black rounded-full liquid-glass border border-black/10 transition-colors"
+              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-black rounded-full liquid-glass border border-blue-500/25 transition-colors"
             >
               <X size={18} />
             </button>
 
-            <h2 className="font-instrument italic text-2xl text-slate-950 mb-1">Add New Project</h2>
+            <h2 className="font-instrument italic text-2xl text-white mb-1">Add New Project</h2>
             <p className="text-slate-500 text-xs mb-6">
               Projects require at least one verified developer. You will be automatically attributed as Lead Developer.
             </p>
@@ -486,7 +486,7 @@ export const MyProjectsPage: React.FC = () => {
                 <label className="block text-slate-600 text-xs tracking-wider uppercase mb-1.5 font-mono">Technologies</label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {technologies.map((t) => (
-                    <span key={t} className="liquid-glass text-xs text-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-black/10 bg-slate-50 font-mono">
+                    <span key={t} className="liquid-glass text-xs text-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-blue-500/25 bg-[#070e22] text-slate-300 font-mono">
                       {t}
                       <button type="button" onClick={() => removeTech(t)} className="text-slate-400 hover:text-black">
                         <X size={12} />
@@ -503,7 +503,7 @@ export const MyProjectsPage: React.FC = () => {
                     placeholder="Add technology (e.g. Redis, PyTorch, Docker)"
                     className={inputCls}
                   />
-                  <button type="button" onClick={addTech} className="px-5 py-3 rounded-xl bg-black text-white text-xs font-semibold hover:bg-slate-800 shrink-0 shadow-sm">
+                  <button type="button" onClick={addTech} className="px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-semibold hover:bg-slate-800 shrink-0 shadow-sm">
                     Add
                   </button>
                 </div>
@@ -517,7 +517,7 @@ export const MyProjectsPage: React.FC = () => {
                     {teamMembers.map((m) => {
                       const dev = availableDevelopers.find((d) => d.id === m.developer_id);
                       return (
-                        <span key={m.developer_id} className="liquid-glass text-xs text-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-black/10 bg-slate-50 font-mono">
+                        <span key={m.developer_id} className="liquid-glass text-xs text-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-blue-500/25 bg-[#070e22] text-slate-300 font-mono">
                           <span>{dev ? dev.user.full_name || dev.user.username : `Developer #${m.developer_id}`} ({m.role_in_project})</span>
                           <button type="button" onClick={() => removeTeamMember(m.developer_id)} className="text-slate-400 hover:text-black">
                             <X size={12} />
@@ -547,7 +547,7 @@ export const MyProjectsPage: React.FC = () => {
                       type="button"
                       onClick={handleAddCoDev}
                       disabled={!selectedCoDevId}
-                      className="px-5 py-3 rounded-xl bg-black text-white text-xs font-semibold hover:bg-slate-800 disabled:opacity-40 shrink-0 shadow-sm"
+                      className="px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-semibold hover:bg-slate-800 disabled:opacity-40 shrink-0 shadow-sm"
                     >
                       Add
                     </button>
@@ -557,18 +557,18 @@ export const MyProjectsPage: React.FC = () => {
                 )}
               </div>
 
-              <div className="pt-4 border-t border-black/[0.06] flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-blue-500/15 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-full liquid-glass text-xs font-medium text-slate-600 hover:text-black border border-black/10"
+                  className="px-5 py-2.5 rounded-full liquid-glass text-xs font-medium text-slate-600 hover:text-black border border-blue-500/25"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-7 py-2.5 rounded-full bg-black text-white text-xs font-semibold hover:bg-slate-800 disabled:opacity-50 shadow-sm"
+                  className="px-7 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-semibold hover:bg-slate-800 disabled:opacity-50 shadow-sm"
                 >
                   {isSubmitting ? 'Publishing…' : 'Publish Project'}
                 </button>
@@ -581,17 +581,17 @@ export const MyProjectsPage: React.FC = () => {
       {/* ── Edit Project Modal (Modify Published Projects) ── */}
       {editingProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md">
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto liquid-glass rounded-3xl border border-black/[0.08] p-6 sm:p-8 shadow-2xl bg-white/95 text-slate-900">
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto liquid-glass rounded-3xl border border-blue-500/25 p-6 sm:p-8 shadow-2xl bg-[#0a1228] text-white">
             <button
               onClick={() => setEditingProject(null)}
-              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-black rounded-full liquid-glass border border-black/10 transition-colors"
+              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-black rounded-full liquid-glass border border-blue-500/25 transition-colors"
             >
               <X size={18} />
             </button>
 
-            <h2 className="font-instrument italic text-2xl text-slate-950 mb-1">Modify Published Project</h2>
+            <h2 className="font-instrument italic text-2xl text-white mb-1">Modify Published Project</h2>
             <p className="text-slate-500 text-xs mb-6">
-              Update technical details, live endpoints, descriptions, or status for <span className="text-slate-900 font-medium">{editingProject.name}</span>.
+              Update technical details, live endpoints, descriptions, or status for <span className="text-slate-100 font-medium">{editingProject.name}</span>.
             </p>
 
             {editError && (
@@ -710,7 +710,7 @@ export const MyProjectsPage: React.FC = () => {
                 <label className="block text-slate-600 text-xs tracking-wider uppercase mb-1.5 font-mono">Technologies</label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {editTechnologies.map((t) => (
-                    <span key={t} className="liquid-glass text-xs text-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-black/10 bg-slate-50 font-mono">
+                    <span key={t} className="liquid-glass text-xs text-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-blue-500/25 bg-[#070e22] text-slate-300 font-mono">
                       {t}
                       <button type="button" onClick={() => removeEditTech(t)} className="text-slate-400 hover:text-black">
                         <X size={12} />
@@ -727,24 +727,24 @@ export const MyProjectsPage: React.FC = () => {
                     placeholder="Add technology"
                     className={inputCls}
                   />
-                  <button type="button" onClick={addEditTech} className="px-5 py-3 rounded-xl bg-black text-white text-xs font-semibold hover:bg-slate-800 shrink-0 shadow-sm">
+                  <button type="button" onClick={addEditTech} className="px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-semibold hover:bg-slate-800 shrink-0 shadow-sm">
                     Add
                   </button>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-black/[0.06] flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-blue-500/15 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setEditingProject(null)}
-                  className="px-5 py-2.5 rounded-full liquid-glass text-xs font-medium text-slate-600 hover:text-black border border-black/10"
+                  className="px-5 py-2.5 rounded-full liquid-glass text-xs font-medium text-slate-600 hover:text-black border border-blue-500/25"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-7 py-2.5 rounded-full bg-black text-white text-xs font-semibold hover:bg-slate-800 disabled:opacity-50 shadow-sm"
+                  className="px-7 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-semibold hover:bg-slate-800 disabled:opacity-50 shadow-sm"
                 >
                   {isUpdating ? 'Saving Changes…' : 'Save Modifications'}
                 </button>

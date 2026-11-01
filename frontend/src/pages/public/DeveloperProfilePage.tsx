@@ -67,38 +67,38 @@ export const DeveloperProfilePage: React.FC = () => {
     }
   };
 
-  /* ── Loading skeleton ── */
+  /* Loading skeleton */
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#060b19] text-slate-100">
         <div className="max-w-5xl mx-auto px-6 py-12">
-          <div className="bg-slate-100/70 rounded-3xl h-72 animate-pulse mb-8 border border-black/[0.05]" />
+          <div className="bg-[#0a1228]/80 rounded-3xl h-72 animate-pulse mb-8 border border-blue-500/20" />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="bg-slate-100/70 rounded-2xl h-56 animate-pulse border border-black/[0.05]" />
-            <div className="lg:col-span-2 bg-slate-100/70 rounded-2xl h-56 animate-pulse border border-black/[0.05]" />
+            <div className="bg-[#0a1228]/80 rounded-2xl h-56 animate-pulse border border-blue-500/20" />
+            <div className="lg:col-span-2 bg-[#0a1228]/80 rounded-2xl h-56 animate-pulse border border-blue-500/20" />
           </div>
         </div>
       </div>
     );
   }
 
-  /* ── Error state ── */
+  /* Error state */
   if (error || !developer) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-6">
+      <div className="min-h-screen bg-[#060b19] flex items-center justify-center px-6">
         <div className="text-center">
-          <div className="w-16 h-16 liquid-glass rounded-full flex items-center justify-center mx-auto mb-5 text-slate-500 text-2xl font-bold border border-black/10 shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-blue-950/80 border border-blue-500/30 flex items-center justify-center mx-auto mb-5 text-cyan-400 text-2xl font-bold shadow-lg">
             !
           </div>
-          <h2 className="font-instrument italic text-2xl text-slate-900 mb-2">
+          <h2 className="font-sans font-bold text-2xl text-white mb-2">
             Developer Profile Unavailable
           </h2>
-          <p className="text-slate-600 text-sm mb-8">
+          <p className="text-slate-400 text-sm mb-8">
             {error || 'Could not find this developer.'}
           </p>
           <Link
             to="/developers"
-            className="inline-flex items-center gap-2 liquid-glass rounded-full px-5 py-2.5 text-slate-900 text-xs font-semibold border border-black/10 hover:bg-slate-50 transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all shadow-sm"
           >
             <ArrowLeft size={14} />
             <span>Back to Developers</span>
@@ -111,10 +111,10 @@ export const DeveloperProfilePage: React.FC = () => {
   const user = developer.user;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-[#060b19] text-slate-100 selection:bg-blue-600 selection:text-white">
       <div className="max-w-5xl mx-auto px-6 py-12">
 
-        {/* ── Breadcrumb ── */}
+        {/* Breadcrumb */}
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -123,22 +123,22 @@ export const DeveloperProfilePage: React.FC = () => {
         >
           <Link
             to="/developers"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-white transition-colors"
           >
             <ArrowLeft size={14} />
             <span>Back to Developer Directory</span>
           </Link>
         </motion.div>
 
-        {/* ── Hero Card ── */}
+        {/* Hero Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="liquid-glass rounded-3xl p-8 mb-8 overflow-hidden relative border border-black/[0.08] shadow-sm bg-white/70"
+          className="rounded-3xl p-8 mb-8 overflow-hidden relative border border-blue-500/25 shadow-2xl bg-[#0a1228]/85"
         >
           {/* Subtle ambient glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-50/50 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/15 blur-[120px] rounded-full pointer-events-none" />
 
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
 
@@ -150,19 +150,19 @@ export const DeveloperProfilePage: React.FC = () => {
                   <img
                     src={user.avatar_url}
                     alt={user.full_name}
-                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover ring-2 ring-black/[0.08] shadow-lg"
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover ring-2 ring-blue-500/40 shadow-xl"
                   />
                 ) : (
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-slate-100 border border-black/[0.08] flex items-center justify-center text-slate-900 text-3xl font-extrabold shadow-sm">
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-br from-blue-600 to-cyan-500 border border-blue-500/30 flex items-center justify-center text-white text-3xl font-extrabold shadow-sm">
                     {user.full_name.charAt(0)}
                   </div>
                 )}
                 {user.is_verified && (
                   <div
-                    className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-md border border-black/[0.05]"
+                    className="absolute -bottom-1 -right-1 bg-[#060b19] rounded-full p-1 shadow-md border border-blue-500/40"
                     title="Verified Developer"
                   >
-                    <CheckCircle2 size={20} className="text-emerald-600" />
+                    <CheckCircle2 size={20} className="text-cyan-400" />
                   </div>
                 )}
               </div>
@@ -170,40 +170,40 @@ export const DeveloperProfilePage: React.FC = () => {
               {/* Name / title / meta */}
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <h1 className="font-instrument italic text-3xl sm:text-4xl text-slate-950">
+                  <h1 className="font-sans font-extrabold text-3xl sm:text-4xl text-white">
                     {user.full_name}
                   </h1>
                   {user.is_verified && (
-                    <span className="inline-flex items-center gap-1 liquid-glass px-2.5 py-0.5 rounded-full text-xs font-semibold text-emerald-700 border border-emerald-200 bg-emerald-50/50">
-                      <CheckCircle2 size={11} />
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold text-cyan-300 border border-blue-500/40 bg-blue-950/80">
+                      <CheckCircle2 size={11} className="text-cyan-400" />
                       Verified
                     </span>
                   )}
                 </div>
 
-                <p className="text-xs text-slate-400 font-mono tracking-widest uppercase mb-2">
+                <p className="text-xs text-cyan-400/80 font-mono tracking-widest uppercase mb-2">
                   @{user.username}
                 </p>
 
-                <p className="text-base font-medium text-slate-700 mb-3">
+                <p className="text-base font-medium text-slate-300 mb-3">
                   {developer.title || 'Senior Software Engineer'}
                 </p>
 
-                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500">
+                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400">
                   {developer.location && (
                     <div className="flex items-center gap-1">
-                      <MapPin size={13} className="text-slate-400" />
+                      <MapPin size={13} className="text-cyan-400" />
                       <span>{developer.location}</span>
                     </div>
                   )}
                   {developer.years_experience > 0 && (
                     <div className="flex items-center gap-1">
-                      <Briefcase size={13} className="text-slate-400" />
+                      <Briefcase size={13} className="text-cyan-400" />
                       <span>{developer.years_experience} Years Experience</span>
                     </div>
                   )}
                   <div className="flex items-center gap-1">
-                    <Eye size={13} className="text-slate-400" />
+                    <Eye size={13} className="text-cyan-400" />
                     <span>{developer.views_count} Profile Views</span>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export const DeveloperProfilePage: React.FC = () => {
             <div className="w-full md:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <button
                 onClick={() => setContactModalOpen(true)}
-                className="bg-black text-white rounded-full px-6 py-2.5 font-medium text-sm flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors shadow-sm"
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full px-6 py-2.5 font-semibold text-sm flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] transition-all shadow-sm"
               >
                 <Send size={14} />
                 <span>Contact Developer</span>
@@ -223,7 +223,7 @@ export const DeveloperProfilePage: React.FC = () => {
               {currentUser && currentUser.id !== user.id && (
                 <button
                   onClick={handleStartChat}
-                  className="liquid-glass text-slate-800 rounded-full px-5 py-2.5 text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-50 border border-black/10 transition-colors shadow-sm"
+                  className="bg-[#070e22] text-slate-200 hover:text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center justify-center gap-2 hover:bg-[#0e1938] border border-blue-500/30 transition-colors shadow-sm"
                 >
                   <MessageSquare size={14} />
                   <span>Message</span>
@@ -233,12 +233,12 @@ export const DeveloperProfilePage: React.FC = () => {
           </div>
 
           {/* Divider row: availability + social links */}
-          <div className="mt-8 pt-6 border-t border-black/[0.06] flex flex-wrap items-center justify-between gap-4 text-xs">
+          <div className="mt-8 pt-6 border-t border-blue-500/15 flex flex-wrap items-center justify-between gap-4 text-xs">
             {/* Availability */}
             <div className="flex items-center gap-2">
               <span className="text-slate-400 uppercase font-mono tracking-widest text-[11px]">Status</span>
-              <span className="inline-flex items-center gap-1.5 liquid-glass px-3 py-1 rounded-full text-slate-700 font-medium border border-black/[0.08] bg-slate-50">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-cyan-300 font-medium border border-blue-500/30 bg-blue-950/60 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 {developer.availability}
               </span>
             </div>
@@ -251,7 +251,7 @@ export const DeveloperProfilePage: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                   title="GitHub Profile"
-                  className="liquid-glass rounded-full p-2.5 text-slate-600 hover:text-black hover:bg-slate-50 border border-black/10 transition-colors flex items-center gap-1.5 px-3"
+                  className="rounded-full p-2.5 text-slate-300 hover:text-white hover:border-cyan-400 bg-[#070e22] border border-blue-500/30 transition-colors flex items-center gap-1.5 px-3 shadow-sm"
                 >
                   <GithubIcon size={15} />
                   <span>GitHub</span>
@@ -263,7 +263,7 @@ export const DeveloperProfilePage: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                   title="LinkedIn Profile"
-                  className="liquid-glass rounded-full p-2.5 text-slate-600 hover:text-black hover:bg-slate-50 border border-black/10 transition-colors flex items-center gap-1.5 px-3"
+                  className="rounded-full p-2.5 text-slate-300 hover:text-white hover:border-cyan-400 bg-[#070e22] border border-blue-500/30 transition-colors flex items-center gap-1.5 px-3 shadow-sm"
                 >
                   <LinkedinIcon size={15} />
                   <span>LinkedIn</span>
@@ -275,7 +275,7 @@ export const DeveloperProfilePage: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                   title="Personal Website"
-                  className="liquid-glass rounded-full p-2.5 text-slate-600 hover:text-black hover:bg-slate-50 border border-black/10 transition-colors flex items-center gap-1.5 px-3"
+                  className="rounded-full p-2.5 text-slate-300 hover:text-white hover:border-cyan-400 bg-[#070e22] border border-blue-500/30 transition-colors flex items-center gap-1.5 px-3 shadow-sm"
                 >
                   <Globe size={15} />
                   <span>Website / Work Details</span>
@@ -285,7 +285,7 @@ export const DeveloperProfilePage: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* ── Main Grid ── */}
+        {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
           {/* Left column: About + Skills */}
@@ -296,18 +296,18 @@ export const DeveloperProfilePage: React.FC = () => {
             className="space-y-6"
           >
             {/* About card */}
-            <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
-              <h3 className="font-instrument italic text-xl text-slate-900 mb-3">
+            <div className="rounded-2xl p-6 border border-blue-500/25 shadow-xl bg-[#0a1228]/85">
+              <h3 className="font-sans font-bold text-xl text-white mb-3">
                 About {user.full_name}
               </h3>
-              <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-line">
+              <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
                 {developer.bio || developer.short_bio || 'No biography provided.'}
               </p>
             </div>
 
             {/* Skills card */}
-            <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
-              <h3 className="font-instrument italic text-xl text-slate-900 mb-4">
+            <div className="rounded-2xl p-6 border border-blue-500/25 shadow-xl bg-[#0a1228]/85">
+              <h3 className="font-sans font-bold text-xl text-white mb-4">
                 Core Skills
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -315,13 +315,13 @@ export const DeveloperProfilePage: React.FC = () => {
                   developer.skills.map((skill) => (
                     <span
                       key={skill.id}
-                      className="liquid-glass text-xs text-slate-700 rounded-full px-3 py-1 border border-black/[0.08] bg-slate-50 font-mono"
+                      className="text-xs text-cyan-300 rounded-full px-3 py-1 border border-blue-500/25 bg-[#070e22] font-mono"
                     >
                       {skill.name}
                     </span>
                   ))
                 ) : (
-                  <span className="text-slate-400 text-xs">No skills listed yet.</span>
+                  <span className="text-slate-500 text-xs">No skills listed yet.</span>
                 )}
               </div>
             </div>
@@ -336,24 +336,24 @@ export const DeveloperProfilePage: React.FC = () => {
           >
             {/* Section header */}
             <div className="flex items-center gap-3">
-              <h2 className="font-instrument italic text-2xl text-slate-900">
+              <h2 className="font-sans font-bold text-2xl text-white">
                 Associated Projects
               </h2>
-              <span className="liquid-glass text-xs text-slate-600 rounded-full px-2.5 py-0.5 border border-black/[0.08] bg-slate-50 font-mono">
+              <span className="text-xs text-cyan-300 rounded-full px-2.5 py-0.5 border border-blue-500/30 bg-blue-950/80 font-mono">
                 {projects.length}
               </span>
             </div>
-            <p className="text-slate-500 text-xs tracking-wide -mt-4">
+            <p className="text-slate-400 text-xs tracking-wide -mt-4">
               Software personally designed, engineered, and delivered by {user.full_name}.
             </p>
 
             {projects.length === 0 ? (
-              <div className="liquid-glass rounded-2xl p-12 text-center border border-black/[0.08] shadow-sm bg-white/70">
-                <Code size={36} className="mx-auto text-slate-300 mb-3" />
-                <p className="text-sm font-semibold text-slate-700">
+              <div className="rounded-2xl p-12 text-center border border-blue-500/25 shadow-xl bg-[#0a1228]/85">
+                <Code size={36} className="mx-auto text-cyan-400 mb-3" />
+                <p className="text-sm font-semibold text-white">
                   No public projects published yet
                 </p>
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-slate-400 mt-1">
                   New projects created by this developer will appear here with verified attribution.
                 </p>
               </div>
@@ -367,7 +367,7 @@ export const DeveloperProfilePage: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* ── Contact Modal ── */}
+        {/* Contact Modal */}
         {contactModalOpen && (
           <ContactDeveloperModal
             developer={developer}

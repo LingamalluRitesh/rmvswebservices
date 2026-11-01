@@ -388,118 +388,31 @@ export const HomePage: React.FC = () => {
             </Link>
           </motion.div>
 
-          {/* ─────────────────────────────────────────
-              THE 4 FLOATING FROSTED GLASS FEATURE CARDS (BizNext Reference)
-          ───────────────────────────────────────── */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 w-full max-w-6xl mt-12 text-left"
-          >
-            {/* Card 1: Website Design */}
-            <div className="rounded-3xl p-6 bg-[#0a1228]/80 backdrop-blur-xl border border-blue-500/25 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-cyan-400/40 hover:shadow-[0_15px_35px_rgba(37,99,235,0.25)] transition-all flex flex-col justify-between group">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(0,102,255,0.2)]">
-                  <Globe size={22} />
-                </div>
-                <h3 className="font-sans font-bold text-lg text-white mb-1.5">Website Design</h3>
-                <p className="text-slate-400 text-xs leading-relaxed">
-                  Ultra-responsive web portals and SaaS platforms engineered with React, TypeScript & Tailwind.
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-blue-500/15 flex items-center justify-between text-[11px] font-mono text-cyan-400">
-                <span>Speed & SEO Ready</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </div>
-
-            {/* Card 2: SEO & Cloud Growth (FEATURED / ACTIVE CARD - Glowing Blue Gradient in BizNext reference) */}
-            <div className="rounded-3xl p-6 bg-gradient-to-b from-blue-600 via-blue-700 to-blue-900 text-white border border-blue-400/50 shadow-[0_0_35px_rgba(37,99,235,0.6)] hover:shadow-[0_0_45px_rgba(37,99,235,0.85)] transition-all flex flex-col justify-between group transform lg:-translate-y-2">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-white group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-                    <TrendingUp size={22} />
-                  </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/20 text-white font-semibold backdrop-blur-md">
-                    Featured
-                  </span>
-                </div>
-                <h3 className="font-sans font-bold text-lg text-white mb-1.5">SEO & Cloud Growth</h3>
-                <p className="text-blue-100 text-xs leading-relaxed">
-                  High-throughput FastAPI microservices, Neon PostgreSQL, and automated organic search acceleration.
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-white/20 flex items-center justify-between text-[11px] font-mono text-cyan-200">
-                <span>99.98% Uptime SLA</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </div>
-
-            {/* Card 3: Mobile & E-Commerce */}
-            <div className="rounded-3xl p-6 bg-[#0a1228]/80 backdrop-blur-xl border border-blue-500/25 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-cyan-400/40 hover:shadow-[0_15px_35px_rgba(37,99,235,0.25)] transition-all flex flex-col justify-between group">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(0,102,255,0.2)]">
-                  <Smartphone size={22} />
-                </div>
-                <h3 className="font-sans font-bold text-lg text-white mb-1.5">Mobile & E-Commerce</h3>
-                <p className="text-slate-400 text-xs leading-relaxed">
-                  Cross-platform mobile apps in Flutter, frictionless checkout flows, and payment gateway orchestration.
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-blue-500/15 flex items-center justify-between text-[11px] font-mono text-cyan-400">
-                <span>iOS & Android Native</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </div>
-
-            {/* Card 4: 24/7 AI Support */}
-            <div className="rounded-3xl p-6 bg-[#0a1228]/80 backdrop-blur-xl border border-blue-500/25 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:border-cyan-400/40 hover:shadow-[0_15px_35px_rgba(37,99,235,0.25)] transition-all flex flex-col justify-between group">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(0,102,255,0.2)]">
-                  <Zap size={22} />
-                </div>
-                <h3 className="font-sans font-bold text-lg text-white mb-1.5">24/7 AI Support</h3>
-                <p className="text-slate-400 text-xs leading-relaxed">
-                  Autonomous intelligent agent integrations, real-time client WhatsApp channels, and continuous SLA.
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-blue-500/15 flex items-center justify-between text-[11px] font-mono text-cyan-400">
-                <span>Instant Advisory</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Metrics Capsule Pill (Exact BizNext Reference) */}
+          {/* Clean Trust Highlights Bar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.5 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-6 sm:px-8 py-3 rounded-full bg-[#081026]/90 border border-blue-500/30 backdrop-blur-md text-xs sm:text-sm font-mono text-slate-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
+            transition={{ duration: 0.9, delay: 0.4 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs text-slate-300 font-mono"
           >
-            <span className="flex items-center gap-2"><span className="text-cyan-400 font-bold">500+</span> Projects</span>
-            <span className="text-blue-500/40">|</span>
-            <span className="flex items-center gap-2"><span className="text-cyan-400 font-bold">98%</span> Client Satisfaction</span>
-            <span className="text-blue-500/40">|</span>
-            <span className="flex items-center gap-2"><span className="text-cyan-400 font-bold">24/7</span> Support</span>
-            <span className="text-blue-500/40 hidden sm:inline">|</span>
-            <Link to="/contact" className="text-cyan-400 hover:text-white font-semibold flex items-center gap-1 transition-colors">
-              Get Free Quote →
-            </Link>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8]" />
+              <span>100% Verified Creators</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+              <span>Zero Intermediary Markup</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_8px_#60a5fa]" />
+              <span>FastAPI &amp; React &amp; Neon DB</span>
+            </div>
           </motion.div>
-
-          {/* Bottom Tagline */}
-          <div className="mt-4 text-center">
-            <span className="text-slate-400 font-mono text-xs tracking-[0.25em] uppercase">
-              — {tagline || 'Modern · Fast · Secure · Scalable'} —
-            </span>
-          </div>
 
         </div>
 
         {/* Scroll Down Cue */}
-        <div className="z-20 text-center pt-4 pb-2">
+        <div className="z-20 text-center pt-6 pb-2">
           <div 
             onClick={() => {
               const el = document.getElementById('disciplines-section');
@@ -514,7 +427,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* ─────────────────────────────────────────
-          2. THE 4 PILLARS & EDITORIAL HEADER
+          2. THE 4 CAPABILITIES & GROWTH SOLUTIONS (BizNext Options)
       ───────────────────────────────────────── */}
       <section id="disciplines-section" className="py-20 sm:py-28 px-4 sm:px-6 max-w-6xl mx-auto">
         <FadeIn>
@@ -522,7 +435,7 @@ export const HomePage: React.FC = () => {
           <div className="text-center mb-4">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/60 border border-blue-500/30 text-cyan-300 text-xs font-mono uppercase tracking-widest shadow-[0_0_15px_rgba(0,102,255,0.2)]">
               <Zap size={13} className="text-cyan-400" />
-              <span>CORE CAPABILITIES</span>
+              <span>CORE CAPABILITIES &amp; GROWTH SOLUTIONS</span>
             </span>
           </div>
 
@@ -534,73 +447,176 @@ export const HomePage: React.FC = () => {
             Direct collaboration with India's premier software engineers. Zero intermediary markup, total transparency, and verified creator attribution.
           </p>
 
+          {/* The 4 Signature Glass Feature Cards (from the BizNext reference) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
-            {[
-              {
-                icon: Globe,
-                title: 'Websites',
-                subtitle: 'High-Performance Web Portals',
-                desc: 'Responsive web apps, client portals, and digital platforms engineered with React, TypeScript & FastAPI.',
-                specs: ['React / Vite', 'FastAPI Backends', 'Mobile-Responsive', 'SEO Optimized'],
-              },
-              {
-                icon: Smartphone,
-                title: 'Apps',
-                subtitle: 'Cross-Platform Mobile',
-                desc: 'Native-feel iOS & Android applications engineered with Flutter and React Native.',
-                specs: ['Flutter / Dart', 'React Native', 'Offline-First Cache', 'Biometric Auth'],
-              },
-              {
-                icon: Code2,
-                title: 'Software',
-                subtitle: 'Enterprise Microservices',
-                desc: 'Distributed backends, high-throughput APIs, cloud automation, and high-concurrency database schemas.',
-                specs: ['Distributed APIs', 'PostgreSQL / Redis', 'Docker & K8s', 'Event-Driven'],
-              },
-              {
-                icon: TrendingUp,
-                title: 'Digital Solutions',
-                subtitle: 'AI & Business Intelligence',
-                desc: 'Autonomous AI agents, predictive business analytics, and automated cloud workflows.',
-                specs: ['LLM Orchestration', 'Data Pipelines', 'Workflow Bots', 'Telemetry Dashboards'],
-              },
-            ].map(({ icon: Icon, title, subtitle, desc, specs }) => (
-              <div
-                key={title}
-                className="rounded-3xl p-6 sm:p-7 flex flex-col justify-between group bg-[#0a1228]/80 hover:bg-[#0e1938] border border-blue-500/20 hover:border-cyan-400/40 shadow-lg hover:shadow-[0_10px_30px_rgba(37,99,235,0.25)] transition-all"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400 mb-5 group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(0,102,255,0.2)]">
-                    <Icon size={22} />
-                  </div>
-                  <h3 className="font-instrument italic text-2xl text-white mb-1">{title}</h3>
-                  <p className="text-cyan-400 text-[11px] font-mono uppercase tracking-wider mb-4">{subtitle}</p>
-                  <p className="text-slate-400 text-xs leading-relaxed mb-6">{desc}</p>
-
-                  <div className="space-y-2 mb-6 pt-4 border-t border-blue-500/15">
-                    {specs.map((item) => (
-                      <div key={item} className="flex items-center gap-2 text-[11px] text-slate-300">
-                        <Check size={12} className="text-cyan-400 shrink-0" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
+            {/* Card 1: Website Design */}
+            <div className="rounded-3xl p-6 sm:p-7 flex flex-col justify-between group bg-[#0a1228]/80 hover:bg-[#0e1938] border border-blue-500/25 hover:border-cyan-400/40 shadow-lg hover:shadow-[0_10px_30px_rgba(37,99,235,0.25)] transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400 mb-5 group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(0,102,255,0.2)]">
+                  <Globe size={22} />
                 </div>
+                <h3 className="font-sans font-bold text-xl text-white mb-1">Website Design</h3>
+                <p className="text-cyan-400 text-[11px] font-mono uppercase tracking-wider mb-3">High-Performance Web Portals</p>
+                <p className="text-slate-400 text-xs leading-relaxed mb-6">
+                  Ultra-responsive web portals, SaaS platforms, and client dashboards engineered with React, TypeScript &amp; Tailwind.
+                </p>
 
-                <div className="pt-4 border-t border-blue-500/15 flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] text-slate-400 font-mono uppercase block">Delivery Tier</span>
-                    <span className="text-white font-semibold text-xs">Production Grade</span>
-                  </div>
-                  <Link
-                    to="/contact"
-                    className="px-4 py-1.5 rounded-full bg-blue-600/20 hover:bg-blue-600 text-xs font-medium text-cyan-300 hover:text-white border border-blue-500/30 transition-all flex items-center gap-1 shadow-sm"
-                  >
-                    Inquire <ArrowRight size={11} />
-                  </Link>
+                <div className="space-y-2 mb-6 pt-4 border-t border-blue-500/15">
+                  {['React 18 / Vite', 'FastAPI Backends', 'Mobile-Responsive', 'Speed & SEO Ready'].map((item) => (
+                    <div key={item} className="flex items-center gap-2 text-[11px] text-slate-300">
+                      <Check size={12} className="text-cyan-400 shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
+
+              <div className="pt-4 border-t border-blue-500/15 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-slate-400 font-mono uppercase block">Delivery Tier</span>
+                  <span className="text-white font-semibold text-xs">Production Grade</span>
+                </div>
+                <Link
+                  to="/contact"
+                  className="px-4 py-1.5 rounded-full bg-blue-600/20 hover:bg-blue-600 text-xs font-medium text-cyan-300 hover:text-white border border-blue-500/30 transition-all flex items-center gap-1 shadow-sm"
+                >
+                  Inquire <ArrowRight size={11} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 2: SEO & Cloud Growth (Featured / Active Card in glowing blue gradient) */}
+            <div className="rounded-3xl p-6 sm:p-7 flex flex-col justify-between group bg-gradient-to-b from-blue-600 via-blue-700 to-blue-900 text-white border border-blue-400/50 shadow-[0_0_35px_rgba(37,99,235,0.6)] hover:shadow-[0_0_45px_rgba(37,99,235,0.85)] transition-all transform lg:-translate-y-2">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-white group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                    <TrendingUp size={22} />
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/20 text-white font-semibold backdrop-blur-md">
+                    Featured
+                  </span>
+                </div>
+                <h3 className="font-sans font-bold text-xl text-white mb-1">SEO &amp; Cloud Growth</h3>
+                <p className="text-cyan-200 text-[11px] font-mono uppercase tracking-wider mb-3">Enterprise Cloud &amp; Microservices</p>
+                <p className="text-blue-100 text-xs leading-relaxed mb-6">
+                  High-throughput FastAPI microservices, Neon PostgreSQL, cloud automation, and automated organic search acceleration.
+                </p>
+
+                <div className="space-y-2 mb-6 pt-4 border-t border-white/20">
+                  {['Distributed APIs', 'PostgreSQL / Redis', 'Docker & K8s', '99.98% Uptime SLA'].map((item) => (
+                    <div key={item} className="flex items-center gap-2 text-[11px] text-blue-100">
+                      <Check size={12} className="text-cyan-200 shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-white/20 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-blue-200 font-mono uppercase block">Delivery Tier</span>
+                  <span className="text-white font-semibold text-xs">Featured Tier</span>
+                </div>
+                <Link
+                  to="/contact"
+                  className="px-4 py-1.5 rounded-full bg-white/20 hover:bg-white text-xs font-semibold text-white hover:text-blue-900 border border-white/30 transition-all flex items-center gap-1 shadow-sm"
+                >
+                  Inquire <ArrowRight size={11} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 3: Mobile & E-Commerce */}
+            <div className="rounded-3xl p-6 sm:p-7 flex flex-col justify-between group bg-[#0a1228]/80 hover:bg-[#0e1938] border border-blue-500/25 hover:border-cyan-400/40 shadow-lg hover:shadow-[0_10px_30px_rgba(37,99,235,0.25)] transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400 mb-5 group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(0,102,255,0.2)]">
+                  <Smartphone size={22} />
+                </div>
+                <h3 className="font-sans font-bold text-xl text-white mb-1">Mobile &amp; E-Commerce</h3>
+                <p className="text-cyan-400 text-[11px] font-mono uppercase tracking-wider mb-3">Cross-Platform Mobile</p>
+                <p className="text-slate-400 text-xs leading-relaxed mb-6">
+                  Cross-platform mobile apps in Flutter, frictionless checkout flows, biometric auth, and payment gateway orchestration.
+                </p>
+
+                <div className="space-y-2 mb-6 pt-4 border-t border-blue-500/15">
+                  {['Flutter / Dart', 'React Native', 'Offline-First Cache', 'iOS & Android Native'].map((item) => (
+                    <div key={item} className="flex items-center gap-2 text-[11px] text-slate-300">
+                      <Check size={12} className="text-cyan-400 shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-blue-500/15 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-slate-400 font-mono uppercase block">Delivery Tier</span>
+                  <span className="text-white font-semibold text-xs">Production Grade</span>
+                </div>
+                <Link
+                  to="/contact"
+                  className="px-4 py-1.5 rounded-full bg-blue-600/20 hover:bg-blue-600 text-xs font-medium text-cyan-300 hover:text-white border border-blue-500/30 transition-all flex items-center gap-1 shadow-sm"
+                >
+                  Inquire <ArrowRight size={11} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 4: 24/7 AI Support */}
+            <div className="rounded-3xl p-6 sm:p-7 flex flex-col justify-between group bg-[#0a1228]/80 hover:bg-[#0e1938] border border-blue-500/25 hover:border-cyan-400/40 shadow-lg hover:shadow-[0_10px_30px_rgba(37,99,235,0.25)] transition-all">
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-500/30 flex items-center justify-center text-cyan-400 mb-5 group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(0,102,255,0.2)]">
+                  <Zap size={22} />
+                </div>
+                <h3 className="font-sans font-bold text-xl text-white mb-1">24/7 AI Support</h3>
+                <p className="text-cyan-400 text-[11px] font-mono uppercase tracking-wider mb-3">AI &amp; Autonomous Systems</p>
+                <p className="text-slate-400 text-xs leading-relaxed mb-6">
+                  Autonomous intelligent agent integrations, real-time client WhatsApp channels, and continuous 24/7 SLA engineering.
+                </p>
+
+                <div className="space-y-2 mb-6 pt-4 border-t border-blue-500/15">
+                  {['LLM Orchestration', 'Workflow Bots', 'Instant Advisory', 'Telemetry Dashboards'].map((item) => (
+                    <div key={item} className="flex items-center gap-2 text-[11px] text-slate-300">
+                      <Check size={12} className="text-cyan-400 shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-blue-500/15 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-slate-400 font-mono uppercase block">Delivery Tier</span>
+                  <span className="text-white font-semibold text-xs">24/7 Dedicated SLA</span>
+                </div>
+                <Link
+                  to="/contact"
+                  className="px-4 py-1.5 rounded-full bg-blue-600/20 hover:bg-blue-600 text-xs font-medium text-cyan-300 hover:text-white border border-blue-500/30 transition-all flex items-center gap-1 shadow-sm"
+                >
+                  Inquire <ArrowRight size={11} />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Metrics Capsule Pill (Exact BizNext Reference, positioned right below the options) */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-6 sm:px-8 py-3.5 rounded-full bg-[#081026]/90 border border-blue-500/30 backdrop-blur-md text-xs sm:text-sm font-mono text-slate-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] max-w-3xl mx-auto">
+            <span className="flex items-center gap-2"><span className="text-cyan-400 font-bold">500+</span> Projects</span>
+            <span className="text-blue-500/40">|</span>
+            <span className="flex items-center gap-2"><span className="text-cyan-400 font-bold">98%</span> Client Satisfaction</span>
+            <span className="text-blue-500/40">|</span>
+            <span className="flex items-center gap-2"><span className="text-cyan-400 font-bold">24/7</span> Support</span>
+            <span className="text-blue-500/40 hidden sm:inline">|</span>
+            <Link to="/contact" className="text-cyan-400 hover:text-white font-semibold flex items-center gap-1 transition-colors">
+              Get Free Quote →
+            </Link>
+          </div>
+
+          {/* Tagline */}
+          <div className="mt-5 text-center">
+            <span className="text-slate-500 font-mono text-xs tracking-[0.25em] uppercase">
+              — {tagline || 'Modern · Fast · Secure · Scalable'} —
+            </span>
           </div>
         </FadeIn>
       </section>

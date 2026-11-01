@@ -54,17 +54,17 @@ export const DevelopersDirectory: React.FC = () => {
   const clearFilters = () => { setSearchQuery(''); setSelectedSkill(''); setSelectedAvailability(''); setSelectedLocation(''); fetchDevelopers(); };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-[#060b19] text-slate-100 selection:bg-blue-600 selection:text-white">
       {/* Header */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-10">
         <div className="flex items-center gap-3 mb-4">
           <img src={logoUrl} alt={companyName} className="h-8 w-auto object-contain" />
-          <p className="text-slate-500 text-xs tracking-widest uppercase font-mono">{companyName} Roster</p>
+          <p className="text-cyan-400 text-xs tracking-widest uppercase font-mono">{companyName} Roster</p>
         </div>
-        <h1 className="font-instrument italic text-[clamp(2rem,5vw,4rem)] leading-[1.05] text-slate-900">
-          Verified <em>Developers</em>
+        <h1 className="font-sans font-extrabold text-[clamp(2rem,5vw,4rem)] leading-[1.05] text-white">
+          Verified <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent">Developers</span>
         </h1>
-        <p className="text-slate-600 text-sm mt-3 max-w-xl leading-relaxed">
+        <p className="text-slate-300 text-sm mt-3 max-w-xl leading-relaxed">
           Browse our hand-verified roster of senior developers, AI engineers, and cloud specialists.
           Collaborate directly without middleman markups.
         </p>
@@ -72,24 +72,24 @@ export const DevelopersDirectory: React.FC = () => {
 
       {/* Filter bar */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 mb-10">
-        <div className="liquid-glass rounded-2xl p-5 space-y-4 border border-black/[0.08] shadow-sm">
+        <div className="rounded-2xl p-5 space-y-4 border border-blue-500/25 bg-[#0a1228]/85 shadow-xl">
           <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-cyan-400" size={16} />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by name, title, or biography..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-black/10 text-slate-900 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none transition-colors shadow-sm"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm placeholder-slate-500 focus:border-cyan-400 focus:outline-none transition-colors shadow-sm"
               />
             </div>
             <div className="flex gap-2">
-              <button type="submit" className="px-5 py-2.5 rounded-xl bg-black text-white text-sm font-semibold hover:bg-slate-800 transition-colors flex items-center gap-1.5 shadow-sm">
+              <button type="submit" className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm font-semibold hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all flex items-center gap-1.5 shadow-sm">
                 <Search size={14} /> Search
               </button>
               {(searchQuery || selectedSkill || selectedAvailability || selectedLocation) && (
-                <button type="button" onClick={clearFilters} className="px-3.5 py-2.5 rounded-xl liquid-glass text-slate-600 hover:text-black text-xs flex items-center gap-1 border border-black/10">
+                <button type="button" onClick={clearFilters} className="px-3.5 py-2.5 rounded-xl bg-[#070e22] text-slate-300 hover:text-white text-xs flex items-center gap-1 border border-blue-500/30">
                   <X size={13} /> Reset
                 </button>
               )}
@@ -98,11 +98,11 @@ export const DevelopersDirectory: React.FC = () => {
 
           {/* Skill pills */}
           <div>
-            <span className="text-slate-500 text-xs block mb-2 font-mono">Filter by technology:</span>
+            <span className="text-cyan-400 text-xs block mb-2 font-mono">Filter by technology:</span>
             <div className="flex flex-wrap gap-1.5">
               <button
                 onClick={() => setSelectedSkill('')}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${selectedSkill === '' ? 'bg-black text-white shadow-sm' : 'liquid-glass text-slate-600 hover:text-black border border-black/10'}`}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${selectedSkill === '' ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm' : 'bg-[#070e22] text-slate-300 hover:text-white border border-blue-500/20 hover:border-cyan-400/40'}`}
               >
                 All Skills
               </button>
@@ -110,7 +110,7 @@ export const DevelopersDirectory: React.FC = () => {
                 <button
                   key={skill}
                   onClick={() => setSelectedSkill(selectedSkill === skill ? '' : skill)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${selectedSkill === skill ? 'bg-black text-white shadow-sm' : 'liquid-glass text-slate-600 hover:text-black border border-black/10'}`}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${selectedSkill === skill ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm' : 'bg-[#070e22] text-slate-300 hover:text-white border border-blue-500/20 hover:border-cyan-400/40'}`}
                 >
                   {skill}
                 </button>
@@ -119,15 +119,15 @@ export const DevelopersDirectory: React.FC = () => {
           </div>
 
           {/* Availability */}
-          <div className="flex items-center gap-3 pt-3 border-t border-black/[0.06]">
-            <span className="text-slate-500 text-xs font-mono">Availability:</span>
+          <div className="flex items-center gap-3 pt-3 border-t border-blue-500/15">
+            <span className="text-cyan-400 text-xs font-mono">Availability:</span>
             <select
               value={selectedAvailability}
               onChange={(e) => setSelectedAvailability(e.target.value)}
-              className="px-3 py-1.5 rounded-lg bg-white border border-black/10 text-slate-700 text-xs focus:outline-none focus:border-black/30 transition-colors shadow-sm"
+              className="px-3 py-1.5 rounded-lg bg-[#070e22] border border-blue-500/30 text-white text-xs focus:outline-none focus:border-cyan-400 transition-colors shadow-sm"
             >
-              <option value="">Any Availability</option>
-              {availabilityOptions.map((opt) => (<option key={opt} value={opt}>{opt}</option>))}
+              <option value="" className="bg-[#070e22]">Any Availability</option>
+              {availabilityOptions.map((opt) => (<option key={opt} value={opt} className="bg-[#070e22]">{opt}</option>))}
             </select>
           </div>
         </div>
@@ -138,14 +138,14 @@ export const DevelopersDirectory: React.FC = () => {
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="liquid-glass h-60 rounded-3xl animate-pulse border border-black/[0.06]" />
+              <div key={i} className="h-60 rounded-3xl animate-pulse bg-[#0a1228]/60 border border-blue-500/15" />
             ))}
           </div>
         ) : developers.length === 0 ? (
-          <div className="text-center py-20 liquid-glass rounded-3xl border border-black/[0.08] shadow-sm">
-            <p className="font-instrument italic text-slate-900 text-2xl mb-2">No developers found</p>
-            <p className="text-slate-500 text-sm mb-6 max-w-sm mx-auto">Try adjusting your search criteria or removing skill filters.</p>
-            <button onClick={clearFilters} className="px-5 py-2.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm">
+          <div className="text-center py-20 rounded-3xl border border-blue-500/25 shadow-xl bg-[#0a1228]/80">
+            <p className="font-sans font-bold text-white text-2xl mb-2">No developers found</p>
+            <p className="text-slate-400 text-sm mb-6 max-w-sm mx-auto">Try adjusting your search criteria or removing skill filters.</p>
+            <button onClick={clearFilters} className="px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm font-semibold hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all shadow-sm">
               Clear filters
             </button>
           </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft, ExternalLink, CheckCircle2,
-  Layers, ShieldCheck, Building, MessageSquare,
+  ShieldCheck, Building, MessageSquare,
   Edit3, Trash2, X, AlertCircle, Camera, Image as ImageIcon,
   RefreshCw, Upload, Check, Globe, Sparkles
 } from 'lucide-react';
@@ -240,17 +240,17 @@ export const ProjectDetailPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#060b19] text-slate-100">
         <div className="max-w-5xl mx-auto px-6 py-12">
-          <div className="bg-slate-100/70 rounded-3xl h-96 animate-pulse mb-8 border border-black/[0.05]" />
+          <div className="bg-[#0a1228]/80 rounded-3xl h-96 animate-pulse mb-8 border border-blue-500/20" />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-slate-100/70 rounded-2xl h-48 animate-pulse border border-black/[0.05]" />
-              <div className="bg-slate-100/70 rounded-2xl h-32 animate-pulse border border-black/[0.05]" />
+              <div className="bg-[#0a1228]/80 rounded-2xl h-48 animate-pulse border border-blue-500/20" />
+              <div className="bg-[#0a1228]/80 rounded-2xl h-32 animate-pulse border border-blue-500/20" />
             </div>
             <div className="space-y-6">
-              <div className="bg-slate-100/70 rounded-2xl h-64 animate-pulse border border-black/[0.05]" />
-              <div className="bg-slate-100/70 rounded-2xl h-40 animate-pulse border border-black/[0.05]" />
+              <div className="bg-[#0a1228]/80 rounded-2xl h-64 animate-pulse border border-blue-500/20" />
+              <div className="bg-[#0a1228]/80 rounded-2xl h-40 animate-pulse border border-blue-500/20" />
             </div>
           </div>
         </div>
@@ -260,14 +260,14 @@ export const ProjectDetailPage: React.FC = () => {
 
   if (error || !project) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center px-6">
+      <div className="min-h-screen bg-[#060b19] flex items-center justify-center px-6">
         <div className="text-center">
-          <p className="text-slate-400 text-xs tracking-widest uppercase mb-4 font-mono">Error</p>
-          <h2 className="font-instrument italic text-3xl text-slate-900 mb-3">Project Not Found</h2>
-          <p className="text-slate-600 text-sm mb-8">{error || 'This project may have been moved or removed.'}</p>
+          <p className="text-cyan-400 text-xs tracking-widest uppercase mb-4 font-mono">Error</p>
+          <h2 className="font-sans font-bold text-3xl text-white mb-3">Project Not Found</h2>
+          <p className="text-slate-400 text-sm mb-8">{error || 'This project may have been moved or removed.'}</p>
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 liquid-glass rounded-full text-slate-900 text-xs font-semibold border border-black/10 hover:bg-slate-50 transition-all shadow-sm"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold shadow-md transition-all"
           >
             <ArrowLeft size={14} />
             <span>Back to Projects</span>
@@ -287,17 +287,17 @@ export const ProjectDetailPage: React.FC = () => {
     project.developer_associations[0]?.developer;
 
   const inputCls =
-    'w-full bg-white border border-black/10 rounded-xl text-slate-900 text-sm placeholder-slate-400 focus:border-black/30 focus:outline-none px-4 py-3 shadow-xs';
+    'w-full bg-[#070e22] border border-blue-500/30 rounded-xl text-white text-sm placeholder-slate-500 focus:border-cyan-400 focus:outline-none px-4 py-3 shadow-xs';
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-[#060b19] text-slate-100 selection:bg-blue-600 selection:text-white">
       <div className="max-w-5xl mx-auto px-6 py-12">
 
         {/* Back and Authorized Controls */}
         <div className="mb-8 flex items-center justify-between gap-4">
           <Link
             to="/projects"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-white transition-colors"
           >
             <ArrowLeft size={14} />
             <span>Back to Projects Showcase</span>
@@ -307,14 +307,14 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={openEditModal}
-                className="px-4 py-2 rounded-full liquid-glass text-xs font-medium text-slate-700 hover:text-black border border-black/10 transition-colors flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 rounded-full bg-[#0a1228] text-xs font-medium text-slate-200 hover:text-white border border-blue-500/30 hover:border-cyan-400 transition-colors flex items-center gap-1.5 shadow-sm"
               >
                 <Edit3 size={13} />
                 <span>Modify Project</span>
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 rounded-full liquid-glass text-xs font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 rounded-full bg-[#0a1228] text-xs font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 border border-rose-500/30 transition-colors flex items-center gap-1.5 shadow-sm"
               >
                 <Trash2 size={13} />
                 <span>Delete</span>
@@ -324,7 +324,7 @@ export const ProjectDetailPage: React.FC = () => {
         </div>
 
         {/* Hero Banner with Image */}
-        <div className="relative rounded-3xl overflow-hidden mb-10 border border-black/[0.08] shadow-md group">
+        <div className="relative rounded-3xl overflow-hidden mb-10 border border-blue-500/25 shadow-2xl group">
           <div className="h-64 sm:h-[420px] w-full relative">
             <img
               src={heroImgSrc || project.image_url || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80'}
@@ -335,16 +335,16 @@ export const ProjectDetailPage: React.FC = () => {
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
             {/* High contrast gradient overlay for legible text on photos */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#060b19] via-[#060b19]/60 to-transparent" />
 
             {/* Quick Change Cover Image button */}
             {isAuthorized && (
               <button
                 type="button"
                 onClick={openCoverModal}
-                className="absolute top-5 right-5 z-20 px-4 py-2 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white text-xs font-semibold border border-white/20 transition-all flex items-center gap-1.5 shadow-xl hover:scale-105"
+                className="absolute top-5 right-5 z-20 px-4 py-2 rounded-full bg-[#060b19]/80 hover:bg-[#060b19] backdrop-blur-md text-white text-xs font-semibold border border-blue-500/40 hover:border-cyan-400 transition-all flex items-center gap-1.5 shadow-xl hover:scale-105"
               >
-                <Camera size={14} className="text-amber-300" />
+                <Camera size={14} className="text-cyan-400" />
                 <span>Change Cover Image</span>
               </button>
             )}
@@ -354,15 +354,15 @@ export const ProjectDetailPage: React.FC = () => {
           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
               <div>
-                <span className="liquid-glass text-white/90 text-xs tracking-widest uppercase rounded-full px-3 py-1 inline-block mb-3 border border-white/20">
+                <span className="bg-blue-950/80 text-cyan-300 text-xs tracking-widest uppercase rounded-full px-3 py-1 inline-block mb-3 border border-blue-500/30">
                   {project.category}
                 </span>
-                <h1 className="font-instrument italic text-4xl sm:text-5xl text-white tracking-tight leading-tight">
+                <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-white tracking-tight leading-tight">
                   {project.name}
                 </h1>
                 {project.client_name && (
-                  <p className="text-white/80 text-sm flex items-center gap-1.5 mt-2">
-                    <Building size={14} className="text-white/60" />
+                  <p className="text-slate-300 text-sm flex items-center gap-1.5 mt-2">
+                    <Building size={14} className="text-cyan-400" />
                     <span>
                       Engineered for{' '}
                       <strong className="text-white font-semibold">{project.client_name}</strong>
@@ -378,7 +378,7 @@ export const ProjectDetailPage: React.FC = () => {
                     href={project.demo_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-5 py-2.5 rounded-full bg-white text-slate-900 font-semibold text-xs flex items-center gap-2 hover:bg-slate-100 transition-all shadow-md"
+                    className="px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs flex items-center gap-2 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)] transition-all shadow-md"
                   >
                     <ExternalLink size={14} />
                     <span>Live Demo</span>
@@ -388,9 +388,9 @@ export const ProjectDetailPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={openCoverModal}
-                    className="px-4 py-2.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-medium text-xs flex items-center gap-2 border border-white/30 transition-all"
+                    className="px-4 py-2.5 rounded-full bg-[#0a1228]/80 hover:bg-[#0e1938] backdrop-blur-md text-white font-medium text-xs flex items-center gap-2 border border-blue-500/30 transition-all"
                   >
-                    <Camera size={14} />
+                    <Camera size={14} className="text-cyan-400" />
                     <span>Select Landing Page</span>
                   </button>
                 )}
@@ -399,10 +399,10 @@ export const ProjectDetailPage: React.FC = () => {
                     href={project.repo_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-5 py-2.5 rounded-full liquid-glass text-white font-semibold text-xs flex items-center gap-2 hover:bg-white/10 border border-white/20 transition-all"
+                    className="p-2.5 rounded-full bg-[#0a1228]/80 hover:bg-[#0e1938] text-slate-300 hover:text-white border border-blue-500/30 transition-all shadow-md"
+                    title="Source Repository"
                   >
-                    <GithubIcon size={14} />
-                    <span>Source Code</span>
+                    <GithubIcon size={16} />
                   </a>
                 )}
               </div>
@@ -410,55 +410,48 @@ export const ProjectDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Grid: Details & Team Attribution */}
+        {/* Two-column layout: Overview & Metadata */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          {/* Main Details (2 cols) */}
-          <div className="lg:col-span-2 space-y-6">
-
-            {/* Overview */}
-            <div className="liquid-glass rounded-2xl p-6 sm:p-8 border border-black/[0.08] shadow-sm bg-white/70">
-              <h2 className="font-instrument italic text-2xl text-slate-900 mb-4">
-                Project Overview
-              </h2>
-              <div className="border-t border-black/[0.06] pt-4">
-                <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-line">
-                  {project.description || project.short_description}
+          {/* Main content */}
+          <div className="lg:col-span-2 space-y-8">
+            <div className="rounded-3xl p-8 border border-blue-500/25 shadow-xl bg-[#0a1228]/85 space-y-6">
+              <div>
+                <span className="text-cyan-400 text-xs tracking-widest uppercase font-mono block mb-2">Project Brief</span>
+                <p className="text-slate-200 text-base leading-relaxed font-normal">
+                  {project.description || project.short_description || 'High-performance digital system engineered for production scale.'}
                 </p>
               </div>
-            </div>
 
-            {/* Technologies Used */}
-            {project.technologies && project.technologies.length > 0 && (
-              <div className="liquid-glass rounded-2xl p-6 sm:p-8 border border-black/[0.08] shadow-sm bg-white/70">
-                <h2 className="font-instrument italic text-2xl text-slate-900 mb-4 flex items-center gap-2">
-                  <Layers size={18} className="text-slate-400" />
-                  <span>Technologies Applied</span>
-                </h2>
-                <div className="border-t border-black/[0.06] pt-4">
+              {/* Technologies List */}
+              {project.technologies && project.technologies.length > 0 && (
+                <div className="pt-6 border-t border-blue-500/15">
+                  <span className="text-cyan-400 text-xs tracking-widest uppercase font-mono block mb-3">
+                    Technologies &amp; Frameworks
+                  </span>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((t) => (
                       <span
-                        key={t.id}
-                        className="liquid-glass text-xs text-slate-700 rounded-full px-3 py-1.5 font-mono border border-black/[0.08] bg-slate-50/60"
+                        key={t.id || t.name}
+                        className="px-3 py-1.5 rounded-full text-xs font-mono bg-[#070e22] text-cyan-300 border border-blue-500/25 shadow-xs"
                       >
                         {t.name}
                       </span>
                     ))}
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
 
             {/* Team Attribution Card */}
-            <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
+            <div className="rounded-2xl p-6 border border-blue-500/25 shadow-xl bg-[#0a1228]/85">
               <div className="flex items-center gap-1.5 mb-4">
-                <ShieldCheck size={13} className="text-slate-400" />
-                <p className="text-slate-400 text-xs tracking-widest uppercase font-mono">
+                <ShieldCheck size={13} className="text-cyan-400" />
+                <p className="text-cyan-400 text-xs tracking-widest uppercase font-mono">
                   Project Creators
                 </p>
               </div>
@@ -468,30 +461,30 @@ export const ProjectDetailPage: React.FC = () => {
                   <Link
                     key={assoc.id}
                     to={`/developers/${assoc.developer.user.username}`}
-                    className="liquid-glass rounded-2xl p-4 flex items-center gap-3.5 group block hover:bg-slate-50/80 transition-all border border-black/[0.06]"
+                    className="rounded-2xl p-4 flex items-center gap-3.5 group block hover:bg-[#0e1938] transition-all border border-blue-500/20 bg-[#070e22]/90"
                   >
                     {assoc.developer.user.avatar_url ? (
                       <img
                         src={assoc.developer.user.avatar_url}
                         alt={assoc.developer.user.full_name}
-                        className="w-11 h-11 rounded-xl object-cover ring-1 ring-black/[0.08] shrink-0"
+                        className="w-11 h-11 rounded-xl object-cover ring-2 ring-blue-500/30 shrink-0"
                       />
                     ) : (
-                      <div className="w-11 h-11 rounded-xl bg-slate-100 border border-black/[0.08] flex items-center justify-center text-slate-800 font-bold text-sm shrink-0">
+                      <div className="w-11 h-11 rounded-xl bg-blue-950 border border-blue-500/30 flex items-center justify-center text-cyan-300 font-bold text-sm shrink-0">
                         {assoc.developer.user.full_name.charAt(0)}
                       </div>
                     )}
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-semibold text-slate-900 group-hover:text-black transition-colors truncate">
+                        <span className="text-sm font-semibold text-white group-hover:text-cyan-300 transition-colors truncate">
                           {assoc.developer.user.full_name}
                         </span>
                         {assoc.developer.user.is_verified && (
-                          <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                          <CheckCircle2 size={13} className="text-cyan-400 shrink-0" />
                         )}
                       </div>
-                      <span className="text-xs text-slate-500 block">
+                      <span className="text-xs text-slate-300 block">
                         {assoc.role_in_project}
                       </span>
                       <span className="text-[11px] text-slate-400 font-mono">
@@ -504,10 +497,10 @@ export const ProjectDetailPage: React.FC = () => {
 
               {/* Inquire CTA */}
               {leadDeveloper && (
-                <div className="mt-5 pt-5 border-t border-black/[0.06]">
+                <div className="mt-5 pt-5 border-t border-blue-500/15">
                   <button
                     onClick={() => setContactModalOpen(true)}
-                    className="w-full py-3 rounded-full bg-black text-white font-semibold text-xs flex items-center justify-center gap-2 hover:bg-slate-800 transition-all shadow-md"
+                    className="w-full py-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all shadow-md"
                   >
                     <MessageSquare size={14} />
                     <span>Inquire Similar System</span>
@@ -517,28 +510,28 @@ export const ProjectDetailPage: React.FC = () => {
             </div>
 
             {/* Project Metadata */}
-            <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
-              <h3 className="font-instrument italic text-lg text-slate-900 mb-4">Metadata</h3>
+            <div className="rounded-2xl p-6 border border-blue-500/25 shadow-xl bg-[#0a1228]/85">
+              <h3 className="font-sans font-bold text-lg text-white mb-4">Metadata</h3>
               <div className="space-y-0 text-xs">
-                <div className="flex justify-between py-2.5 border-b border-black/[0.06]">
+                <div className="flex justify-between py-2.5 border-b border-blue-500/15">
                   <span className="text-slate-400">Category</span>
-                  <span className="text-slate-900 font-semibold">{project.category}</span>
+                  <span className="text-white font-semibold">{project.category}</span>
                 </div>
                 {project.start_date && (
-                  <div className="flex justify-between py-2.5 border-b border-black/[0.06]">
+                  <div className="flex justify-between py-2.5 border-b border-blue-500/15">
                     <span className="text-slate-400">Start Date</span>
-                    <span className="text-slate-600 font-mono">{project.start_date}</span>
+                    <span className="text-slate-300 font-mono">{project.start_date}</span>
                   </div>
                 )}
-                {project.completion_date && (
-                  <div className="flex justify-between py-2.5 border-b border-black/[0.06]">
-                    <span className="text-slate-400">Delivered</span>
-                    <span className="text-slate-600 font-mono">{project.completion_date}</span>
+                {(project as any).end_date && (
+                  <div className="flex justify-between py-2.5 border-b border-blue-500/15">
+                    <span className="text-slate-400">Completion</span>
+                    <span className="text-slate-300 font-mono">{(project as any).end_date}</span>
                   </div>
                 )}
                 <div className="flex justify-between py-2.5">
-                  <span className="text-slate-400">Status</span>
-                  <span className="text-slate-900 font-semibold">{project.status}</span>
+                  <span className="text-slate-400">Verification</span>
+                  <span className="text-cyan-400 font-medium">100% Attribution Verified</span>
                 </div>
               </div>
             </div>
@@ -546,8 +539,8 @@ export const ProjectDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Inquiry Modal */}
-        {contactModalOpen && leadDeveloper && (
+        {/* Contact Lead Developer Modal */}
+        {leadDeveloper && (
           <ContactDeveloperModal
             developer={leadDeveloper as any}
             isOpen={contactModalOpen}
@@ -555,25 +548,29 @@ export const ProjectDetailPage: React.FC = () => {
           />
         )}
 
-        {/* Edit Project Modal */}
+        {/* Modify Project Modal */}
         {editModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md">
-            <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto liquid-glass rounded-3xl border border-black/[0.08] p-6 sm:p-8 shadow-2xl bg-white/95">
-              <button
-                onClick={() => setEditModalOpen(false)}
-                className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-900 rounded-full liquid-glass border border-black/10 transition-colors"
-              >
-                <X size={18} />
-              </button>
-
-              <h2 className="font-instrument italic text-2xl text-slate-900 mb-1">Modify Published Project</h2>
-              <p className="text-slate-500 text-xs mb-6">
-                Update technical specifications, live endpoints, or descriptions for <span className="text-slate-900 font-medium">{project.name}</span>.
-              </p>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+            <div className="bg-[#0a1228] rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto border border-blue-500/30 shadow-2xl relative text-white">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="font-sans font-bold text-2xl text-white">Modify Project Specification</h3>
+                  <p className="text-slate-400 text-xs mt-1">
+                    Update technical specifications, live endpoints, or descriptions for <span className="text-cyan-300 font-medium">{project.name}</span>.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setEditModalOpen(false)}
+                  className="p-2 rounded-full hover:bg-[#070e22] text-slate-400 hover:text-white transition-colors"
+                >
+                  <X size={18} />
+                </button>
+              </div>
 
               {editError && (
-                <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
-                  <AlertCircle size={15} className="shrink-0 text-rose-500" />
+                <div className="mb-5 p-3.5 rounded-xl bg-rose-950/50 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                  <AlertCircle size={15} className="shrink-0 text-rose-400" />
                   <span>{editError}</span>
                 </div>
               )}
@@ -581,7 +578,7 @@ export const ProjectDetailPage: React.FC = () => {
               <form onSubmit={handleEditSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Project Name *</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Project Name *</label>
                     <input
                       type="text"
                       required
@@ -591,37 +588,37 @@ export const ProjectDetailPage: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Category *</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Category *</label>
                     <select
                       value={editCategory}
                       onChange={(e) => setEditCategory(e.target.value)}
                       className={inputCls}
                     >
-                      <option value="Websites">Websites</option>
-                      <option value="Apps">Mobile Apps</option>
-                      <option value="Software">Enterprise Software</option>
-                      <option value="AI/ML">AI / Machine Learning</option>
-                      <option value="SaaS">Enterprise SaaS</option>
-                      <option value="Automation">Automation</option>
+                      <option value="Websites" className="bg-[#070e22]">Websites</option>
+                      <option value="Apps" className="bg-[#070e22]">Mobile Apps</option>
+                      <option value="Software" className="bg-[#070e22]">Enterprise Software</option>
+                      <option value="AI/ML" className="bg-[#070e22]">AI / Machine Learning</option>
+                      <option value="SaaS" className="bg-[#070e22]">Enterprise SaaS</option>
+                      <option value="Automation" className="bg-[#070e22]">Automation</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Status</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Status</label>
                     <select
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
                       className={inputCls}
                     >
-                      <option value="Published">Published</option>
-                      <option value="Draft">Draft</option>
-                      <option value="Archived">Archived</option>
+                      <option value="Published" className="bg-[#070e22]">Published</option>
+                      <option value="Draft" className="bg-[#070e22]">Draft</option>
+                      <option value="Archived" className="bg-[#070e22]">Archived</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Client / Sponsor</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Client / Sponsor</label>
                     <input
                       type="text"
                       value={editClientName}
@@ -632,7 +629,7 @@ export const ProjectDetailPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Short Summary</label>
+                  <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Short Summary</label>
                   <input
                     type="text"
                     value={editShortDescription}
@@ -642,7 +639,7 @@ export const ProjectDetailPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Full Project Overview</label>
+                  <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Full Project Overview</label>
                   <textarea
                     rows={4}
                     value={editDescription}
@@ -653,7 +650,7 @@ export const ProjectDetailPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Live Demo URL</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Live Demo URL</label>
                     <input
                       type="url"
                       value={editDemoUrl}
@@ -662,7 +659,7 @@ export const ProjectDetailPage: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Source Repository URL</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Source Repository URL</label>
                     <input
                       type="url"
                       value={editRepoUrl}
@@ -674,14 +671,14 @@ export const ProjectDetailPage: React.FC = () => {
 
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-slate-500 text-xs tracking-widest uppercase font-mono">Cover Image URL</label>
+                    <label className="text-slate-400 text-xs tracking-widest uppercase font-mono">Cover Image URL</label>
                     {editDemoUrl && (
                       <button
                         type="button"
                         onClick={() => {
                           setEditImageUrl(`https://image.thum.io/get/width/1200/crop/800/${editDemoUrl}`);
                         }}
-                        className="text-[11px] text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1 transition-colors"
+                        className="text-[11px] text-cyan-400 hover:text-white font-semibold flex items-center gap-1 transition-colors"
                       >
                         <Camera size={12} />
                         <span>Capture from Live Demo</span>
@@ -696,21 +693,21 @@ export const ProjectDetailPage: React.FC = () => {
                     className={inputCls}
                   />
                   {editImageUrl && (
-                    <div className="mt-2 h-24 rounded-xl overflow-hidden border border-black/10 relative">
+                    <div className="mt-2 h-24 rounded-xl overflow-hidden border border-blue-500/30 relative">
                       <img src={editImageUrl} alt="Preview" className="w-full h-full object-cover" />
-                      <span className="absolute bottom-1 right-2 px-2 py-0.5 rounded text-[10px] bg-black/60 text-white font-mono">Live Preview</span>
+                      <span className="absolute bottom-1 right-2 px-2 py-0.5 rounded text-[10px] bg-black/80 text-white font-mono">Live Preview</span>
                     </div>
                   )}
                 </div>
 
                 {/* Technologies */}
                 <div>
-                  <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Technologies</label>
+                  <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Technologies</label>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {editTechnologies.map((t) => (
-                      <span key={t} className="liquid-glass text-xs text-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-black/10 bg-slate-50">
+                      <span key={t} className="text-xs text-cyan-300 px-3 py-1 rounded-full flex items-center gap-1.5 border border-blue-500/30 bg-[#070e22]">
                         {t}
-                        <button type="button" onClick={() => removeEditTech(t)} className="text-slate-400 hover:text-black">
+                        <button type="button" onClick={() => removeEditTech(t)} className="text-slate-400 hover:text-white">
                           <X size={12} />
                         </button>
                       </span>
@@ -725,24 +722,24 @@ export const ProjectDetailPage: React.FC = () => {
                       placeholder="Add technology (e.g. Next.js, Rust)"
                       className={inputCls}
                     />
-                    <button type="button" onClick={addEditTech} className="px-5 py-3 rounded-xl bg-black text-white text-xs font-semibold hover:bg-slate-800 shrink-0">
+                    <button type="button" onClick={addEditTech} className="px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold hover:shadow-[0_0_12px_rgba(37,99,235,0.5)] shrink-0">
                       Add
                     </button>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-black/[0.06] flex items-center justify-end gap-3">
+                <div className="pt-4 border-t border-blue-500/15 flex items-center justify-end gap-3">
                   <button
                     type="button"
                     onClick={() => setEditModalOpen(false)}
-                    className="px-5 py-2.5 rounded-full liquid-glass text-xs font-medium text-slate-600 hover:text-black border border-black/10"
+                    className="px-5 py-2.5 rounded-full bg-[#070e22] text-xs font-medium text-slate-300 hover:text-white border border-blue-500/30"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isUpdating}
-                    className="px-7 py-2.5 rounded-full bg-black text-white text-xs font-semibold hover:bg-slate-800 disabled:opacity-50 shadow-sm"
+                    className="px-7 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] disabled:opacity-50 shadow-sm"
                   >
                     {isUpdating ? 'Saving Changes…' : 'Save Modifications'}
                   </button>
@@ -754,29 +751,29 @@ export const ProjectDetailPage: React.FC = () => {
 
         {/* Cover Image & Live Landing Page Selector Modal */}
         {coverModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto border border-black/10 shadow-2xl relative">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+            <div className="bg-[#0a1228] rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto border border-blue-500/30 shadow-2xl relative text-white">
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <h3 className="font-instrument italic text-2xl text-slate-900">Project Cover Visual</h3>
-                  <p className="text-slate-500 text-xs mt-1">Select landing page from live website or set custom visual for <strong className="text-slate-800">{project.name}</strong></p>
+                  <h3 className="font-sans font-bold text-2xl text-white">Project Cover Visual</h3>
+                  <p className="text-slate-400 text-xs mt-1">Select landing page from live website or set custom visual for <strong className="text-cyan-300">{project.name}</strong></p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setCoverModalOpen(false)}
-                  className="p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-black transition-colors"
+                  className="p-2 rounded-full hover:bg-[#070e22] text-slate-400 hover:text-white transition-colors"
                 >
                   <X size={18} />
                 </button>
               </div>
 
               {/* Tabs */}
-              <div className="flex items-center gap-2 p-1 bg-slate-100 rounded-2xl mb-6">
+              <div className="flex items-center gap-2 p-1 bg-[#070e22] rounded-2xl mb-6 border border-blue-500/25">
                 <button
                   type="button"
                   onClick={() => setCoverTab('live')}
                   className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
-                    coverTab === 'live' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-900'
+                    coverTab === 'live' ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   <Globe size={13} />
@@ -786,7 +783,7 @@ export const ProjectDetailPage: React.FC = () => {
                   type="button"
                   onClick={() => setCoverTab('custom')}
                   className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
-                    coverTab === 'custom' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-900'
+                    coverTab === 'custom' ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   <ImageIcon size={13} />
@@ -796,7 +793,7 @@ export const ProjectDetailPage: React.FC = () => {
                   type="button"
                   onClick={() => setCoverTab('presets')}
                   className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
-                    coverTab === 'presets' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-900'
+                    coverTab === 'presets' ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   <Sparkles size={13} />
@@ -808,7 +805,7 @@ export const ProjectDetailPage: React.FC = () => {
               {coverTab === 'live' && (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Live Website URL</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Live Website URL</label>
                     <input
                       type="url"
                       value={targetLiveUrl}
@@ -824,15 +821,15 @@ export const ProjectDetailPage: React.FC = () => {
                       type="button"
                       disabled={isCapturingScreenshot || !targetLiveUrl}
                       onClick={handleCaptureLiveScreenshot}
-                      className="p-3.5 rounded-2xl border border-black/10 hover:border-black/25 bg-slate-50 hover:bg-white text-left transition-all group disabled:opacity-50"
+                      className="p-3.5 rounded-2xl border border-blue-500/25 hover:border-cyan-400/40 bg-[#070e22] text-left transition-all group disabled:opacity-50"
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <Camera size={16} className="text-blue-600 group-hover:scale-110 transition-transform" />
-                        <span className="text-xs font-semibold text-slate-900">
-                          {isCapturingScreenshot ? 'Capturing High-Res Screenshot…' : 'Capture Browser Screenshot'}
+                        <Camera size={16} className="text-cyan-400 group-hover:scale-110 transition-transform" />
+                        <span className="text-xs font-semibold text-white">
+                          {isCapturingScreenshot ? 'Capturing Screenshot…' : 'Capture Browser Screenshot'}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-500">Renders live page via headless engine and saves local snapshot.</p>
+                      <p className="text-[11px] text-slate-400">Renders live page via headless engine and saves local snapshot.</p>
                     </button>
 
                     <button
@@ -843,13 +840,13 @@ export const ProjectDetailPage: React.FC = () => {
                         setSelectedCoverUrl(url);
                         setCaptureMessage('Selected dynamic live snapshot!');
                       }}
-                      className="p-3.5 rounded-2xl border border-black/10 hover:border-black/25 bg-slate-50 hover:bg-white text-left transition-all group disabled:opacity-50"
+                      className="p-3.5 rounded-2xl border border-blue-500/25 hover:border-cyan-400/40 bg-[#070e22] text-left transition-all group disabled:opacity-50"
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <RefreshCw size={16} className="text-emerald-600 group-hover:scale-110 transition-transform" />
-                        <span className="text-xs font-semibold text-slate-900">Dynamic Live Snapshot</span>
+                        <RefreshCw size={16} className="text-emerald-400 group-hover:scale-110 transition-transform" />
+                        <span className="text-xs font-semibold text-white">Dynamic Live Snapshot</span>
                       </div>
-                      <p className="text-[11px] text-slate-500">Real-time cloud preview of the live URL.</p>
+                      <p className="text-[11px] text-slate-400">Real-time cloud preview of the live URL.</p>
                     </button>
                   </div>
 
@@ -861,13 +858,13 @@ export const ProjectDetailPage: React.FC = () => {
                         setSelectedCoverUrl('/projects/pbr-solar-landing.png');
                         setCaptureMessage('Selected captured PBR Solar landing page!');
                       }}
-                      className="w-full py-2.5 px-4 rounded-xl border border-blue-200 bg-blue-50/70 hover:bg-blue-50 text-blue-800 text-xs font-medium flex items-center justify-between transition-colors"
+                      className="w-full py-2.5 px-4 rounded-xl border border-blue-500/30 bg-blue-950/40 hover:bg-blue-950/70 text-cyan-300 text-xs font-medium flex items-center justify-between transition-colors"
                     >
                       <span className="flex items-center gap-2">
-                        <CheckCircle2 size={14} className="text-blue-600" />
+                        <CheckCircle2 size={14} className="text-cyan-400" />
                         <span>Use Captured PBR Solar Landing Page (/projects/pbr-solar-landing.png)</span>
                       </span>
-                      <span className="text-[10px] font-mono uppercase bg-blue-100 px-2 py-0.5 rounded text-blue-900 font-semibold">Ready</span>
+                      <span className="text-[10px] font-mono uppercase bg-blue-900/60 border border-blue-500/40 px-2 py-0.5 rounded text-cyan-300 font-semibold">Ready</span>
                     </button>
                   </div>
                 </div>
@@ -877,7 +874,7 @@ export const ProjectDetailPage: React.FC = () => {
               {coverTab === 'custom' && (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Custom Image URL</label>
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Custom Image URL</label>
                     <input
                       type="url"
                       value={selectedCoverUrl}
@@ -888,10 +885,10 @@ export const ProjectDetailPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-slate-500 text-xs tracking-widest uppercase mb-1.5 font-mono">Or Upload from Computer</label>
-                    <div className="border-2 border-dashed border-slate-200 hover:border-slate-300 rounded-2xl p-6 text-center transition-colors">
-                      <Upload size={24} className="mx-auto text-slate-400 mb-2" />
-                      <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition-colors">
+                    <label className="block text-slate-400 text-xs tracking-widest uppercase mb-1.5 font-mono">Or Upload from Computer</label>
+                    <div className="border-2 border-dashed border-blue-500/30 hover:border-cyan-400/50 rounded-2xl p-6 text-center transition-colors bg-[#070e22]">
+                      <Upload size={24} className="mx-auto text-cyan-400 mb-2" />
+                      <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-950/80 border border-blue-500/40 hover:bg-blue-900/60 text-cyan-300 text-xs font-semibold transition-colors">
                         <span>Browse image file</span>
                         <input
                           type="file"
@@ -919,16 +916,16 @@ export const ProjectDetailPage: React.FC = () => {
                       }}
                       className={`p-2.5 rounded-2xl border text-left transition-all flex items-center gap-3 ${
                         selectedCoverUrl === preset.url
-                          ? 'border-black bg-slate-50 ring-2 ring-black/10'
-                          : 'border-black/10 hover:border-black/30'
+                          ? 'border-cyan-400 bg-blue-950/60 ring-2 ring-cyan-400/30'
+                          : 'border-blue-500/20 bg-[#070e22] hover:border-cyan-400/40'
                       }`}
                     >
-                      <div className="w-16 h-12 rounded-lg overflow-hidden bg-slate-200 shrink-0">
+                      <div className="w-16 h-12 rounded-lg overflow-hidden bg-slate-900 shrink-0">
                         <img src={preset.url} alt={preset.title} className="w-full h-full object-cover" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs font-semibold text-slate-900 truncate">{preset.title}</p>
-                        <p className="text-[10px] text-slate-500 truncate">{preset.desc}</p>
+                        <p className="text-xs font-semibold text-white truncate">{preset.title}</p>
+                        <p className="text-[10px] text-slate-400 truncate">{preset.desc}</p>
                       </div>
                     </button>
                   ))}
@@ -937,16 +934,16 @@ export const ProjectDetailPage: React.FC = () => {
 
               {/* Live Preview Box */}
               {selectedCoverUrl && (
-                <div className="mt-6 pt-5 border-t border-slate-100">
+                <div className="mt-6 pt-5 border-t border-blue-500/15">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-slate-500 text-xs font-mono uppercase tracking-widest">Cover Preview</span>
+                    <span className="text-cyan-400 text-xs font-mono uppercase tracking-widest">Cover Preview</span>
                     {captureMessage && (
-                      <span className="text-[11px] text-emerald-600 font-medium flex items-center gap-1">
+                      <span className="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
                         <CheckCircle2 size={12} /> {captureMessage}
                       </span>
                     )}
                   </div>
-                  <div className="h-44 w-full rounded-2xl overflow-hidden border border-black/10 relative shadow-sm">
+                  <div className="h-44 w-full rounded-2xl overflow-hidden border border-blue-500/30 relative shadow-sm">
                     <img
                       src={selectedCoverUrl}
                       alt="Preview"
@@ -955,7 +952,7 @@ export const ProjectDetailPage: React.FC = () => {
                         setCaptureMessage('Image failed to load. Check URL.');
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#060b19] via-transparent to-transparent flex items-end p-4">
                       <span className="text-white text-xs font-semibold drop-shadow">{project.name}</span>
                     </div>
                   </div>
@@ -963,11 +960,11 @@ export const ProjectDetailPage: React.FC = () => {
               )}
 
               {/* Modal footer */}
-              <div className="mt-6 pt-4 border-t border-black/[0.06] flex items-center justify-end gap-3">
+              <div className="mt-6 pt-4 border-t border-blue-500/15 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setCoverModalOpen(false)}
-                  className="px-5 py-2.5 rounded-full liquid-glass text-xs font-medium text-slate-600 hover:text-black border border-black/10"
+                  className="px-5 py-2.5 rounded-full bg-[#070e22] text-xs font-medium text-slate-300 hover:text-white border border-blue-500/30"
                 >
                   Cancel
                 </button>
@@ -975,7 +972,7 @@ export const ProjectDetailPage: React.FC = () => {
                   type="button"
                   disabled={!selectedCoverUrl || isUpdating}
                   onClick={handleSaveCoverImage}
-                  className="px-7 py-2.5 rounded-full bg-black text-white text-xs font-semibold hover:bg-slate-800 disabled:opacity-50 shadow-sm flex items-center gap-1.5"
+                  className="px-7 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] disabled:opacity-50 shadow-sm flex items-center gap-1.5"
                 >
                   {isUpdating ? (
                     <span>Saving Cover…</span>

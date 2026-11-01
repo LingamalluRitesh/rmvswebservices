@@ -52,20 +52,20 @@ export const CustomerWhatsAppPreferenceCard: React.FC = () => {
   };
 
   return (
-    <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-sm bg-white/70 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/[0.06] pb-4">
+    <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-blue-500/15 pb-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center shrink-0">
             <Smartphone size={20} />
           </div>
           <div>
-            <h2 className="font-instrument italic text-2xl text-slate-950">WhatsApp Messaging Preferences</h2>
+            <h2 className="font-instrument italic text-2xl text-white">WhatsApp Messaging Preferences</h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Control automated WhatsApp messages for order progress, invoices, and delivery ETA updates.
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-[11px] font-mono">
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#070e22] text-slate-300 text-slate-700 text-[11px] font-mono">
           <Shield size={12} className="text-emerald-600" />
           <span>Meta Verified Opt-in</span>
         </div>
@@ -92,7 +92,7 @@ export const CustomerWhatsAppPreferenceCard: React.FC = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="+91 98765 43210"
-              className="w-full px-4 py-2.5 rounded-xl bg-white border border-black/10 text-slate-900 text-sm font-mono placeholder-slate-400 focus:border-black/30 focus:outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm font-mono placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
             />
             <p className="text-[10px] text-slate-400 mt-1">E.164 standard format required (e.g. +919876543210).</p>
           </div>
@@ -102,7 +102,7 @@ export const CustomerWhatsAppPreferenceCard: React.FC = () => {
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl bg-white border border-black/10 text-slate-900 text-sm focus:border-black/30 focus:outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[#070e22] border border-blue-500/30 text-white text-sm focus:border-cyan-400 focus:outline-none"
             >
               <option value="en_US">English (US)</option>
               <option value="en_GB">English (UK)</option>
@@ -112,9 +112,9 @@ export const CustomerWhatsAppPreferenceCard: React.FC = () => {
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4 pt-1">
-          <div className="p-4 rounded-2xl bg-slate-50 border border-black/[0.06] flex items-center justify-between">
+          <div className="p-4 rounded-2xl bg-[#070e22] text-slate-300 border border-blue-500/15 flex items-center justify-between">
             <div>
-              <p className="font-semibold text-slate-900 text-xs">Transactional Notifications</p>
+              <p className="font-semibold text-slate-100 text-xs">Transactional Notifications</p>
               <p className="text-[11px] text-slate-500 mt-0.5">Order confirmations, invoices, receipts, and delivery ETAs.</p>
             </div>
             <input
@@ -125,9 +125,9 @@ export const CustomerWhatsAppPreferenceCard: React.FC = () => {
             />
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-50 border border-black/[0.06] flex items-center justify-between">
+          <div className="p-4 rounded-2xl bg-[#070e22] text-slate-300 border border-blue-500/15 flex items-center justify-between">
             <div>
-              <p className="font-semibold text-slate-900 text-xs">Marketing &amp; Updates</p>
+              <p className="font-semibold text-slate-100 text-xs">Marketing &amp; Updates</p>
               <p className="text-[11px] text-slate-500 mt-0.5">New features, announcements, and engineering releases.</p>
             </div>
             <input
@@ -148,7 +148,7 @@ export const CustomerWhatsAppPreferenceCard: React.FC = () => {
           <button
             type="submit"
             disabled={isSaving}
-            className="px-6 py-2.5 rounded-full bg-black text-white text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-50 shrink-0"
+            className="px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-50 shrink-0"
           >
             {isSaving ? 'Updating...' : 'Save WhatsApp Preferences'}
           </button>

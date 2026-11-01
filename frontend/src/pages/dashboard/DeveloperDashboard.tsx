@@ -156,7 +156,7 @@ export const DeveloperDashboard: React.FC = () => {
   const isPending = user.status === 'pending';
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 pb-20">
+    <div className="min-h-screen bg-[#060b19] text-slate-100 pb-20">
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-6">
 
         {/* Success Alert */}
@@ -168,7 +168,7 @@ export const DeveloperDashboard: React.FC = () => {
         )}
 
         {/* Top Welcome Card */}
-        <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-sm bg-white/70 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             {/* Interactive Device Avatar */}
             <div className="relative group shrink-0">
@@ -200,7 +200,7 @@ export const DeveloperDashboard: React.FC = () => {
                     }}
                   />
                 ) : (
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 flex items-center justify-center text-slate-900 text-2xl font-bold">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#070e22] text-slate-300 flex items-center justify-center text-slate-100 text-2xl font-bold">
                     {user.full_name.charAt(0)}
                   </div>
                 )}
@@ -236,7 +236,7 @@ export const DeveloperDashboard: React.FC = () => {
 
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="font-instrument italic text-3xl text-slate-950">
+                <h1 className="font-instrument italic text-3xl text-white">
                   Welcome back, {user.full_name}
                 </h1>
                 {user.is_verified && (
@@ -267,7 +267,7 @@ export const DeveloperDashboard: React.FC = () => {
               type="button"
               onClick={() => directFileInputRef.current?.click()}
               disabled={isDirectUploading}
-              className="liquid-glass text-slate-800 rounded-full px-4 py-2 text-xs font-semibold flex items-center gap-1.5 border border-black/10 hover:bg-slate-50 transition-all shadow-2xs active:scale-95 disabled:opacity-50"
+              className="liquid-glass text-slate-800 rounded-full px-4 py-2 text-xs font-semibold flex items-center gap-1.5 border border-blue-500/25 hover:bg-[#070e22] text-slate-300 transition-all shadow-2xs active:scale-95 disabled:opacity-50"
             >
               {isDirectUploading ? (
                 <RefreshCw size={13} className="animate-spin text-slate-600" />
@@ -288,7 +288,7 @@ export const DeveloperDashboard: React.FC = () => {
             {isDeveloper && (
               <Link
                 to={`/developers/${user.username}`}
-                className="liquid-glass text-slate-800 rounded-full px-4 py-2 text-xs font-semibold flex items-center gap-2 border border-black/10 hover:bg-slate-50 transition-all shadow-2xs"
+                className="liquid-glass text-slate-800 rounded-full px-4 py-2 text-xs font-semibold flex items-center gap-2 border border-blue-500/25 hover:bg-[#070e22] text-slate-300 transition-all shadow-2xs"
               >
                 <ExternalLink size={13} />
                 <span>Full Details</span>
@@ -327,38 +327,38 @@ export const DeveloperDashboard: React.FC = () => {
 
         {/* Quick Metrics */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
+          <div className="liquid-glass rounded-2xl p-6 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
             <div className="flex items-center justify-between mb-3">
               <span className="text-slate-400 text-xs tracking-wider uppercase font-mono">
                 {isDeveloper ? 'Client Inquiries' : 'Inquiries Sent'}
               </span>
               <MessageSquare size={16} className="text-slate-400" />
             </div>
-            <div className="text-3xl font-bold text-slate-950">{inquiries.length}</div>
+            <div className="text-3xl font-bold text-white">{inquiries.length}</div>
             <p className="text-xs text-slate-500 mt-1">Direct project requests</p>
           </div>
 
           {isDeveloper ? (
             <>
-              <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
+              <div className="liquid-glass rounded-2xl p-6 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-slate-400 text-xs tracking-wider uppercase font-mono">
                     Projects
                   </span>
                   <FolderGit2 size={16} className="text-slate-400" />
                 </div>
-                <div className="text-3xl font-bold text-slate-950">{projects.length}</div>
+                <div className="text-3xl font-bold text-white">{projects.length}</div>
                 <p className="text-xs text-slate-500 mt-1">Credited as Lead / Contributor</p>
               </div>
 
-              <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
+              <div className="liquid-glass rounded-2xl p-6 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-slate-400 text-xs tracking-wider uppercase font-mono">
                     Impressions
                   </span>
                   <Eye size={16} className="text-slate-400" />
                 </div>
-                <div className="text-3xl font-bold text-slate-950">
+                <div className="text-3xl font-bold text-white">
                   {user.developer_profile?.views_count || 0}
                 </div>
                 <p className="text-xs text-slate-500 mt-1">Verified directory views</p>
@@ -366,25 +366,25 @@ export const DeveloperDashboard: React.FC = () => {
             </>
           ) : (
             <>
-              <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
+              <div className="liquid-glass rounded-2xl p-6 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-slate-400 text-xs tracking-wider uppercase font-mono">
                     Conversations
                   </span>
                   <Users size={16} className="text-slate-400" />
                 </div>
-                <div className="text-3xl font-bold text-slate-950">{inquiries.length}</div>
+                <div className="text-3xl font-bold text-white">{inquiries.length}</div>
                 <p className="text-xs text-slate-500 mt-1">Live direct discussions</p>
               </div>
 
-              <div className="liquid-glass rounded-2xl p-6 border border-black/[0.08] shadow-sm bg-white/70">
+              <div className="liquid-glass rounded-2xl p-6 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-slate-400 text-xs tracking-wider uppercase font-mono">
                     Company
                   </span>
                   <Star size={16} className="text-slate-400" />
                 </div>
-                <div className="text-sm font-semibold text-slate-950 mt-1">
+                <div className="text-sm font-semibold text-white mt-1">
                   {user.client_profile?.company_name || 'Client'}
                 </div>
                 <p className="text-xs text-slate-500 mt-1">
@@ -396,10 +396,10 @@ export const DeveloperDashboard: React.FC = () => {
         </div>
 
         {/* Inquiries Section */}
-        <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-sm bg-white/70 space-y-6">
+        <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-instrument italic text-2xl text-slate-950">
+              <h2 className="font-instrument italic text-2xl text-white">
                 {isDeveloper ? 'Incoming Project Inquiries' : 'Your Sent Inquiries'}
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -418,7 +418,7 @@ export const DeveloperDashboard: React.FC = () => {
           </div>
 
           {inquiries.length === 0 ? (
-            <div className="text-center py-12 border border-dashed border-black/10 rounded-2xl bg-slate-50/50">
+            <div className="text-center py-12 border border-dashed border-blue-500/25 rounded-2xl bg-[#070e22] text-slate-300/50">
               <MessageSquare size={34} className="mx-auto text-slate-300 mb-3" />
               <p className="text-sm font-semibold text-slate-700">No project inquiries yet</p>
               <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
@@ -436,8 +436,8 @@ export const DeveloperDashboard: React.FC = () => {
                 >
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <h4 className="text-sm font-semibold text-slate-900">{inq.project_name}</h4>
-                      <span className="liquid-glass text-slate-700 text-xs px-2.5 py-0.5 rounded-full border border-black/10 bg-slate-50 font-mono">
+                      <h4 className="text-sm font-semibold text-slate-100">{inq.project_name}</h4>
+                      <span className="liquid-glass text-slate-700 text-xs px-2.5 py-0.5 rounded-full border border-blue-500/25 bg-[#070e22] text-slate-300 font-mono">
                         {inq.status}
                       </span>
                     </div>
@@ -458,7 +458,7 @@ export const DeveloperDashboard: React.FC = () => {
                   <div className="flex items-center gap-2 shrink-0">
                     <Link
                       to="/dashboard/inquiries"
-                      className="liquid-glass text-slate-800 rounded-full px-4 py-1.5 text-xs font-semibold border border-black/10 hover:bg-slate-50 transition-all shadow-2xs"
+                      className="liquid-glass text-slate-800 rounded-full px-4 py-1.5 text-xs font-semibold border border-blue-500/25 hover:bg-[#070e22] text-slate-300 transition-all shadow-2xs"
                     >
                       Manage
                     </Link>
@@ -471,10 +471,10 @@ export const DeveloperDashboard: React.FC = () => {
 
         {/* ── Projects Section ── */}
         {isDeveloper && (
-          <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-sm bg-white/70 space-y-6">
+          <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h2 className="font-instrument italic text-2xl text-slate-950">
+                <h2 className="font-instrument italic text-2xl text-white">
                   My Projects &amp; Case Studies
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -491,7 +491,7 @@ export const DeveloperDashboard: React.FC = () => {
                 </Link>
                 <Link
                   to="/dashboard/my-projects"
-                  className="liquid-glass text-slate-700 rounded-full px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 border border-black/10 hover:bg-slate-50 transition-colors"
+                  className="liquid-glass text-slate-700 rounded-full px-4 py-1.5 text-xs font-semibold flex items-center gap-1.5 border border-blue-500/25 hover:bg-[#070e22] text-slate-300 transition-colors"
                 >
                   <span>Manage All</span>
                   <ArrowRight size={13} />
@@ -500,7 +500,7 @@ export const DeveloperDashboard: React.FC = () => {
             </div>
 
             {projects.length === 0 ? (
-              <div className="text-center py-12 border border-dashed border-black/10 rounded-2xl bg-slate-50/50">
+              <div className="text-center py-12 border border-dashed border-blue-500/25 rounded-2xl bg-[#070e22] text-slate-300/50">
                 <FolderGit2 size={34} className="mx-auto text-slate-300 mb-3" />
                 <p className="text-sm font-semibold text-slate-700">No projects added yet</p>
                 <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto mb-4">
@@ -516,14 +516,14 @@ export const DeveloperDashboard: React.FC = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {projects.map((proj) => (
-                  <div key={proj.id} className="liquid-glass rounded-2xl p-4 border border-black/[0.08] bg-white flex flex-col justify-between shadow-2xs hover:shadow-sm transition-shadow">
+                  <div key={proj.id} className="liquid-glass rounded-2xl p-4 border border-blue-500/25 bg-[#070e22] flex flex-col justify-between shadow-2xs hover:shadow-sm transition-shadow">
                     <div>
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div>
-                          <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                          <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#070e22] text-slate-300 text-slate-600">
                             {proj.category || 'Engineering'}
                           </span>
-                          <h4 className="font-instrument italic text-lg text-slate-950 mt-1">
+                          <h4 className="font-instrument italic text-lg text-white mt-1">
                             {proj.name}
                           </h4>
                         </div>
@@ -537,7 +537,7 @@ export const DeveloperDashboard: React.FC = () => {
                       {proj.technologies && proj.technologies.length > 0 && (
                         <div className="flex flex-wrap gap-1 mb-3">
                           {proj.technologies.slice(0, 3).map((t) => (
-                            <span key={t.id || t.name} className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-slate-50 text-slate-600 border border-black/[0.06]">
+                            <span key={t.id || t.name} className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#070e22] text-slate-300 text-slate-600 border border-blue-500/15">
                               {t.name}
                             </span>
                           ))}
@@ -548,7 +548,7 @@ export const DeveloperDashboard: React.FC = () => {
                       )}
                     </div>
 
-                    <div className="pt-3 border-t border-black/[0.06] flex items-center justify-between gap-2">
+                    <div className="pt-3 border-t border-blue-500/15 flex items-center justify-between gap-2">
                       <Link
                         to={`/projects/${proj.slug}`}
                         className="text-xs text-slate-600 hover:text-black font-semibold flex items-center gap-1"
@@ -558,7 +558,7 @@ export const DeveloperDashboard: React.FC = () => {
                       </Link>
                       <Link
                         to="/dashboard/my-projects"
-                        className="px-3 py-1 rounded-full liquid-glass text-xs font-medium text-slate-700 hover:text-black border border-black/10 flex items-center gap-1 shadow-2xs"
+                        className="px-3 py-1 rounded-full liquid-glass text-xs font-medium text-slate-700 hover:text-black border border-blue-500/25 flex items-center gap-1 shadow-2xs"
                       >
                         <Edit3 size={11} />
                         <span>Edit</span>
@@ -579,16 +579,16 @@ export const DeveloperDashboard: React.FC = () => {
       {/* ── Edit Profile Modal ── */}
       {isEditModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl max-w-xl w-full border border-black/10 shadow-2xl overflow-hidden my-8 max-h-[90vh] flex flex-col">
+          <div className="bg-[#0a1228] rounded-3xl text-white border border-blue-500/30 max-w-xl w-full border border-blue-500/25 shadow-2xl overflow-hidden my-8 max-h-[90vh] flex flex-col">
 
             {/* Modal Header */}
-            <div className="px-6 py-5 border-b border-black/[0.08] flex items-center justify-between bg-slate-50/70">
+            <div className="px-6 py-5 border-b border-blue-500/25 flex items-center justify-between bg-[#070e22] text-slate-300">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center font-bold text-base shadow-xs">
                   {formData.full_name ? formData.full_name.charAt(0) : user.username.charAt(0)}
                 </div>
                 <div>
-                  <h2 className="font-instrument italic text-xl text-slate-950">
+                  <h2 className="font-instrument italic text-xl text-white">
                     Edit Your Profile
                   </h2>
                   <p className="text-xs text-slate-500 font-mono">
@@ -600,14 +600,14 @@ export const DeveloperDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsEditModalOpen(false)}
-                className="p-2 rounded-full text-slate-400 hover:text-black hover:bg-slate-100 transition-colors"
+                className="p-2 rounded-full text-slate-400 hover:text-black hover:bg-[#070e22] text-slate-300 transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Modal Body */}
-            <form onSubmit={handleSaveProfile} className="p-6 space-y-6 overflow-y-auto flex-1 text-slate-900">
+            <form onSubmit={handleSaveProfile} className="p-6 space-y-6 overflow-y-auto flex-1 text-slate-100">
               {saveError && (
                 <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
                   <AlertCircle size={15} className="shrink-0 text-rose-500" />
@@ -616,7 +616,7 @@ export const DeveloperDashboard: React.FC = () => {
               )}
 
               {/* Profile Picture */}
-              <div className="space-y-3 pb-4 border-b border-black/[0.06]">
+              <div className="space-y-3 pb-4 border-b border-blue-500/15">
                 <label className="block text-slate-700 text-xs font-semibold uppercase tracking-wider font-mono">
                   Profile Picture (Device Upload & Cloud Auto-Sync)
                 </label>
@@ -634,7 +634,7 @@ export const DeveloperDashboard: React.FC = () => {
               </div>
 
               {/* Basic Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-black/[0.06]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-blue-500/15">
                 <div>
                   <label className="block text-slate-700 text-xs font-medium mb-1">Full Name</label>
                   <input
@@ -642,7 +642,7 @@ export const DeveloperDashboard: React.FC = () => {
                     required
                     value={formData.full_name}
                     onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -653,7 +653,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+91 ..."
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -664,7 +664,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="e.g. Full-Stack Engineer"
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -675,7 +675,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     placeholder="e.g. Bengaluru, India"
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -686,7 +686,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.availability}
                     onChange={(e) => setFormData({ ...formData, availability: e.target.value })}
                     placeholder="e.g. Available for Projects"
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -697,24 +697,24 @@ export const DeveloperDashboard: React.FC = () => {
                     min={0}
                     value={formData.years_experience}
                     onChange={(e) => setFormData({ ...formData, years_experience: Number(e.target.value) })}
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
               </div>
 
               {/* Skills */}
-              <div className="space-y-3 pb-4 border-b border-black/[0.06]">
+              <div className="space-y-3 pb-4 border-b border-blue-500/15">
                 <label className="block text-slate-700 text-xs font-bold uppercase tracking-wider font-mono">
                   Skills ({formData.skills.length})
                 </label>
-                <div className="flex flex-wrap gap-1.5 p-3 rounded-xl bg-slate-50 border border-black/10 min-h-[48px]">
+                <div className="flex flex-wrap gap-1.5 p-3 rounded-xl bg-[#070e22] text-slate-300 border border-blue-500/25 min-h-[48px]">
                   {formData.skills.length === 0 ? (
                     <span className="text-slate-400 text-xs italic">No skills added yet.</span>
                   ) : (
                     formData.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2.5 py-1 rounded-lg bg-white border border-black/10 text-slate-800 text-xs font-mono flex items-center gap-1.5 shadow-2xs"
+                        className="px-2.5 py-1 rounded-lg bg-[#070e22] border border-blue-500/30 text-cyan-300 text-xs font-mono flex items-center gap-1.5 shadow-2xs"
                       >
                         <span>{skill}</span>
                         <button
@@ -741,7 +741,7 @@ export const DeveloperDashboard: React.FC = () => {
                       }
                     }}
                     placeholder="Type skill name and press Enter or click Add"
-                    className="flex-1 bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="flex-1 bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                   <button
                     type="button"
@@ -754,7 +754,7 @@ export const DeveloperDashboard: React.FC = () => {
               </div>
 
               {/* Bios */}
-              <div className="space-y-3 pb-4 border-b border-black/[0.06]">
+              <div className="space-y-3 pb-4 border-b border-blue-500/15">
                 <div>
                   <label className="block text-slate-700 text-xs font-medium mb-1">Short Bio</label>
                   <input
@@ -762,7 +762,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.short_bio}
                     onChange={(e) => setFormData({ ...formData, short_bio: e.target.value })}
                     placeholder="Brief 1-sentence tagline..."
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -773,7 +773,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                     placeholder="Full description of your background and achievements..."
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30 resize-none"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30 resize-none"
                   />
                 </div>
               </div>
@@ -787,7 +787,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.github_url}
                     onChange={(e) => setFormData({ ...formData, github_url: e.target.value })}
                     placeholder="https://github.com/..."
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -798,7 +798,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.linkedin_url}
                     onChange={(e) => setFormData({ ...formData, linkedin_url: e.target.value })}
                     placeholder="https://linkedin.com/in/..."
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -809,7 +809,7 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.portfolio_url}
                     onChange={(e) => setFormData({ ...formData, portfolio_url: e.target.value })}
                     placeholder="https://..."
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
 
@@ -820,17 +820,17 @@ export const DeveloperDashboard: React.FC = () => {
                     value={formData.resume_url}
                     onChange={(e) => setFormData({ ...formData, resume_url: e.target.value })}
                     placeholder="https://..."
-                    className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-black/30"
+                    className="w-full bg-[#070e22] text-slate-300 border border-blue-500/25 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-black/30"
                   />
                 </div>
               </div>
 
               {/* Modal Footer */}
-              <div className="pt-4 border-t border-black/[0.08] flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-blue-500/25 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}
-                  className="px-5 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-black hover:bg-slate-100 transition-colors"
+                  className="px-5 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-black hover:bg-[#070e22] text-slate-300 transition-colors"
                 >
                   Cancel
                 </button>

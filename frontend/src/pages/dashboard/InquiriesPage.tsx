@@ -57,13 +57,13 @@ export const InquiriesPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-[#060b19] text-slate-100">
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
 
         {/* Header */}
         <div>
           <p className="text-slate-400 text-xs tracking-widest uppercase mb-2 font-mono">CRM Pipeline</p>
-          <h1 className="font-instrument italic text-4xl text-slate-950">Client Inquiries &amp; CRM</h1>
+          <h1 className="font-instrument italic text-4xl text-white">Client Inquiries &amp; CRM</h1>
           <p className="text-slate-600 text-sm mt-2">
             Track project requests, negotiate deliverables, and communicate with partners.
           </p>
@@ -71,12 +71,12 @@ export const InquiriesPage: React.FC = () => {
 
         {/* Body */}
         {isLoading ? (
-          <div className="bg-slate-100/70 rounded-3xl h-96 animate-pulse border border-black/[0.05]" />
+          <div className="bg-[#070e22] text-slate-300/70 rounded-3xl h-96 animate-pulse border border-black/[0.05]" />
         ) : inquiries.length === 0 ? (
-          <div className="liquid-glass rounded-3xl text-center py-24 flex flex-col items-center gap-4 border border-black/[0.08] shadow-sm bg-white/70">
+          <div className="liquid-glass rounded-3xl text-center py-24 flex flex-col items-center gap-4 border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
             <MessageSquare size={44} className="text-slate-300" />
             <div>
-              <h3 className="font-instrument italic text-2xl text-slate-950 mb-1">No Inquiries Found</h3>
+              <h3 className="font-instrument italic text-2xl text-white mb-1">No Inquiries Found</h3>
               <p className="text-slate-500 text-xs max-w-sm mx-auto">
                 When clients submit project requirements, they will appear here in your CRM pipeline.
               </p>
@@ -86,7 +86,7 @@ export const InquiriesPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             {/* Inquiry List Sidebar */}
-            <div className="liquid-glass rounded-3xl p-4 space-y-2 max-h-[75vh] overflow-y-auto border border-black/[0.08] shadow-sm bg-white/70">
+            <div className="liquid-glass rounded-3xl p-4 space-y-2 max-h-[75vh] overflow-y-auto border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
               {inquiries.map((inq) => {
                 const partner = user?.role === 'developer' ? inq.client : inq.developer?.user;
                 const partnerName = partner?.full_name || inq.client_name || 'Client';
@@ -97,13 +97,13 @@ export const InquiriesPage: React.FC = () => {
                     onClick={() => setSelectedInquiry(inq)}
                     className={`p-4 rounded-2xl cursor-pointer transition-all border ${
                       isSelected
-                        ? 'bg-white border-black/20 shadow-sm ring-1 ring-black/5'
-                        : 'bg-slate-50/70 border-black/[0.06] hover:bg-slate-100/70'
+                        ? 'bg-blue-950/60 border-cyan-400/50 shadow-md ring-1 ring-cyan-400/20'
+                        : 'bg-[#070e22] text-slate-300 border-blue-500/15 hover:bg-[#070e22] text-slate-300/70'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <h4 className="text-sm font-semibold text-slate-900 truncate">{inq.project_name}</h4>
-                      <span className="liquid-glass px-2 py-0.5 rounded-full text-[10px] text-slate-700 border border-black/10 bg-slate-50 font-mono">
+                      <h4 className="text-sm font-semibold text-slate-100 truncate">{inq.project_name}</h4>
+                      <span className="liquid-glass px-2 py-0.5 rounded-full text-[10px] text-slate-700 border border-blue-500/25 bg-[#070e22] text-slate-300 font-mono">
                         {inq.status}
                       </span>
                     </div>
@@ -118,18 +118,18 @@ export const InquiriesPage: React.FC = () => {
             </div>
 
             {/* Inquiry Detail View */}
-            <div className="lg:col-span-2 liquid-glass rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-black/[0.08] shadow-sm bg-white/70">
+            <div className="lg:col-span-2 liquid-glass rounded-3xl p-6 sm:p-8 flex flex-col justify-between border border-blue-500/25 shadow-sm bg-[#0a1228]/85 text-white">
               {selectedInquiry ? (
                 <div className="space-y-6">
 
                   {/* Header Row */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-black/[0.08]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-blue-500/25">
                     <div>
                       <div className="flex items-center gap-3 mb-1 flex-wrap">
-                        <h2 className="font-instrument italic text-3xl text-slate-950">
+                        <h2 className="font-instrument italic text-3xl text-white">
                           {selectedInquiry.project_name}
                         </h2>
-                        <span className="liquid-glass px-3 py-1 rounded-full text-xs text-slate-700 border border-black/10 bg-slate-50 font-mono">
+                        <span className="liquid-glass px-3 py-1 rounded-full text-xs text-slate-700 border border-blue-500/25 bg-[#070e22] text-slate-300 font-mono">
                           {selectedInquiry.status}
                         </span>
                       </div>
@@ -169,7 +169,7 @@ export const InquiriesPage: React.FC = () => {
                           className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                             selectedInquiry.status === st
                               ? 'bg-black text-white font-semibold shadow-xs'
-                              : 'liquid-glass text-slate-600 hover:text-black hover:bg-slate-100 border border-black/10'
+                              : 'liquid-glass text-slate-600 hover:text-black hover:bg-[#070e22] text-slate-300 border border-blue-500/25'
                           }`}
                         >
                           {st}
@@ -179,7 +179,7 @@ export const InquiriesPage: React.FC = () => {
                   </div>
 
                   {/* Scope & Details */}
-                  <div className="liquid-glass rounded-2xl p-5 space-y-4 border border-black/[0.06] bg-slate-50/70">
+                  <div className="liquid-glass rounded-2xl p-5 space-y-4 border border-blue-500/15 bg-[#070e22] text-slate-300">
                     <div>
                       <h4 className="text-slate-500 text-xs tracking-wider uppercase mb-2 font-mono">
                         Project Description &amp; Requirements
@@ -189,33 +189,33 @@ export const InquiriesPage: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-black/[0.08] text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-blue-500/25 text-xs">
                       <div>
                         <span className="text-slate-400 block mb-1">Project Type</span>
-                        <span className="font-semibold text-slate-900">{selectedInquiry.project_type || 'N/A'}</span>
+                        <span className="font-semibold text-slate-100">{selectedInquiry.project_type || 'N/A'}</span>
                       </div>
                       <div>
                         <span className="text-slate-400 block mb-1">Budget Range</span>
-                        <span className="font-semibold text-slate-900 font-mono">{selectedInquiry.budget_range || 'Flexible'}</span>
+                        <span className="font-semibold text-slate-100 font-mono">{selectedInquiry.budget_range || 'Flexible'}</span>
                       </div>
                       <div>
                         <span className="text-slate-400 block mb-1">Expected Timeline</span>
-                        <span className="font-semibold text-slate-900">{selectedInquiry.timeline || 'Flexible'}</span>
+                        <span className="font-semibold text-slate-100">{selectedInquiry.timeline || 'Flexible'}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Contact Card */}
-                  <div className="liquid-glass rounded-2xl p-4 flex items-center justify-between text-xs border border-black/[0.06] bg-slate-50/70">
+                  <div className="liquid-glass rounded-2xl p-4 flex items-center justify-between text-xs border border-blue-500/15 bg-[#070e22] text-slate-300">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-slate-200 border border-black/[0.08] flex items-center justify-center text-slate-900 font-bold text-sm shadow-2xs">
+                      <div className="w-10 h-10 rounded-xl bg-slate-200 border border-blue-500/25 flex items-center justify-center text-slate-100 font-bold text-sm shadow-2xs">
                         {(user?.role === 'developer'
                           ? selectedInquiry.client?.full_name || selectedInquiry.client_name || 'C'
                           : selectedInquiry.developer?.user?.full_name || 'D'
                         ).charAt(0)}
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900">
+                        <p className="font-semibold text-slate-100">
                           {user?.role === 'developer'
                             ? selectedInquiry.client?.full_name || selectedInquiry.client_name || 'Client'
                             : selectedInquiry.developer?.user?.full_name || 'Developer'}

@@ -19,11 +19,11 @@ export const WhatsAppFloatingButton: React.FC = () => {
     <div className="fixed bottom-6 right-6 z-40 flex items-center gap-3">
       {/* Tooltip Pill */}
       {showTooltip && (
-        <div className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl liquid-glass border border-black/10 bg-white shadow-lg text-slate-800 text-xs font-medium animate-in fade-in slide-in-from-right-2">
+        <div className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl border border-emerald-500/40 bg-[#0a1228]/95 shadow-xl text-slate-100 text-xs font-medium animate-in fade-in slide-in-from-right-2">
           <span>Need help? Chat with {companyName}</span>
           <button
             onClick={() => setShowTooltip(false)}
-            className="text-slate-400 hover:text-black ml-1"
+            className="text-slate-400 hover:text-white ml-1"
           >
             <X size={12} />
           </button>
