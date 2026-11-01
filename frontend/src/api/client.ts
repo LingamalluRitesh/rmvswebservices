@@ -1,11 +1,24 @@
 import axios from 'axios';
 
-const apiBase = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api/v1`
-  : '/api/v1';
+const getApiBase = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api/v1`;
+  }
+  // If running in browser and not on localhost, default to the live backend URL
+  if (typeof window !== 'undefined') {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (!isLocal) {
+      return 'https://rmvs-backend.onrender.com/api/v1';
+    }
+  }
+  return '/api/v1';
+};
+
+const apiBase = getApiBase();
 
 const api = axios.create({
   baseURL: apiBase,
+  timeout: 10000, // 10s maximum timeout to prevent frozen requests during server cold-starts
   headers: {
     'Content-Type': 'application/json',
   },

@@ -11,10 +11,13 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const fallbackUrl = project.demo_url
-    ? `https://image.thum.io/get/width/1200/crop/800/${project.demo_url}`
-    : 'https://images.unsplash.com/photo-1509391365360-2e959784a276?w=1200&q=80';
-  const [imgSrc, setImgSrc] = useState(project.image_url || fallbackUrl);
+  const fallbackUrl = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
+  const [imgSrc, setImgSrc] = useState(() => {
+    if (project.image_url && !project.image_url.includes('1drv.ms')) {
+      return project.image_url;
+    }
+    return fallbackUrl;
+  });
 
   const leadAssoc = project.developer_associations?.find((d) => d.is_lead) || project.developer_associations?.[0];
   const leadDev = leadAssoc?.developer;
@@ -32,12 +35,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         <img
           src={imgSrc}
           alt={project.name}
+          loading="lazy"
+          decoding="async"
           onError={() => {
-            if (imgSrc !== fallbackUrl) {
-              setImgSrc(fallbackUrl);
-            } else {
-              setImgSrc('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80');
-            }
+            setImgSrc(fallbackUrl);
           }}
           className={`w-full h-full object-cover transition-transform duration-700 ease-out ${isHovered ? 'scale-105 brightness-[0.7]' : 'scale-100 brightness-[0.85]'}`}
         />

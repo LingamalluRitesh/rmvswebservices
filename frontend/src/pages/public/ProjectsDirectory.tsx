@@ -12,24 +12,36 @@ export const ProjectsDirectory: React.FC = () => {
   const { settings } = useSettings();
   const companyName = settings?.company_name || 'RMVS Web Services';
   const logoUrl = settings?.logo_url || '/logo.png';
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(() => {
+    try {
+      const cached = localStorage.getItem('rmvs_cached_projects');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return [];
+  });
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(projects.length === 0);
 
   const categories = ['All', 'AI/ML', 'SaaS', 'Websites', 'Mobile Apps', 'Software', 'CRM', 'Web Platforms', 'Automation'];
 
   useEffect(() => { fetchProjects(); }, [selectedCategory]);
 
   const fetchProjects = async () => {
-    setIsLoading(true);
+    if (projects.length === 0) setIsLoading(true);
     try {
       const params: Record<string, string> = {};
       if (selectedCategory && selectedCategory !== 'All') params.category = selectedCategory;
       if (searchQuery) params.query = searchQuery;
       const res = await api.get('/projects', { params });
       setProjects(res.data);
-    } catch (e) { console.error('Failed to fetch projects', e); }
+      if (selectedCategory === 'All' && !searchQuery) {
+        localStorage.setItem('rmvs_cached_projects', JSON.stringify(res.data));
+      }
+    } catch (e) { console.warn('Failed to fetch projects', e); }
     finally { setIsLoading(false); }
   };
 

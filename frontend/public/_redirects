@@ -1,1 +1,4 @@
+/api/* https://rmvs-backend.onrender.com/api/:splat 200
+/ws/* wss://rmvs-backend.onrender.com/ws/:splat 200
 /* /index.html 200
+

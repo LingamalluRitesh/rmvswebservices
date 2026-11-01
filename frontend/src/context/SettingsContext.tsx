@@ -36,8 +36,14 @@ const defaultFallbackSettings: CompanySettings = {
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [settings, setSettings] = useState<CompanySettings | null>(defaultFallbackSettings);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [settings, setSettings] = useState<CompanySettings | null>(() => {
+    try {
+      const cached = localStorage.getItem('rmvs_cached_settings');
+      if (cached) return JSON.parse(cached);
+    } catch (_) {}
+    return defaultFallbackSettings;
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const applyBrandingToDocument = (data: CompanySettings) => {
     if (data.company_name) {
@@ -59,11 +65,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const res = await api.get<CompanySettings>('/settings');
       if (res.data) {
         setSettings(res.data);
+        localStorage.setItem('rmvs_cached_settings', JSON.stringify(res.data));
         applyBrandingToDocument(res.data);
       }
     } catch (err) {
       console.warn('Could not fetch company settings, using defaults.', err);
-      applyBrandingToDocument(defaultFallbackSettings);
+      applyBrandingToDocument(settings || defaultFallbackSettings);
     } finally {
       setIsLoading(false);
     }
@@ -72,11 +79,13 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const updateSettings = async (newSettings: Partial<CompanySettings>): Promise<CompanySettings> => {
     const res = await api.put<CompanySettings>('/settings', newSettings);
     setSettings(res.data);
+    localStorage.setItem('rmvs_cached_settings', JSON.stringify(res.data));
     applyBrandingToDocument(res.data);
     return res.data;
   };
 
   useEffect(() => {
+    applyBrandingToDocument(settings || defaultFallbackSettings);
     refreshSettings();
   }, []);
 

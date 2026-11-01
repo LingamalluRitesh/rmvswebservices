@@ -51,6 +51,10 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
 
 
+    if (!import.meta.env.VITE_WS_URL && !import.meta.env.VITE_API_URL && typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      wsUrl = `wss://rmvs-backend.onrender.com/ws?token=${token}`;
+    }
+
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 

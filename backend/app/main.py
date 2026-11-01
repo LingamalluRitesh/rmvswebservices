@@ -1,3 +1,6 @@
+import asyncio
+import os
+import httpx
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,16 +9,40 @@ from app.api.v1.router import api_router
 from app.api.websockets.routes import ws_router
 from app.db.seed import seed_data
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup: ensure tables and seed initial platform state
-    print("RMVS Web Services Backend starting up... checking database & seeds.")
+async def _background_startup():
+    print("RMVS Web Services: Running background schema & seed verification...")
     try:
         await seed_data()
+        print("RMVS Web Services: Database tables and seeds ready.")
     except Exception as e:
         print(f"Seed notice: {e}")
+
+async def _keep_alive_loop():
+    """Keeps Render Free Tier backend awake by pinging its health endpoint every 10 minutes."""
+    await asyncio.sleep(45)  # initial delay after boot
+    backend_url = os.getenv("RENDER_EXTERNAL_URL", "https://rmvs-backend.onrender.com").rstrip("/")
+    health_url = f"{backend_url}/health"
+    print(f"RMVS Keep-Alive active for: {health_url}")
+    while True:
+        try:
+            await asyncio.sleep(600)  # 10 minutes (Render spins down after 15m)
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.get(health_url)
+                print(f"Keep-Alive ping to {health_url}: {resp.status_code}")
+        except asyncio.CancelledError:
+            break
+        except Exception as e:
+            print(f"Keep-Alive ping error: {e}")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("RMVS Web Services Backend starting up... immediate readiness enabled.")
+    startup_task = asyncio.create_task(_background_startup())
+    keep_alive_task = asyncio.create_task(_keep_alive_loop())
     yield
     print("RMVS Web Services Backend shutting down.")
+    startup_task.cancel()
+    keep_alive_task.cancel()
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

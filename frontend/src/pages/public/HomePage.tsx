@@ -35,16 +35,179 @@ const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: 
   );
 };
 
+/* ─────────────────────────────────────────
+   Instant Fallback Production Cache
+───────────────────────────────────────── */
+const fallbackInitialProjects: Project[] = [
+  {
+    id: 5,
+    name: 'SreeWaterSolutions',
+    slug: 'sreewatersolutions',
+    short_description: 'Professional water purification and treatment systems provider delivering reliable RO, commercial water systems, and 24/7 maintenance.',
+    description: 'Modern, responsive business website designed to showcase professional water purification and treatment services across Andhra Pradesh.',
+    category: 'Websites',
+    demo_url: 'https://www.sreewatersolutions.com/',
+    repo_url: undefined,
+    image_url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80',
+    status: 'Published',
+    visibility: 'Public',
+    client_name: 'Sree Water Solutions',
+    created_at: '2026-10-03T12:11:58.916434Z',
+    developer_associations: [
+      {
+        id: 6,
+        role_in_project: 'Lead Developer',
+        is_lead: true,
+        developer: {
+          id: 3,
+          title: 'Chief Executive Officer (CEO)',
+          availability: 'Available for Advisory',
+          years_experience: 3,
+          user: {
+            id: 3,
+            username: 'riteshlingamallu8',
+            full_name: 'Ritesh Lingamallu',
+            role: 'super_admin',
+            avatar_url: 'https://media.licdn.com/dms/image/v2/D4D35AQFckrBvrwWh-Q/profile-framedphoto-shrink_800_800/B4DaAWMSiVJIAI-/0/1787078715771?e=1791622800&v=beta&t=5EVFRjqZKuo7-6gVsyWdAueZFzhaO5w9XV2TTdU5TmA',
+            is_verified: true,
+          },
+          skills: [
+            { id: 1, name: 'Python' },
+            { id: 2, name: 'FastAPI' },
+            { id: 3, name: 'React' },
+            { id: 4, name: 'TypeScript' }
+          ]
+        }
+      }
+    ],
+    technologies: [
+      { id: 1, name: 'React' },
+      { id: 2, name: 'TypeScript' }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Narasimha Stills',
+    slug: 'narasimha-stills',
+    short_description: 'Cinematic visual portfolio showcasing high-definition photography, wedding moments, and event capturing with interactive gallery design.',
+    description: 'High-performance interactive 3D photography showcase featuring cinematic animations and responsive visual aesthetics.',
+    category: 'Websites',
+    demo_url: 'https://photography-website-ahc.pages.dev/',
+    repo_url: undefined,
+    image_url: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1200&q=80',
+    status: 'Published',
+    visibility: 'Public',
+    client_name: 'NS Photography',
+    created_at: '2026-10-03T08:38:35.229999Z',
+    developer_associations: [
+      {
+        id: 4,
+        role_in_project: 'Lead Developer',
+        is_lead: true,
+        developer: {
+          id: 9,
+          title: 'Frontend Developer',
+          availability: 'Available for Projects',
+          years_experience: 3,
+          user: {
+            id: 10,
+            username: 'ltmani',
+            full_name: 'Lingamallu Tharun Manikanta',
+            role: 'developer',
+            avatar_url: 'https://media.licdn.com/dms/image/v2/D4D35AQFtxR6DWcGtdg/profile-framedphoto-shrink_400_400/B4DaEBy0FRKcAU-/0/1791031460559?e=1791637200&v=beta&t=2HzQSmqWMdSf-V_hkIqtTvAWwu-XO7XyoykFVDv5gP4',
+            is_verified: true,
+          },
+          skills: [
+            { id: 3, name: 'React' },
+            { id: 4, name: 'TypeScript' },
+            { id: 26, name: 'JavaScript' }
+          ]
+        }
+      }
+    ],
+    technologies: [
+      { id: 3, name: 'React' },
+      { id: 4, name: 'TypeScript' }
+    ]
+  },
+  {
+    id: 1,
+    name: 'PBR Solar Energy',
+    slug: 'pbr-solar-energy',
+    short_description: 'Modern, responsive solar-energy platform designed to showcase sustainable clean energy engineering and industrial installations.',
+    description: 'Solar energy platform engineered with responsive layouts, power calculator, and enterprise consultation booking.',
+    category: 'Websites',
+    demo_url: 'https://www.pbrsolarenergy.com/',
+    repo_url: 'https://github.com/LingamalluRitesh/pbr-solar',
+    image_url: '/projects/project-1-landing.png',
+    status: 'Published',
+    visibility: 'Public',
+    client_name: 'PBR Solar Energy',
+    created_at: '2026-09-26T07:58:03.192480Z',
+    developer_associations: [
+      {
+        id: 1,
+        role_in_project: 'Lead Architect',
+        is_lead: true,
+        developer: {
+          id: 3,
+          title: 'Chief Executive Officer (CEO)',
+          availability: 'Available for Advisory',
+          years_experience: 3,
+          user: {
+            id: 3,
+            username: 'riteshlingamallu8',
+            full_name: 'Ritesh Lingamallu',
+            role: 'super_admin',
+            avatar_url: 'https://media.licdn.com/dms/image/v2/D4D35AQFckrBvrwWh-Q/profile-framedphoto-shrink_800_800/B4DaAWMSiVJIAI-/0/1787078715771?e=1791622800&v=beta&t=5EVFRjqZKuo7-6gVsyWdAueZFzhaO5w9XV2TTdU5TmA',
+            is_verified: true,
+          },
+          skills: [
+            { id: 2, name: 'FastAPI' },
+            { id: 3, name: 'React' },
+            { id: 4, name: 'TypeScript' }
+          ]
+        }
+      }
+    ],
+    technologies: [
+      { id: 1, name: 'FastAPI' },
+      { id: 2, name: 'React' }
+    ]
+  }
+];
+
 export const HomePage: React.FC = () => {
   const { settings } = useSettings();
   const companyName = settings?.company_name || 'RMVS Web Services';
   const tagline = settings?.tagline || 'DESIGN • DEVELOP • GROW TOGETHER';
 
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [developers, setDevelopers] = useState<DeveloperProfile[]>([]);
+  // Instant Stale-While-Revalidate Cache: Render immediately in 0ms!
+  const [projects, setProjects] = useState<Project[]>(() => {
+    try {
+      const cached = localStorage.getItem('rmvs_cached_projects');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return fallbackInitialProjects;
+  });
+
+  const [developers, setDevelopers] = useState<DeveloperProfile[]>(() => {
+    try {
+      const cached = localStorage.getItem('rmvs_cached_developers');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return [];
+  });
+
   const [selectedPillar, setSelectedPillar] = useState('All');
-  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
-  const [isLoadingDevs, setIsLoadingDevs] = useState(true);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(projects.length === 0);
+  const [isLoadingDevs, setIsLoadingDevs] = useState(developers.length === 0);
 
   // Inquiry Form State in CTA
   const [inquiryName, setInquiryName] = useState('');
@@ -55,20 +218,26 @@ export const HomePage: React.FC = () => {
   const [inquirySubmitted, setInquirySubmitted] = useState(false);
 
   useEffect(() => {
-    // Fetch live published projects
+    // Fetch live published projects in background
     api.get('/projects')
       .then((res) => {
-        setProjects(res.data);
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setProjects(res.data);
+          localStorage.setItem('rmvs_cached_projects', JSON.stringify(res.data));
+        }
       })
-      .catch((e) => console.error('Failed to load projects', e))
+      .catch((e) => console.warn('Projects background refresh notice:', e.message))
       .finally(() => setIsLoadingProjects(false));
 
-    // Fetch verified developers roster
+    // Fetch verified developers roster in background
     api.get('/developers')
       .then((res) => {
-        setDevelopers(res.data);
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setDevelopers(res.data);
+          localStorage.setItem('rmvs_cached_developers', JSON.stringify(res.data));
+        }
       })
-      .catch((e) => console.error('Failed to load developers', e))
+      .catch((e) => console.warn('Developers background refresh notice:', e.message))
       .finally(() => setIsLoadingDevs(false));
   }, []);
 
@@ -89,8 +258,14 @@ export const HomePage: React.FC = () => {
       ───────────────────────────────────────── */}
       <section className="relative pt-12 sm:pt-20 pb-20 sm:pb-28 overflow-hidden bg-white flex flex-col items-center justify-center text-center px-4 sm:px-6">
         
-        {/* Subtle Ambient Backlight */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-b from-indigo-50/70 via-slate-50/40 to-transparent rounded-full blur-3xl pointer-events-none" />
+        {/* Hardware-Accelerated Ambient Backlight (Zero scroll lag) */}
+        <div 
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse at center, rgba(238, 242, 255, 0.75) 0%, rgba(248, 250, 252, 0.35) 50%, transparent 70%)',
+            transform: 'translateZ(0)'
+          }}
+        />
 
         <div className="max-w-5xl mx-auto z-10 flex flex-col items-center">
           

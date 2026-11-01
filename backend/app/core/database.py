@@ -64,11 +64,14 @@ def normalize_database_url(raw_url: str):
         ssl_ctx.verify_mode = ssl.CERT_NONE
         connect_args["ssl"] = ssl_ctx
         connect_args["statement_cache_size"] = 0
-        connect_args["timeout"] = 30
+        connect_args["timeout"] = 10
 
     # Neon serverless pooling optimizations
     engine_kwargs["pool_pre_ping"] = True
     engine_kwargs["pool_recycle"] = 300
+    engine_kwargs["pool_size"] = 5
+    engine_kwargs["max_overflow"] = 10
+    engine_kwargs["pool_timeout"] = 10
 
     return clean_url, connect_args, engine_kwargs
 

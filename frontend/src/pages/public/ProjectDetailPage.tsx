@@ -87,11 +87,10 @@ export const ProjectDetailPage: React.FC = () => {
     try {
       const res = await api.get(`/projects/${s}`);
       setProject(res.data);
-      const fallback = res.data.demo_url
-        ? `https://image.thum.io/get/width/1200/crop/800/${res.data.demo_url}`
-        : 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
-      setHeroImgSrc(res.data.image_url || fallback);
-      setSelectedCoverUrl(res.data.image_url || fallback);
+      const fallback = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
+      const cleanImg = res.data.image_url && !res.data.image_url.includes('1drv.ms') ? res.data.image_url : fallback;
+      setHeroImgSrc(cleanImg);
+      setSelectedCoverUrl(cleanImg);
       setTargetLiveUrl(res.data.demo_url || '');
     } catch (e: any) {
       console.error('Error loading project', e);
@@ -103,9 +102,7 @@ export const ProjectDetailPage: React.FC = () => {
 
   const openCoverModal = () => {
     if (!project) return;
-    const fallback = project.demo_url
-      ? `https://image.thum.io/get/width/1200/crop/800/${project.demo_url}`
-      : 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
+    const fallback = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
     setSelectedCoverUrl(project.image_url || fallback);
     setTargetLiveUrl(project.demo_url || '');
     setCaptureMessage(null);
@@ -330,17 +327,10 @@ export const ProjectDetailPage: React.FC = () => {
         <div className="relative rounded-3xl overflow-hidden mb-10 border border-black/[0.08] shadow-md group">
           <div className="h-64 sm:h-[420px] w-full relative">
             <img
-              src={heroImgSrc || project.image_url || '/projects/pbr-solar-landing.png'}
+              src={heroImgSrc || project.image_url || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80'}
               alt={project.name}
               onError={() => {
-                const fb = project.demo_url
-                  ? `https://image.thum.io/get/width/1200/crop/800/${project.demo_url}`
-                  : '/projects/pbr-solar-landing.png';
-                if (heroImgSrc !== fb) {
-                  setHeroImgSrc(fb);
-                } else {
-                  setHeroImgSrc('https://images.unsplash.com/photo-1509391365360-2e959784a276?w=1200&q=80');
-                }
+                setHeroImgSrc('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80');
               }}
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />

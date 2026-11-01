@@ -11,12 +11,21 @@ export const DevelopersDirectory: React.FC = () => {
   const companyName = settings?.company_name || 'RMVS Web Services';
   const logoUrl = settings?.logo_url || '/logo.png';
 
-  const [developers, setDevelopers] = useState<DeveloperProfile[]>([]);
+  const [developers, setDevelopers] = useState<DeveloperProfile[]>(() => {
+    try {
+      const cached = localStorage.getItem('rmvs_cached_developers');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return [];
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSkill, setSelectedSkill] = useState('');
   const [selectedAvailability, setSelectedAvailability] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(developers.length === 0);
   const [selectedDevForContact, setSelectedDevForContact] = useState<DeveloperProfile | null>(null);
 
   const skillsList = ['Python', 'FastAPI', 'React', 'TypeScript', 'SQL', 'PostgreSQL', 'AI/ML', 'Docker', 'Kubernetes', 'Node.js', 'Flutter', 'AWS'];
@@ -25,7 +34,7 @@ export const DevelopersDirectory: React.FC = () => {
   useEffect(() => { fetchDevelopers(); }, [selectedSkill, selectedAvailability]);
 
   const fetchDevelopers = async () => {
-    setIsLoading(true);
+    if (developers.length === 0) setIsLoading(true);
     try {
       const params: Record<string, string> = {};
       if (searchQuery) params.query = searchQuery;
@@ -34,7 +43,10 @@ export const DevelopersDirectory: React.FC = () => {
       if (selectedLocation) params.location = selectedLocation;
       const res = await api.get('/developers', { params });
       setDevelopers(res.data);
-    } catch (e) { console.error('Error fetching developers', e); }
+      if (!selectedSkill && !selectedAvailability && !searchQuery && !selectedLocation) {
+        localStorage.setItem('rmvs_cached_developers', JSON.stringify(res.data));
+      }
+    } catch (e) { console.warn('Error fetching developers', e); }
     finally { setIsLoading(false); }
   };
 
