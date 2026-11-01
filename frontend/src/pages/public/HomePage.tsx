@@ -268,22 +268,22 @@ export const HomePage: React.FC = () => {
     <div className="bg-white min-h-screen text-slate-900 overflow-x-hidden">
 
       {/* ─────────────────────────────────────────
-          1. HERO STAGE (Atmospheric Cinematic Realistic Nature Scenery - Wattbank Inspired)
+          1. HERO STAGE (Panoramic Skyline Executive Office & Cloud Engine)
       ───────────────────────────────────────── */}
       <section className="relative min-h-[90vh] sm:min-h-[94vh] pt-24 sm:pt-32 pb-20 sm:pb-24 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] shadow-2xl flex flex-col justify-between px-4 sm:px-8 bg-slate-950">
         
-        {/* Background Image Container with Realistic Nature Scenery */}
+        {/* Background Image Container with Panoramic City View Office */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/hero-nature-bg.jpg"
-            alt="Photorealistic Sunlit Nature Scenery"
-            className="w-full h-full object-cover object-center brightness-[0.92] contrast-[1.06]"
+            src="/hero-office-bg.jpg"
+            alt="Modern Executive Tech Office with Glass Walls and City Skyline View"
+            className="w-full h-full object-cover object-center brightness-[0.94] contrast-[1.05]"
             loading="eager"
             decoding="async"
           />
           {/* Multi-stop cinematic gradients for rich depth & high legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-slate-950/50" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-slate-950/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/50 to-transparent" />
         </div>
 
         {/* Massive Translucent Watermark Brand Typography ("RMVS" / "Wattbank" style) */}
