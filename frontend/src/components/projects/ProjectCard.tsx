@@ -41,13 +41,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ transform: 'translateZ(0)' }}
-      className="relative group rounded-3xl overflow-hidden bg-slate-900 border border-black/[0.08] shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-end h-[420px] sm:h-[460px]"
+      className="relative group rounded-3xl overflow-hidden bg-[#081026] border border-blue-500/25 hover:border-cyan-400/50 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.3)] transition-all duration-300 flex flex-col justify-end h-[420px] sm:h-[460px]"
     >
       {/* Interactive Cursor Spotlight Glow */}
       <div 
         className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
         style={{
-          background: 'radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.12), transparent 40%)'
+          background: 'radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 102, 255, 0.22), transparent 40%)'
         }}
       />
 
@@ -60,17 +60,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
           decoding="async"
           onError={() => setImgSrc(fallbackUrl)}
           className={`w-full h-full object-cover transition-transform duration-700 ease-out ${
-            isHovered ? 'scale-105 brightness-[0.72]' : 'scale-100 brightness-[0.82]'
+            isHovered ? 'scale-105 brightness-[0.70]' : 'scale-100 brightness-[0.78]'
           }`}
         />
-        {/* Cinematic Multi-stop Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent" />
+        {/* Multi-stop Midnight Blue Vignette Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#060b19] via-[#060b19]/75 to-transparent" />
       </div>
 
       {/* Top Header / Badges Bar */}
       <div className="absolute top-5 left-5 right-5 z-20 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full text-[10px] tracking-widest uppercase font-mono bg-white/90 text-slate-900 font-semibold border border-black/10 shadow-sm backdrop-blur-md">
+          <span className="px-3 py-1 rounded-full text-[10px] tracking-widest uppercase font-mono bg-[#070e22]/90 text-cyan-300 font-semibold border border-blue-500/30 shadow-sm backdrop-blur-md">
             {project.category || 'Platform'}
           </span>
           {project.demo_url && (
@@ -90,7 +90,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
                 e.stopPropagation();
                 onQuickView(project);
               }}
-              className="p-2 sm:px-3 sm:py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-black border border-black/10 shadow-sm transition-all flex items-center gap-1.5 text-xs font-medium backdrop-blur-md hover:scale-105"
+              className="p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/40 text-cyan-200 hover:text-white border border-blue-500/30 shadow-sm transition-all flex items-center gap-1.5 text-xs font-medium backdrop-blur-md hover:scale-105"
               title="Quick Preview"
             >
               <Eye size={13} />
@@ -104,7 +104,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
               target="_blank"
               rel="noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-black border border-black/10 shadow-sm transition-all backdrop-blur-md hover:scale-105"
+              className="p-2 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/40 text-cyan-200 hover:text-white border border-blue-500/30 shadow-sm transition-all backdrop-blur-md hover:scale-105"
               title="Launch Live Website"
             >
               <ExternalLink size={13} />
@@ -117,7 +117,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
               target="_blank"
               rel="noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-black border border-black/10 shadow-sm transition-all backdrop-blur-md hover:scale-105"
+              className="p-2 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/40 text-cyan-200 hover:text-white border border-blue-500/30 shadow-sm transition-all backdrop-blur-md hover:scale-105"
               title="View Repository"
             >
               <GithubIcon size={13} />
@@ -128,12 +128,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
 
       {/* Main Content Area */}
       <div className="relative z-10 p-6 sm:p-7">
-        <p className="text-white/70 text-[10px] tracking-widest uppercase font-mono mb-1.5">
+        <p className="text-cyan-400 text-[10px] tracking-widest uppercase font-mono mb-1.5">
           {project.client_name ? `Client · ${project.client_name}` : 'Engineered Platform'}
         </p>
 
         <Link to={`/projects/${project.slug}`}>
-          <h3 className="font-instrument italic text-2xl sm:text-3xl text-white group-hover:text-blue-100 transition-colors leading-snug mb-2 drop-shadow-sm flex items-center gap-2">
+          <h3 className="font-instrument italic text-2xl sm:text-3xl text-white group-hover:text-cyan-300 transition-colors leading-snug mb-2 drop-shadow-sm flex items-center gap-2">
             <span>{project.name}</span>
           </h3>
         </Link>
@@ -148,22 +148,22 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
             {project.technologies.slice(0, 3).map((tech) => (
               <span
                 key={tech.id || tech.name}
-                className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-white/10 text-white/90 border border-white/10 backdrop-blur-md"
+                className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#070e22]/90 text-cyan-300 border border-blue-500/25 backdrop-blur-md"
               >
                 {tech.name}
               </span>
             ))}
             {project.technologies.length > 3 && (
-              <span className="text-[10px] font-mono text-white/50">+{project.technologies.length - 3}</span>
+              <span className="text-[10px] font-mono text-cyan-400/60">+{project.technologies.length - 3}</span>
             )}
           </div>
         )}
 
         {/* Action Bar */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/10">
+        <div className="flex items-center justify-between pt-3 border-t border-blue-500/20">
           <Link
             to={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-blue-200 transition-colors group/cta"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-white transition-colors group/cta"
           >
             <span>Explore details</span>
             <ArrowRight size={13} className="group-hover/cta:translate-x-1 transition-transform" />
@@ -173,17 +173,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
             <Link
               to={`/developers/${leadUser.username}`}
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 hover:bg-white border border-black/10 shadow-sm transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/30 border border-blue-500/30 shadow-sm transition-all hover:scale-105"
             >
               {leadUser.avatar_url ? (
                 <img src={leadUser.avatar_url} alt={leadUser.full_name} className="w-4 h-4 rounded-full object-cover" />
               ) : (
-                <div className="w-4 h-4 rounded-full bg-slate-200 text-slate-800 text-[9px] flex items-center justify-center font-instrument italic">
+                <div className="w-4 h-4 rounded-full bg-blue-950 text-cyan-300 text-[9px] flex items-center justify-center font-instrument italic">
                   {leadUser.full_name.charAt(0)}
                 </div>
               )}
-              <span className="text-[11px] text-slate-700 font-medium">
-                By <span className="text-slate-900 font-semibold">{leadUser.full_name.split(' ')[0]}</span>
+              <span className="text-[11px] text-slate-300 font-medium">
+                By <span className="text-white font-semibold">{leadUser.full_name.split(' ')[0]}</span>
               </span>
             </Link>
           )}
@@ -191,18 +191,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
       </div>
 
       {/* Bottom Spec Strip */}
-      <div className="relative z-10 px-6 py-3 grid grid-cols-3 gap-2 bg-white/95 backdrop-blur-md border-t border-black/[0.08] text-[10px] text-slate-600 font-mono">
+      <div className="relative z-10 px-6 py-3 grid grid-cols-3 gap-2 bg-[#070e22]/95 backdrop-blur-md border-t border-blue-500/20 text-[10px] text-slate-300 font-mono">
         <div className="flex items-center gap-1.5 truncate">
-          <Layers size={11} className="text-slate-500 shrink-0" />
+          <Layers size={11} className="text-cyan-400 shrink-0" />
           <span className="truncate">{project.category || 'Web Application'}</span>
         </div>
-        <div className="flex items-center justify-center gap-1.5 border-x border-black/[0.08]">
-          <Users size={11} className="text-slate-500 shrink-0" />
+        <div className="flex items-center justify-center gap-1.5 border-x border-blue-500/20">
+          <Users size={11} className="text-cyan-400 shrink-0" />
           <span>{contributorCount} {contributorCount === 1 ? 'Developer' : 'Squad'}</span>
         </div>
         <div className="flex items-center justify-end gap-1.5">
-          <ShieldCheck size={11} className="text-slate-700 shrink-0" />
-          <span className="text-slate-900 font-semibold">Verified</span>
+          <ShieldCheck size={11} className="text-cyan-400 shrink-0" />
+          <span className="text-white font-semibold">Verified</span>
         </div>
       </div>
     </div>

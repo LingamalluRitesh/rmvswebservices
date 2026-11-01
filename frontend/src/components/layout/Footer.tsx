@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   const logoUrl = settings?.logo_url || '/logo.png';
 
   return (
-    <footer className="bg-slate-50/90 border-t border-black/[0.08] mt-24 py-16 px-4 sm:px-6">
+    <footer className="bg-[#050a17] border-t border-blue-500/20 mt-24 py-16 px-4 sm:px-6 text-slate-300">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           
@@ -24,35 +24,35 @@ export const Footer: React.FC = () => {
                 className="h-10 sm:h-11 w-auto max-w-[210px] object-contain transition-transform group-hover:scale-[1.02]"
               />
             </a>
-            <div className="text-[11px] text-slate-500">
-              <span className="text-slate-400">Developer: </span>
+            <div className="text-[11px] text-slate-400">
+              <span className="text-slate-500">Developer: </span>
               <a
                 href="https://rmvswebservices.onrender.com/developers/riteshlingamallu8"
-                className="font-medium text-slate-700 hover:text-black underline transition-colors"
+                className="font-medium text-cyan-400 hover:text-cyan-300 underline transition-colors"
               >
                 Ritesh Lingamallu
               </a>
             </div>
-            <p className="text-slate-600 text-xs leading-relaxed">
+            <p className="text-slate-400 text-xs leading-relaxed">
               {settings?.description || 'Verified software engineering and enterprise digital delivery platform.'}
             </p>
             {settings?.address && (
-              <p className="text-slate-500 text-[11px] flex items-center gap-1.5">
-                <MapPin size={12} className="shrink-0 text-slate-400" />
+              <p className="text-slate-400 text-[11px] flex items-center gap-1.5">
+                <MapPin size={12} className="shrink-0 text-cyan-400" />
                 <span>{settings.address}</span>
               </p>
             )}
             {settings?.email && (
-              <p className="text-slate-500 text-[11px] flex items-center gap-1.5">
-                <Mail size={12} className="shrink-0 text-slate-400" />
-                <a href={`mailto:${settings.email}`} className="hover:text-black transition-colors">{settings.email}</a>
+              <p className="text-slate-400 text-[11px] flex items-center gap-1.5">
+                <Mail size={12} className="shrink-0 text-cyan-400" />
+                <a href={`mailto:${settings.email}`} className="hover:text-cyan-300 transition-colors">{settings.email}</a>
               </p>
             )}
           </div>
 
           {/* Platform Columns */}
           <div>
-            <p className="text-slate-900 text-xs font-semibold tracking-widest uppercase mb-4 font-mono">Platform</p>
+            <p className="text-cyan-400 text-xs font-semibold tracking-widest uppercase mb-4 font-mono">Platform</p>
             <ul className="space-y-2.5">
               {[
                 { label: 'Featured Projects', to: '/projects' },
@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
                 { label: 'Services & Solutions', to: '/services' },
               ].map(({ label, to }) => (
                 <li key={label}>
-                  <Link to={to} className="text-slate-500 hover:text-black transition-colors text-xs font-medium">
+                  <Link to={to} className="text-slate-400 hover:text-white transition-colors text-xs font-medium">
                     {label}
                   </Link>
                 </li>
@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
 
           {/* Core Offerings */}
           <div>
-            <p className="text-slate-900 text-xs font-semibold tracking-widest uppercase mb-4 font-mono">Core Solutions</p>
+            <p className="text-cyan-400 text-xs font-semibold tracking-widest uppercase mb-4 font-mono">Core Solutions</p>
             <ul className="space-y-2.5">
               {[
                 { label: 'Websites & Web Apps', to: '/services' },
@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
                 { label: 'Digital & AI Solutions', to: '/services' },
               ].map(({ label, to }) => (
                 <li key={label}>
-                  <Link to={to} className="text-slate-500 hover:text-black transition-colors text-xs font-medium">
+                  <Link to={to} className="text-slate-400 hover:text-white transition-colors text-xs font-medium">
                     {label}
                   </Link>
                 </li>
@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
 
           {/* Company & Access */}
           <div>
-            <p className="text-slate-900 text-xs font-semibold tracking-widest uppercase mb-4 font-mono">Company &amp; Access</p>
+            <p className="text-cyan-400 text-xs font-semibold tracking-widest uppercase mb-4 font-mono">Company &amp; Access</p>
             <ul className="space-y-2.5">
               {[
                 { label: 'About Leadership', to: '/about' },
@@ -101,7 +101,7 @@ export const Footer: React.FC = () => {
                 { label: 'Register New Account', to: '/register' },
               ].map(({ label, to }) => (
                 <li key={label}>
-                  <Link to={to} className="text-slate-500 hover:text-black transition-colors text-xs font-medium">
+                  <Link to={to} className="text-slate-400 hover:text-white transition-colors text-xs font-medium">
                     {label}
                   </Link>
                 </li>
@@ -110,7 +110,7 @@ export const Footer: React.FC = () => {
             <div className="pt-4">
               <Link
                 to="/register"
-                className="inline-flex items-center gap-1.5 text-xs text-slate-800 hover:text-black transition-colors group font-semibold"
+                className="inline-flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 transition-colors group font-semibold"
               >
                 Join Platform <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
               </Link>
@@ -119,19 +119,19 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-black/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-500">
+        <div className="border-t border-blue-500/15 pt-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-400">
           <div className="text-center sm:text-left space-y-1">
             <p>
               © {year}{' '}
               <a
                 href="https://rmvswebservices.onrender.com/"
-                className="font-semibold text-slate-800 hover:text-black transition-colors"
+                className="font-semibold text-white hover:text-cyan-300 transition-colors"
               >
                 RMVS WebServices
               </a>
               . All rights reserved.
             </p>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-500">
               Verified Software Platform • Enterprise Solutions
             </p>
           </div>
@@ -140,16 +140,16 @@ export const Footer: React.FC = () => {
             <div>
               <a
                 href="https://rmvswebservices.onrender.com/"
-                className="font-bold text-slate-900 hover:text-black text-sm tracking-tight transition-colors inline-block"
+                className="font-bold text-white hover:text-cyan-300 text-sm tracking-tight transition-colors inline-block"
               >
                 RMVS WebServices
               </a>
             </div>
-            <div className="text-xs text-slate-600">
-              <span className="text-slate-400">Developer Name: </span>
+            <div className="text-xs text-slate-400">
+              <span className="text-slate-500">Developer Name: </span>
               <a
                 href="https://rmvswebservices.onrender.com/developers/riteshlingamallu8"
-                className="font-semibold text-slate-900 hover:text-black underline transition-colors"
+                className="font-semibold text-cyan-400 hover:text-cyan-300 underline transition-colors"
               >
                 Ritesh Lingamallu
               </a>
