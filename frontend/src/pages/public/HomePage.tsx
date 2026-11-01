@@ -4,11 +4,12 @@ import { motion, useInView } from 'framer-motion';
 import {
   ArrowRight, Globe, Smartphone, Code2, TrendingUp,
   ShieldCheck, FolderGit2, CheckCircle2,
-  Sparkles, Check, UserCheck
+  Sparkles, Check, UserCheck, LayoutGrid, SlidersHorizontal, Search, Eye, ExternalLink
 } from 'lucide-react';
 import api from '../../api/client';
 import type { Project, DeveloperProfile } from '../../types';
 import { ProjectCard } from '../../components/projects/ProjectCard';
+import { ProjectQuickViewModal } from '../../components/projects/ProjectQuickViewModal';
 import { DeveloperCard } from '../../components/developers/DeveloperCard';
 import { useSettings } from '../../context/SettingsContext';
 
@@ -206,6 +207,10 @@ export const HomePage: React.FC = () => {
   });
 
   const [selectedPillar, setSelectedPillar] = useState('All');
+  const [projectCardView, setProjectCardView] = useState<'grid' | 'showcase'>('grid');
+  const [projectSearchQuery, setProjectSearchQuery] = useState('');
+  const [quickViewProject, setQuickViewProject] = useState<Project | null>(null);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isLoadingProjects, setIsLoadingProjects] = useState(projects.length === 0);
   const [isLoadingDevs, setIsLoadingDevs] = useState(developers.length === 0);
 
@@ -246,9 +251,16 @@ export const HomePage: React.FC = () => {
     setInquirySubmitted(true);
   };
 
-  const filteredProjects = selectedPillar === 'All'
-    ? projects
-    : projects.filter((p) => p.category?.toLowerCase() === selectedPillar.toLowerCase());
+  const filteredProjects = projects.filter((p) => {
+    const matchesCategory = selectedPillar === 'All' || p.category?.toLowerCase() === selectedPillar.toLowerCase();
+    const query = projectSearchQuery.trim().toLowerCase();
+    const matchesSearch = !query ||
+      p.name.toLowerCase().includes(query) ||
+      (p.short_description && p.short_description.toLowerCase().includes(query)) ||
+      (p.client_name && p.client_name.toLowerCase().includes(query)) ||
+      (p.technologies && p.technologies.some((t) => t.name.toLowerCase().includes(query)));
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="bg-white min-h-screen text-slate-900 overflow-x-hidden">
@@ -472,65 +484,318 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* ─────────────────────────────────────────
-          3. PROJECTS SHOWCASE SECTION (Connected to Live DB)
+          3. PROJECTS SHOWCASE SECTION (Interactive Cards & Showcase Modes)
       ───────────────────────────────────────── */}
-      <section className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 max-w-6xl mx-auto" id="projects-section">
         <FadeIn>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 pb-4 border-b border-black/[0.08]">
+          {/* Section Header with View Modes */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-black/[0.08]">
             <div>
-              <p className="text-slate-500 text-xs tracking-widest uppercase font-mono mb-2">Attributed Works</p>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <p className="text-slate-500 text-xs tracking-widest uppercase font-mono">Attributed Works & Live Platforms</p>
+              </div>
               <h2 className="font-instrument italic text-3xl sm:text-4xl text-slate-900">
                 Featured Projects
               </h2>
             </div>
-            <Link
-              to="/projects"
-              className="text-xs text-slate-600 hover:text-black font-medium transition-colors flex items-center gap-1.5 self-start sm:self-auto"
-            >
-              <span>Explore All Details</span> <ArrowRight size={12} />
-            </Link>
+
+            {/* Interactive View Controls */}
+            <div className="flex items-center gap-2.5">
+              <div className="liquid-glass rounded-full p-1 border border-black/10 flex items-center gap-1 shadow-xs">
+                <button
+                  type="button"
+                  onClick={() => setProjectCardView('grid')}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+                    projectCardView === 'grid'
+                      ? 'bg-black text-white shadow-xs'
+                      : 'text-slate-600 hover:text-black hover:bg-black/[0.04]'
+                  }`}
+                  title="Grid Cards View"
+                >
+                  <LayoutGrid size={13} />
+                  <span>Cards</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setProjectCardView('showcase')}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+                    projectCardView === 'showcase'
+                      ? 'bg-black text-white shadow-xs'
+                      : 'text-slate-600 hover:text-black hover:bg-black/[0.04]'
+                  }`}
+                  title="Detailed Showcase View"
+                >
+                  <SlidersHorizontal size={13} />
+                  <span>Showcase</span>
+                </button>
+              </div>
+
+              <Link
+                to="/projects"
+                className="text-xs text-slate-700 hover:text-black font-semibold transition-colors flex items-center gap-1.5 px-3.5 py-2 rounded-full liquid-glass border border-black/10 hover:border-black/20"
+              >
+                <span>Directory</span> <ArrowRight size={12} />
+              </Link>
+            </div>
           </div>
 
+          {/* Interactive Filter Pills & Live Search Bar */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-8">
+            <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
+              {['All', 'Websites', 'Apps', 'Software', 'Digital Solutions'].map((cat) => {
+                const count = cat === 'All'
+                  ? projects.length
+                  : projects.filter((p) => p.category?.toLowerCase() === cat.toLowerCase()).length;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedPillar(cat)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+                      selectedPillar === cat
+                        ? 'bg-black text-white shadow-xs'
+                        : 'liquid-glass text-slate-600 hover:text-black hover:bg-black/[0.04] border border-black/[0.08]'
+                    }`}
+                  >
+                    <span>{cat}</span>
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                        selectedPillar === cat ? 'bg-white/20 text-white' : 'bg-slate-200/80 text-slate-700'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={13} />
+              <input
+                type="text"
+                value={projectSearchQuery}
+                onChange={(e) => setProjectSearchQuery(e.target.value)}
+                placeholder="Search projects & stack..."
+                className="w-full pl-9 pr-7 py-1.5 rounded-full bg-slate-50 border border-black/10 text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-black/30 transition-all shadow-xs"
+              />
+              {projectSearchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setProjectSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-black text-xs"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Projects Rendering */}
           {isLoadingProjects ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="liquid-glass rounded-3xl h-80 animate-pulse" />
+                <div key={i} className="liquid-glass rounded-3xl h-80 animate-pulse border border-black/[0.06]" />
               ))}
             </div>
           ) : filteredProjects.length === 0 ? (
-            /* Symmetrical, perfectly fitted Studio Commissioning Card for Clean Slate */
-            <div className="liquid-glass rounded-3xl p-10 sm:p-14 border border-black/[0.08] text-center max-w-3xl mx-auto shadow-md space-y-6">
-              <div className="w-16 h-16 rounded-full liquid-glass flex items-center justify-center mx-auto text-slate-600 ring-1 ring-black/10">
-                <FolderGit2 size={26} />
+            <div className="liquid-glass rounded-3xl p-10 sm:p-14 border border-black/[0.08] text-center max-w-2xl mx-auto shadow-md space-y-4">
+              <div className="w-14 h-14 rounded-full liquid-glass flex items-center justify-center mx-auto text-slate-600 ring-1 ring-black/10">
+                <FolderGit2 size={24} />
               </div>
-              <div>
-                <h3 className="font-instrument italic text-2xl sm:text-3xl text-slate-900 mb-3">
-                  Project Showcase Ready
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed max-w-lg mx-auto">
-                  Your platform is freshly connected to the backend. Verified developers and administrators can publish projects with full technical specifications and creator attribution.
-                </p>
-              </div>
-              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  to="/register?type=developer"
-                  className="px-7 py-3 rounded-full bg-black text-white text-xs font-semibold hover:bg-slate-800 shadow-md transition-all flex items-center gap-2"
-                >
-                  Register as Developer <ArrowRight size={13} />
-                </Link>
-                <Link
-                  to="/login"
-                  className="px-7 py-3 rounded-full liquid-glass text-slate-800 hover:text-black border border-black/10 text-xs hover:bg-black/[0.04] transition-all"
-                >
-                  Admin Sign In
-                </Link>
-              </div>
+              <h3 className="font-instrument italic text-2xl text-slate-900">
+                No matching projects found
+              </h3>
+              <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto">
+                No projects found for "{projectSearchQuery || selectedPillar}". Try selecting "All" or resetting your search.
+              </p>
+              <button
+                type="button"
+                onClick={() => { setSelectedPillar('All'); setProjectSearchQuery(''); }}
+                className="px-5 py-2 rounded-full bg-black text-white text-xs font-semibold hover:bg-slate-800 transition-colors shadow-sm"
+              >
+                Reset Filters
+              </button>
+            </div>
+          ) : projectCardView === 'grid' ? (
+            /* 1. Grid Cards Mode (High interactivity, spotlight hover, quick preview) */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+              {filteredProjects.map((p) => (
+                <ProjectCard
+                  key={p.id}
+                  project={p}
+                  onQuickView={(proj) => {
+                    setQuickViewProject(proj);
+                    setIsQuickViewOpen(true);
+                  }}
+                />
+              ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-              {filteredProjects.map((p) => (
-                <ProjectCard key={p.id} project={p} />
-              ))}
+            /* 2. Detailed Showcase Mode (Panoramic rich cards with deep architecture specs) */
+            <div className="space-y-8">
+              {filteredProjects.map((p) => {
+                const leadAssoc = p.developer_associations?.find((d) => d.is_lead) || p.developer_associations?.[0];
+                const leadDev = leadAssoc?.developer;
+                const leadUser = leadDev?.user;
+                const fallbackImg = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
+                const imgSrc = p.image_url && !p.image_url.includes('1drv.ms') ? p.image_url : fallbackImg;
+
+                return (
+                  <div
+                    key={p.id}
+                    style={{ transform: 'translateZ(0)' }}
+                    className="liquid-glass rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row gap-6 lg:gap-8 items-center"
+                  >
+                    {/* Media Preview Column */}
+                    <div className="relative w-full lg:w-1/2 h-64 sm:h-80 rounded-2xl overflow-hidden bg-slate-900 shrink-0 group">
+                      <img
+                        src={imgSrc}
+                        alt={p.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 brightness-[0.85]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+
+                      {/* Floating Badges */}
+                      <div className="absolute top-4 left-4 flex items-center gap-2">
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/90 text-slate-900 font-semibold shadow-sm backdrop-blur-md">
+                          {p.category || 'Platform'}
+                        </span>
+                        {p.demo_url && (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-emerald-500/90 text-white font-medium shadow-sm backdrop-blur-md">
+                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                            Live
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setQuickViewProject(p);
+                            setIsQuickViewOpen(true);
+                          }}
+                          className="px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-xs font-medium shadow-sm transition-transform hover:scale-105 flex items-center gap-1.5"
+                        >
+                          <Eye size={13} />
+                          <span>Quick Preview</span>
+                        </button>
+                        {p.demo_url && (
+                          <a
+                            href={p.demo_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-sm transition-transform hover:scale-105"
+                            title="Launch Live Application"
+                          >
+                            <ExternalLink size={13} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Metadata & Specs Column */}
+                    <div className="w-full lg:w-1/2 flex flex-col justify-between space-y-5">
+                      <div>
+                        <div className="flex items-center justify-between gap-2 mb-1.5">
+                          <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                            {p.client_name ? `Client · ${p.client_name}` : 'Engineered Platform'}
+                          </span>
+                          <span className="text-[10px] font-mono text-emerald-600 font-semibold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
+                            Verified Production
+                          </span>
+                        </div>
+
+                        <Link to={`/projects/${p.slug}`}>
+                          <h3 className="font-instrument italic text-2xl sm:text-3xl text-slate-900 hover:text-black transition-colors leading-snug mb-2.5">
+                            {p.name}
+                          </h3>
+                        </Link>
+
+                        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                          {p.short_description || p.description}
+                        </p>
+
+                        {/* Technology Capsules */}
+                        {p.technologies && p.technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mb-5">
+                            {p.technologies.map((t) => (
+                              <span
+                                key={t.id || t.name}
+                                className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-slate-100 text-slate-700 border border-black/[0.06]"
+                              >
+                                {t.name}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Lead Developer & Actions Strip */}
+                      <div className="pt-4 border-t border-black/[0.06] flex flex-wrap items-center justify-between gap-3">
+                        {leadUser ? (
+                          <Link
+                            to={`/developers/${leadUser.username}`}
+                            className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+                          >
+                            {leadUser.avatar_url ? (
+                              <img src={leadUser.avatar_url} alt={leadUser.full_name} className="w-8 h-8 rounded-full object-cover ring-1 ring-black/10" />
+                            ) : (
+                              <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-800 text-xs flex items-center justify-center font-instrument italic">
+                                {leadUser.full_name.charAt(0)}
+                              </div>
+                            )}
+                            <div>
+                              <p className="text-xs font-semibold text-slate-900 flex items-center gap-1">
+                                <span>{leadUser.full_name}</span>
+                                {leadUser.is_verified && <CheckCircle2 size={12} className="text-slate-700" />}
+                              </p>
+                              <p className="text-[10px] font-mono text-slate-400 uppercase">{leadAssoc?.role_in_project || 'Lead Architect'}</p>
+                            </div>
+                          </Link>
+                        ) : (
+                          <div />
+                        )}
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setQuickViewProject(p);
+                              setIsQuickViewOpen(true);
+                            }}
+                            className="px-4 py-2 rounded-full text-xs font-semibold text-slate-700 hover:text-black border border-black/10 hover:border-black/20 bg-white transition-colors flex items-center gap-1.5"
+                          >
+                            <Eye size={12} />
+                            <span>Quick View</span>
+                          </button>
+                          {p.demo_url ? (
+                            <a
+                              href={p.demo_url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="px-5 py-2 rounded-full bg-black hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
+                            >
+                              <Globe size={12} />
+                              <span>Live Site</span>
+                            </a>
+                          ) : (
+                            <Link
+                              to={`/projects/${p.slug}`}
+                              className="px-5 py-2 rounded-full bg-black hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
+                            >
+                              <span>Explore</span>
+                              <ArrowRight size={12} />
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </FadeIn>
@@ -832,6 +1097,13 @@ export const HomePage: React.FC = () => {
           </div>
         </FadeIn>
       </section>
+
+      {/* Interactive Project Quick-View Modal */}
+      <ProjectQuickViewModal
+        project={quickViewProject}
+        isOpen={isQuickViewOpen}
+        onClose={() => setIsQuickViewOpen(false)}
+      />
     </div>
   );
 };

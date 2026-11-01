@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Search, X, Plus } from 'lucide-react';
+import { Search, X, Plus, LayoutGrid, SlidersHorizontal, Eye, ExternalLink, Globe, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
 import type { Project } from '../../types';
 import { ProjectCard } from '../../components/projects/ProjectCard';
+import { ProjectQuickViewModal } from '../../components/projects/ProjectQuickViewModal';
 import { useSettings } from '../../context/SettingsContext';
 
 export const ProjectsDirectory: React.FC = () => {
@@ -24,6 +25,9 @@ export const ProjectsDirectory: React.FC = () => {
   });
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'showcase'>('grid');
+  const [quickViewProject, setQuickViewProject] = useState<Project | null>(null);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(projects.length === 0);
 
   const categories = ['All', 'AI/ML', 'SaaS', 'Websites', 'Mobile Apps', 'Software', 'CRM', 'Web Platforms', 'Automation'];
@@ -63,15 +67,48 @@ export const ProjectsDirectory: React.FC = () => {
             Real software systems engineered by our verified developers. Every project features permanent creator attribution.
           </p>
         </div>
-        {user && (user.is_verified || user.role === 'super_admin') && (
-          <Link
-            to="/dashboard/my-projects?action=new"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-slate-800 shadow-sm transition-colors shrink-0"
-          >
-            <Plus size={14} />
-            <span>New Project</span>
-          </Link>
-        )}
+
+        <div className="flex items-center gap-3 shrink-0">
+          {/* View Mode Toggle */}
+          <div className="liquid-glass rounded-full p-1 border border-black/10 flex items-center gap-1 shadow-xs">
+            <button
+              type="button"
+              onClick={() => setViewMode('grid')}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+                viewMode === 'grid'
+                  ? 'bg-black text-white shadow-xs'
+                  : 'text-slate-600 hover:text-black hover:bg-black/[0.04]'
+              }`}
+              title="Cards Grid View"
+            >
+              <LayoutGrid size={13} />
+              <span>Cards</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode('showcase')}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+                viewMode === 'showcase'
+                  ? 'bg-black text-white shadow-xs'
+                  : 'text-slate-600 hover:text-black hover:bg-black/[0.04]'
+              }`}
+              title="Showcase View"
+            >
+              <SlidersHorizontal size={13} />
+              <span>Showcase</span>
+            </button>
+          </div>
+
+          {user && (user.is_verified || user.role === 'super_admin') && (
+            <Link
+              to="/dashboard/my-projects?action=new"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-slate-800 shadow-sm transition-colors"
+            >
+              <Plus size={14} />
+              <span>New Project</span>
+            </Link>
+          )}
+        </div>
       </div>
 
       {/* Filter bar */}
@@ -123,7 +160,7 @@ export const ProjectsDirectory: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid */}
+      {/* Grid or Showcase View */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
         {isLoading ? (
           <div className="grid md:grid-cols-2 gap-6">
@@ -142,14 +179,183 @@ export const ProjectsDirectory: React.FC = () => {
               Reset filters
             </button>
           </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-6">
+        ) : viewMode === 'grid' ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {projects.map((proj) => (
-              <ProjectCard key={proj.id} project={proj} />
+              <ProjectCard
+                key={proj.id}
+                project={proj}
+                onQuickView={(p) => {
+                  setQuickViewProject(p);
+                  setIsQuickViewOpen(true);
+                }}
+              />
             ))}
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {projects.map((p) => {
+              const leadAssoc = p.developer_associations?.find((d) => d.is_lead) || p.developer_associations?.[0];
+              const leadDev = leadAssoc?.developer;
+              const leadUser = leadDev?.user;
+              const fallbackImg = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
+              const imgSrc = p.image_url && !p.image_url.includes('1drv.ms') ? p.image_url : fallbackImg;
+
+              return (
+                <div
+                  key={p.id}
+                  style={{ transform: 'translateZ(0)' }}
+                  className="liquid-glass rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row gap-6 lg:gap-8 items-center"
+                >
+                  <div className="relative w-full lg:w-1/2 h-64 sm:h-72 rounded-2xl overflow-hidden bg-slate-900 shrink-0 group">
+                    <img
+                      src={imgSrc}
+                      alt={p.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 brightness-[0.85]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                    <div className="absolute top-4 left-4 flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/90 text-slate-900 font-semibold shadow-sm backdrop-blur-md">
+                        {p.category || 'Platform'}
+                      </span>
+                      {p.demo_url && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-emerald-500/90 text-white font-medium shadow-sm backdrop-blur-md">
+                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                          Live
+                        </span>
+                      )}
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setQuickViewProject(p);
+                          setIsQuickViewOpen(true);
+                        }}
+                        className="px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-xs font-medium shadow-sm transition-transform hover:scale-105 flex items-center gap-1.5"
+                      >
+                        <Eye size={13} />
+                        <span>Quick Preview</span>
+                      </button>
+                      {p.demo_url && (
+                        <a
+                          href={p.demo_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-sm transition-transform hover:scale-105"
+                          title="Launch Live Website"
+                        >
+                          <ExternalLink size={13} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-1/2 flex flex-col justify-between space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                          {p.client_name ? `Client · ${p.client_name}` : 'Engineered Platform'}
+                        </span>
+                        <span className="text-[10px] font-mono text-emerald-600 font-semibold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
+                          Verified Production
+                        </span>
+                      </div>
+
+                      <Link to={`/projects/${p.slug}`}>
+                        <h3 className="font-instrument italic text-2xl sm:text-3xl text-slate-900 hover:text-black transition-colors leading-snug mb-2">
+                          {p.name}
+                        </h3>
+                      </Link>
+
+                      <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                        {p.short_description || p.description}
+                      </p>
+
+                      {p.technologies && p.technologies.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {p.technologies.map((t) => (
+                            <span
+                              key={t.id || t.name}
+                              className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-slate-100 text-slate-700 border border-black/[0.06]"
+                            >
+                              {t.name}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="pt-4 border-t border-black/[0.06] flex flex-wrap items-center justify-between gap-3">
+                      {leadUser && (
+                        <Link
+                          to={`/developers/${leadUser.username}`}
+                          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                        >
+                          {leadUser.avatar_url ? (
+                            <img src={leadUser.avatar_url} alt={leadUser.full_name} className="w-7 h-7 rounded-full object-cover ring-1 ring-black/10" />
+                          ) : (
+                            <div className="w-7 h-7 rounded-full bg-slate-200 text-slate-800 text-xs flex items-center justify-center font-instrument italic">
+                              {leadUser.full_name.charAt(0)}
+                            </div>
+                          )}
+                          <div>
+                            <p className="text-xs font-semibold text-slate-900 flex items-center gap-1">
+                              <span>{leadUser.full_name}</span>
+                              {leadUser.is_verified && <CheckCircle2 size={11} className="text-slate-700" />}
+                            </p>
+                            <p className="text-[10px] font-mono text-slate-400 uppercase">{leadAssoc?.role_in_project || 'Lead Architect'}</p>
+                          </div>
+                        </Link>
+                      )}
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setQuickViewProject(p);
+                            setIsQuickViewOpen(true);
+                          }}
+                          className="px-4 py-2 rounded-full text-xs font-semibold text-slate-700 hover:text-black border border-black/10 bg-white transition-colors flex items-center gap-1.5"
+                        >
+                          <Eye size={12} />
+                          <span>Quick View</span>
+                        </button>
+                        {p.demo_url ? (
+                          <a
+                            href={p.demo_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-5 py-2 rounded-full bg-black hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
+                          >
+                            <Globe size={12} />
+                            <span>Live Site</span>
+                          </a>
+                        ) : (
+                          <Link
+                            to={`/projects/${p.slug}`}
+                            className="px-5 py-2 rounded-full bg-black hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition-all"
+                          >
+                            Explore
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
+
+      {/* Interactive Project Quick-View Modal */}
+      <ProjectQuickViewModal
+        project={quickViewProject}
+        isOpen={isQuickViewOpen}
+        onClose={() => setIsQuickViewOpen(false)}
+      />
     </div>
   );
 };
