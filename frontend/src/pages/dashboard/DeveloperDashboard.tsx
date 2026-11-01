@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CheckCircle2, Clock, Eye, FolderGit2, MessageSquare,
   Plus, Users, ArrowRight, ExternalLink, Star, Edit3, X,
-  Camera, AlertCircle
+  Camera, AlertCircle, Upload, RefreshCw
 } from 'lucide-react';
 import api from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
 import type { ClientInquiry, Project } from '../../types';
 import { CustomerWhatsAppPreferenceCard } from '../../components/dashboard/CustomerWhatsAppPreferenceCard';
+import { DeviceAvatarUploader } from '../../components/common/DeviceAvatarUploader';
 
 export const DeveloperDashboard: React.FC = () => {
   const { user, refreshUser } = useAuth();
@@ -38,6 +39,31 @@ export const DeveloperDashboard: React.FC = () => {
     resume_url: '',
   });
   const [skillInput, setSkillInput] = useState('');
+
+  // Direct Device Avatar Upload
+  const directFileInputRef = useRef<HTMLInputElement>(null);
+  const [isDirectUploading, setIsDirectUploading] = useState(false);
+
+  const handleDirectAvatarUpload = async (file: File) => {
+    setIsDirectUploading(true);
+    setSaveError(null);
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+      await api.post('/developers/me/avatar', formDataUpload, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      setSaveSuccess('Profile picture updated and auto-synced across all devices!');
+      setTimeout(() => setSaveSuccess(null), 4000);
+      await refreshUser();
+      window.dispatchEvent(new Event('storage'));
+    } catch (err: any) {
+      console.error('Failed to upload avatar from device', err);
+      setSaveError(err.response?.data?.detail || 'Failed to upload image. Please try another photo.');
+    } finally {
+      setIsDirectUploading(false);
+    }
+  };
 
   useEffect(() => {
     loadDashboardData();
@@ -144,17 +170,70 @@ export const DeveloperDashboard: React.FC = () => {
         {/* Top Welcome Card */}
         <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-sm bg-white/70 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            {user.avatar_url ? (
-              <img
-                src={user.avatar_url}
-                alt={user.full_name}
-                className="w-16 h-16 rounded-2xl object-cover ring-2 ring-black/[0.08] shadow-sm"
+            {/* Interactive Device Avatar */}
+            <div className="relative group shrink-0">
+              <input
+                ref={directFileInputRef}
+                type="file"
+                accept="image/png, image/jpeg, image/webp, image/gif, image/bmp"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) handleDirectAvatarUpload(f);
+                  e.target.value = '';
+                }}
               />
-            ) : (
-              <div className="w-16 h-16 rounded-2xl bg-slate-100 border border-black/[0.08] flex items-center justify-center text-slate-900 text-2xl font-bold shadow-2xs">
-                {user.full_name.charAt(0)}
+
+              <div
+                onClick={() => directFileInputRef.current?.click()}
+                className="relative cursor-pointer rounded-2xl overflow-hidden ring-2 ring-black/[0.08] shadow-sm hover:ring-black/20 transition-all"
+                title="Click to select new photo from your device"
+              >
+                {user.avatar_url ? (
+                  <img
+                    src={user.avatar_url}
+                    alt={user.full_name}
+                    className="w-16 h-16 sm:w-20 sm:h-20 object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400';
+                    }}
+                  />
+                ) : (
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 flex items-center justify-center text-slate-900 text-2xl font-bold">
+                    {user.full_name.charAt(0)}
+                  </div>
+                )}
+
+                {/* Hover overlay with Camera */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white backdrop-blur-[2px]">
+                  {isDirectUploading ? (
+                    <RefreshCw size={18} className="animate-spin text-white" />
+                  ) : (
+                    <>
+                      <Camera size={18} />
+                      <span className="text-[9px] font-mono uppercase font-semibold mt-0.5">Upload</span>
+                    </>
+                  )}
+                </div>
               </div>
-            )}
+
+              {/* Floating Camera Badge */}
+              <button
+                type="button"
+                onClick={() => directFileInputRef.current?.click()}
+                disabled={isDirectUploading}
+                className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-black text-white hover:bg-slate-800 shadow-md transition-all active:scale-90"
+                title="Select photo from device"
+              >
+                {isDirectUploading ? (
+                  <RefreshCw size={11} className="animate-spin text-white" />
+                ) : (
+                  <Camera size={11} />
+                )}
+              </button>
+            </div>
+
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-instrument italic text-3xl text-slate-950">
@@ -182,7 +261,22 @@ export const DeveloperDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Quick Upload from Device Button */}
+            <button
+              type="button"
+              onClick={() => directFileInputRef.current?.click()}
+              disabled={isDirectUploading}
+              className="liquid-glass text-slate-800 rounded-full px-4 py-2 text-xs font-semibold flex items-center gap-1.5 border border-black/10 hover:bg-slate-50 transition-all shadow-2xs active:scale-95 disabled:opacity-50"
+            >
+              {isDirectUploading ? (
+                <RefreshCw size={13} className="animate-spin text-slate-600" />
+              ) : (
+                <Upload size={13} />
+              )}
+              <span>Change Photo</span>
+            </button>
+
             <button
               onClick={openEditModal}
               className="bg-black text-white rounded-full px-4 py-2 text-xs font-semibold flex items-center gap-1.5 hover:bg-slate-800 transition-all shadow-sm"
@@ -524,37 +618,19 @@ export const DeveloperDashboard: React.FC = () => {
               {/* Profile Picture */}
               <div className="space-y-3 pb-4 border-b border-black/[0.06]">
                 <label className="block text-slate-700 text-xs font-semibold uppercase tracking-wider font-mono">
-                  Profile Picture
+                  Profile Picture (Device Upload & Cloud Auto-Sync)
                 </label>
-                <div className="flex items-center gap-4">
-                  {formData.avatar_url ? (
-                    <img
-                      src={formData.avatar_url}
-                      alt="Avatar preview"
-                      className="w-16 h-16 rounded-2xl object-cover ring-2 ring-black/10 shadow-sm"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400';
-                      }}
-                    />
-                  ) : (
-                    <div className="w-16 h-16 rounded-2xl bg-slate-100 border border-black/10 flex items-center justify-center text-slate-400">
-                      <Camera size={22} />
-                    </div>
-                  )}
-
-                  <div className="flex-1 space-y-1">
-                    <input
-                      type="url"
-                      value={formData.avatar_url}
-                      onChange={(e) => setFormData({ ...formData, avatar_url: e.target.value })}
-                      placeholder="Paste image URL (e.g. https://images.unsplash.com/...)"
-                      className="w-full bg-slate-50 border border-black/10 rounded-xl px-3.5 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-black/30"
-                    />
-                    <p className="text-[11px] text-slate-400">
-                      Direct image link (JPG/PNG). Leave empty to use initial letter.
-                    </p>
-                  </div>
-                </div>
+                <DeviceAvatarUploader
+                  currentAvatarUrl={formData.avatar_url}
+                  fallbackName={formData.full_name || user.full_name}
+                  size="md"
+                  onAvatarChange={(newUrl) => setFormData({ ...formData, avatar_url: newUrl || '' })}
+                  directUploadApiUrl="/developers/me/avatar"
+                  onDirectUploadSuccess={async (newUrl) => {
+                    setFormData({ ...formData, avatar_url: newUrl || '' });
+                    await refreshUser();
+                  }}
+                />
               </div>
 
               {/* Basic Details */}

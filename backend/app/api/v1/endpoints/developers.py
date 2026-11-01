@@ -1,12 +1,13 @@
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status, File, UploadFile, Form
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, or_, desc
 from sqlalchemy.orm import selectinload
 from app.core.database import get_db
 from app.models import User, DeveloperProfile, Skill, ProjectDeveloper, Project
-from app.schemas import DeveloperProfileOut, DeveloperProfileUpdate, ProjectOut
+from app.schemas import DeveloperProfileOut, DeveloperProfileUpdate, ProjectOut, UserOut
 from app.api.deps import get_current_user
+from app.services.image_service import optimize_avatar_image
 
 router = APIRouter()
 
@@ -188,3 +189,82 @@ async def update_my_developer_profile(
         )
     )
     return (await db.execute(reloaded_stmt)).scalar_one()
+
+@router.post("/me/avatar")
+async def upload_developer_avatar(
+    file: Optional[UploadFile] = File(None),
+    avatar_data: Optional[str] = Form(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Upload and optimize developer profile photo from device or web.
+    Auto-resizes to square, encodes as high-efficiency WebP, and auto-syncs across all devices.
+    """
+    stmt = (
+        select(DeveloperProfile)
+        .where(DeveloperProfile.user_id == current_user.id)
+        .options(selectinload(DeveloperProfile.user))
+    )
+    profile = (await db.execute(stmt)).scalar_one_or_none()
+    if not profile:
+        profile = DeveloperProfile(user_id=current_user.id)
+        db.add(profile)
+        await db.flush()
+
+    new_avatar_url: Optional[str] = None
+
+    if file and file.filename:
+        file_bytes = await file.read()
+        try:
+            new_avatar_url = optimize_avatar_image(file_bytes)
+        except ValueError as ve:
+            raise HTTPException(status_code=400, detail=str(ve))
+    elif avatar_data and avatar_data.strip():
+        val = avatar_data.strip()
+        if val.startswith("data:image/"):
+            new_avatar_url = val
+        elif val.startswith("http://") or val.startswith("https://"):
+            new_avatar_url = val
+        else:
+            raise HTTPException(status_code=400, detail="Invalid image format. Expected file upload or valid image URL.")
+    else:
+        raise HTTPException(status_code=400, detail="No image file or image data provided")
+
+    # Update in both user model and profile relationship
+    current_user.avatar_url = new_avatar_url
+    if profile.user:
+        profile.user.avatar_url = new_avatar_url
+
+    await db.commit()
+
+    return {
+        "success": True,
+        "avatar_url": new_avatar_url,
+        "message": "Developer profile picture updated and synchronized across all devices successfully"
+    }
+
+@router.delete("/me/avatar")
+async def delete_developer_avatar(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Remove profile photo and revert to initials.
+    """
+    stmt = (
+        select(DeveloperProfile)
+        .where(DeveloperProfile.user_id == current_user.id)
+        .options(selectinload(DeveloperProfile.user))
+    )
+    profile = (await db.execute(stmt)).scalar_one_or_none()
+    current_user.avatar_url = None
+    if profile and profile.user:
+        profile.user.avatar_url = None
+
+    await db.commit()
+    return {
+        "success": True,
+        "avatar_url": None,
+        "message": "Developer profile picture removed successfully"
+    }

@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from typing import Optional
+from fastapi import APIRouter, Depends, HTTPException, status, Response, File, UploadFile, Form
+from fastapi.responses import RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, or_
 from app.core.database import get_db
@@ -12,6 +14,7 @@ from app.schemas import (
     UserOut
 )
 from app.api.deps import get_current_user
+from app.services.image_service import optimize_avatar_image, decode_avatar_data_uri
 
 from sqlalchemy.orm import selectinload
 
@@ -180,3 +183,86 @@ async def login(payload: LoginRequest, db: AsyncSession = Depends(get_db)):
 @router.get("/me", response_model=UserOut)
 async def get_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+@router.post("/me/avatar")
+async def upload_user_avatar(
+    file: Optional[UploadFile] = File(None),
+    avatar_data: Optional[str] = Form(None),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Direct device file upload for user avatar.
+    Optimizes to square WebP and saves to cloud database for instant cross-device sync.
+    """
+    new_avatar_url: Optional[str] = None
+
+    if file and file.filename:
+        file_bytes = await file.read()
+        try:
+            new_avatar_url = optimize_avatar_image(file_bytes)
+        except ValueError as ve:
+            raise HTTPException(status_code=400, detail=str(ve))
+    elif avatar_data and avatar_data.strip():
+        val = avatar_data.strip()
+        if val.startswith("data:image/"):
+            new_avatar_url = val
+        elif val.startswith("http://") or val.startswith("https://"):
+            new_avatar_url = val
+        else:
+            raise HTTPException(status_code=400, detail="Invalid image format. Expected file upload or valid image URL.")
+    else:
+        raise HTTPException(status_code=400, detail="No image file or image data provided")
+
+    current_user.avatar_url = new_avatar_url
+    await db.commit()
+
+    return {
+        "success": True,
+        "avatar_url": new_avatar_url,
+        "message": "Profile picture updated and auto-synced across all devices successfully"
+    }
+
+@router.delete("/me/avatar")
+async def delete_user_avatar(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Remove profile photo and revert to initial avatar.
+    """
+    current_user.avatar_url = None
+    await db.commit()
+    return {
+        "success": True,
+        "avatar_url": None,
+        "message": "Profile picture removed successfully"
+    }
+
+@router.get("/avatar/{user_id}")
+async def get_user_avatar_image(user_id: int, db: AsyncSession = Depends(get_db)):
+    """
+    Direct image URL endpoint for user avatars.
+    Streams decoded binary WebP or redirects to external URL.
+    """
+    stmt = select(User.avatar_url).where(User.id == user_id)
+    avatar_url = (await db.execute(stmt)).scalar_one_or_none()
+
+    if not avatar_url:
+        raise HTTPException(status_code=404, detail="Avatar not found")
+
+    if avatar_url.startswith("data:image/"):
+        try:
+            raw_bytes, mime_type = decode_avatar_data_uri(avatar_url)
+            return Response(
+                content=raw_bytes,
+                media_type=mime_type,
+                headers={
+                    "Cache-Control": "public, max-age=86400",
+                    "ETag": f'"{user_id}-{len(raw_bytes)}"'
+                }
+            )
+        except Exception:
+            raise HTTPException(status_code=500, detail="Error decoding avatar data")
+
+    return RedirectResponse(url=avatar_url)

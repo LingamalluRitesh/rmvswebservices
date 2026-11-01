@@ -12,6 +12,7 @@ import { useSettings } from '../../context/SettingsContext';
 import type { DashboardStats, ClientInquiry, User, Project, CompanySettings, ActivityLog } from '../../types';
 import { WhatsAppAutomationTab } from '../../components/admin/WhatsAppAutomationTab';
 import { OrdersManagementTab } from '../../components/admin/OrdersManagementTab';
+import { DeviceAvatarUploader } from '../../components/common/DeviceAvatarUploader';
 
 export const AdminDashboard: React.FC = () => {
   const { user: currentUser } = useAuth();
@@ -60,6 +61,7 @@ export const AdminDashboard: React.FC = () => {
     github_url: '',
     linkedin_url: '',
     portfolio_url: '',
+    avatar_url: '',
   });
 
   // Reset Password Modal
@@ -186,6 +188,7 @@ export const AdminDashboard: React.FC = () => {
       github_url: dev.github_url || p?.github_url || '',
       linkedin_url: dev.linkedin_url || p?.linkedin_url || '',
       portfolio_url: dev.portfolio_url || p?.portfolio_url || '',
+      avatar_url: dev.avatar_url || dev.user?.avatar_url || '',
     });
   };
 
@@ -198,6 +201,7 @@ export const AdminDashboard: React.FC = () => {
       await api.put(`/admin/developers/${devId}/designation`, {
         title: editDevForm.title,
         department: editDevForm.department,
+        avatar_url: editDevForm.avatar_url,
       });
 
       await api.put(`/admin/developers/${devId}/status`, {
@@ -1267,6 +1271,19 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <form onSubmit={handleSaveDeveloper} className="space-y-4">
+                {/* Profile Picture Device Upload */}
+                <div className="pb-3 border-b border-black/[0.06]">
+                  <label className="block text-slate-700 text-xs font-semibold uppercase font-mono mb-2">
+                    Profile Picture (Device Upload & Cloud Sync)
+                  </label>
+                  <DeviceAvatarUploader
+                    currentAvatarUrl={editDevForm.avatar_url}
+                    fallbackName={editDevForm.full_name || editingDev.full_name}
+                    size="sm"
+                    onAvatarChange={(newUrl) => setEditDevForm({ ...editDevForm, avatar_url: newUrl || '' })}
+                  />
+                </div>
+
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-slate-700 text-xs font-semibold uppercase font-mono mb-1">Dynamic Designation *</label>

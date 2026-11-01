@@ -32,7 +32,7 @@ class User(Base):
     status = Column(String(50), default="approved", nullable=False) # pending, approved, rejected, suspended
     is_active = Column(Boolean, default=True, nullable=False)
     is_verified = Column(Boolean, default=False, nullable=False)
-    avatar_url = Column(String(500), nullable=True)
+    avatar_url = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
 
@@ -67,7 +67,7 @@ class DeveloperProfile(Base):
     linkedin_url = Column(String(255), nullable=True)
     portfolio_url = Column(String(255), nullable=True)
     resume_url = Column(String(255), nullable=True)
-    cover_image_url = Column(String(500), nullable=True)
+    cover_image_url = Column(Text, nullable=True)
     certificates = Column(Text, nullable=True) # JSON or newline text
     achievements = Column(Text, nullable=True) # JSON or newline text
     is_public = Column(Boolean, default=True, nullable=False)

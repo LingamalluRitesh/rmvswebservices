@@ -625,6 +625,10 @@ async def update_developer_designation(
         dev.title = new_title
     if new_dept:
         dev.department = new_dept
+    if "avatar_url" in payload:
+        new_avatar = payload.get("avatar_url")
+        if dev.user:
+            dev.user.avatar_url = new_avatar.strip() if new_avatar and new_avatar.strip() else None
 
     log = ActivityLog(
         user_id=admin.id,
