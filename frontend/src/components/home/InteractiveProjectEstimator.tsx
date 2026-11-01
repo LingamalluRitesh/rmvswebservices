@@ -58,18 +58,18 @@ export const InteractiveProjectEstimator: React.FC = () => {
   const weeks = (totalDays / 7).toFixed(1);
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-slate-900/90 backdrop-blur-2xl border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,0.6)] p-6 sm:p-9 text-slate-100">
+    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-white/[0.95] backdrop-blur-2xl border border-slate-200/90 shadow-[0_25px_70px_rgba(15,23,42,0.08)] p-6 sm:p-9 text-slate-900">
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-8">
-        <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[11px] font-mono uppercase tracking-widest mb-3">
-          <Zap size={12} className="text-cyan-400" />
+        <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-[11px] font-mono uppercase tracking-widest mb-3 shadow-2xs">
+          <Zap size={12} className="text-cyan-600" />
           <span>Interactive Architecture Calculator</span>
         </span>
-        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
+        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-950 mb-2 font-sans">
           Design Your Architecture & Engineering Scope
         </h3>
-        <p className="text-slate-400 text-xs sm:text-sm">
+        <p className="text-slate-600 text-xs sm:text-sm">
           Select your requirements below to instantly model recommended technologies, engineering timeline, and squad allocation.
         </p>
       </div>
@@ -81,7 +81,7 @@ export const InteractiveProjectEstimator: React.FC = () => {
           
           {/* Step 1: Platform */}
           <div>
-            <label className="block text-slate-400 text-xs font-mono uppercase tracking-wider mb-2.5">
+            <label className="block text-slate-500 text-xs font-mono uppercase tracking-wider mb-2.5">
               1. Primary Platform
             </label>
             <div className="grid grid-cols-2 gap-2.5">
@@ -95,14 +95,14 @@ export const InteractiveProjectEstimator: React.FC = () => {
                     onClick={() => setSelectedPlatform(p.id)}
                     className={`p-3.5 rounded-2xl border text-left transition-all flex items-start gap-3 ${
                       isSelected
-                        ? 'bg-cyan-500/15 border-cyan-400/60 shadow-[0_0_20px_rgba(6,182,212,0.15)] text-white'
-                        : 'bg-white/5 border-white/10 hover:bg-white/10 text-slate-300'
+                        ? 'bg-cyan-50/90 border-cyan-500 text-cyan-950 shadow-sm ring-1 ring-cyan-500/30'
+                        : 'bg-slate-50/80 border-slate-200/80 hover:bg-slate-100/80 text-slate-700'
                     }`}
                   >
-                    <Icon size={18} className={isSelected ? 'text-cyan-400' : 'text-slate-400'} />
+                    <Icon size={18} className={isSelected ? 'text-cyan-600' : 'text-slate-400'} />
                     <div>
                       <p className="text-xs font-semibold leading-none mb-1">{p.label}</p>
-                      <p className="text-[10px] text-slate-400 font-mono truncate max-w-[130px]">{p.stack}</p>
+                      <p className="text-[10px] text-slate-500 font-mono truncate max-w-[130px]">{p.stack}</p>
                     </div>
                   </button>
                 );
@@ -112,7 +112,7 @@ export const InteractiveProjectEstimator: React.FC = () => {
 
           {/* Step 2: Scale Tier */}
           <div>
-            <label className="block text-slate-400 text-xs font-mono uppercase tracking-wider mb-2.5">
+            <label className="block text-slate-500 text-xs font-mono uppercase tracking-wider mb-2.5">
               2. Deployment Scale
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -123,8 +123,8 @@ export const InteractiveProjectEstimator: React.FC = () => {
                   onClick={() => setSelectedTier(t.id)}
                   className={`py-2.5 px-3 rounded-xl border text-xs font-medium text-center transition-all ${
                     selectedTier === t.id
-                      ? 'bg-emerald-500/15 border-emerald-400/60 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.15)]'
-                      : 'bg-white/5 border-white/10 hover:bg-white/10 text-slate-300'
+                      ? 'bg-emerald-50 border-emerald-500 text-emerald-900 font-semibold shadow-xs ring-1 ring-emerald-500/30'
+                      : 'bg-slate-50/80 border-slate-200/80 hover:bg-slate-100 text-slate-600'
                   }`}
                 >
                   {t.label}
@@ -135,7 +135,7 @@ export const InteractiveProjectEstimator: React.FC = () => {
 
           {/* Step 3: Add-on Capabilities */}
           <div>
-            <label className="block text-slate-400 text-xs font-mono uppercase tracking-wider mb-2.5">
+            <label className="block text-slate-500 text-xs font-mono uppercase tracking-wider mb-2.5">
               3. Advanced Capabilities
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -148,12 +148,12 @@ export const InteractiveProjectEstimator: React.FC = () => {
                     onClick={() => toggleAddon(addon.id)}
                     className={`py-2 px-3 rounded-xl border text-[11px] font-mono flex items-center justify-between transition-all ${
                       checked
-                        ? 'bg-purple-500/15 border-purple-400/60 text-purple-300'
-                        : 'bg-white/5 border-white/10 hover:bg-white/10 text-slate-400'
+                        ? 'bg-purple-50 border-purple-500 text-purple-950 font-semibold shadow-xs'
+                        : 'bg-slate-50/80 border-slate-200/80 hover:bg-slate-100 text-slate-600'
                     }`}
                   >
                     <span>{addon.label}</span>
-                    {checked && <CheckCircle2 size={13} className="text-purple-400 shrink-0" />}
+                    {checked && <CheckCircle2 size={13} className="text-purple-600 shrink-0" />}
                   </button>
                 );
               })}
@@ -161,55 +161,55 @@ export const InteractiveProjectEstimator: React.FC = () => {
           </div>
         </div>
 
-        {/* Live Estimate Card */}
-        <div className="lg:col-span-5 bg-gradient-to-b from-slate-800/90 to-slate-900/95 border border-white/15 rounded-3xl p-6 text-left space-y-5 shadow-2xl">
+        {/* Live Estimate Card (Clean Light Studio Box) */}
+        <div className="lg:col-span-5 bg-gradient-to-b from-slate-50 to-slate-100/90 border border-slate-200/90 rounded-3xl p-6 text-left space-y-5 shadow-sm">
           
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200/80">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-semibold">
               Live Architecture Model
             </span>
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]" />
           </div>
 
           {/* Delivery & Timeline */}
           <div>
-            <p className="text-slate-400 text-xs font-mono uppercase">Estimated Delivery Timeline</p>
+            <p className="text-slate-500 text-xs font-mono uppercase">Estimated Delivery Timeline</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-3xl font-extrabold text-white tracking-tight">{totalDays}</span>
-              <span className="text-slate-400 text-sm">Days (~{weeks} Weeks)</span>
+              <span className="text-3xl font-extrabold text-slate-950 tracking-tight">{totalDays}</span>
+              <span className="text-slate-500 text-sm">Days (~{weeks} Weeks)</span>
             </div>
           </div>
 
           {/* Architecture Spec */}
           <div className="space-y-2 pt-2 text-xs">
-            <div className="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/5">
-              <span className="text-slate-400 flex items-center gap-1.5">
-                <Cpu size={13} className="text-cyan-400" /> Core Tech
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200/70 shadow-2xs">
+              <span className="text-slate-500 flex items-center gap-1.5 font-medium">
+                <Cpu size={13} className="text-cyan-600" /> Core Tech
               </span>
-              <span className="font-mono text-white font-semibold">{platform.stack}</span>
+              <span className="font-mono text-slate-900 font-semibold">{platform.stack}</span>
             </div>
 
-            <div className="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/5">
-              <span className="text-slate-400 flex items-center gap-1.5">
-                <Users size={13} className="text-emerald-400" /> Squad Scale
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200/70 shadow-2xs">
+              <span className="text-slate-500 flex items-center gap-1.5 font-medium">
+                <Users size={13} className="text-emerald-600" /> Squad Scale
               </span>
-              <span className="font-mono text-emerald-300 text-[11px] font-semibold truncate max-w-[170px]">
+              <span className="font-mono text-emerald-800 text-[11px] font-semibold truncate max-w-[170px]">
                 {tier.squadDesc}
               </span>
             </div>
 
-            <div className="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/5">
-              <span className="text-slate-400 flex items-center gap-1.5">
-                <ShieldCheck size={13} className="text-purple-400" /> Attribution
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200/70 shadow-2xs">
+              <span className="text-slate-500 flex items-center gap-1.5 font-medium">
+                <ShieldCheck size={13} className="text-purple-600" /> Attribution
               </span>
-              <span className="font-mono text-white font-semibold">100% Direct & Transparent</span>
+              <span className="font-mono text-slate-900 font-semibold">100% Direct & Transparent</span>
             </div>
           </div>
 
           {/* Proceed CTA */}
           <Link
             to={`/contact?platform=${selectedPlatform}&tier=${selectedTier}`}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(6,182,212,0.35)] active:scale-95"
+            className="w-full py-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_10px_20px_rgba(15,23,42,0.15)] active:scale-95"
           >
             <span>Lock In This Scope</span>
             <ArrowRight size={14} />

@@ -115,19 +115,19 @@ export const InteractiveCodeStudio: React.FC<InteractiveCodeStudioProps> = ({ on
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto rounded-3xl bg-slate-950/90 backdrop-blur-2xl border border-cyan-500/20 shadow-[0_25px_70px_rgba(0,0,0,0.8),0_0_30px_rgba(6,182,212,0.15)] overflow-hidden text-left relative group">
+    <div className="w-full max-w-lg mx-auto rounded-3xl bg-white/[0.94] backdrop-blur-2xl border border-slate-200/90 shadow-[0_30px_70px_rgba(15,23,42,0.12),0_0_20px_rgba(6,182,212,0.08)] overflow-hidden text-left relative group">
       
       {/* Ambient Cybernetic Corner Accents */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-400/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-36 h-36 bg-blue-400/10 rounded-full blur-2xl pointer-events-none" />
 
       {/* Top Window Chrome */}
-      <div className="px-4 py-3 bg-slate-900/90 border-b border-white/[0.08] flex items-center justify-between gap-3">
+      <div className="px-4 py-3 bg-slate-50/95 border-b border-slate-200/80 flex items-center justify-between gap-3">
         {/* macOS Glass Dots */}
         <div className="flex items-center gap-1.5 shrink-0">
-          <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_6px_#f43f5e]" />
-          <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_6px_#f59e0b]" />
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_#10b981]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_6px_rgba(244,63,94,0.4)]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(16,185,129,0.4)]" />
         </div>
 
         {/* Tab Switchers */}
@@ -141,8 +141,8 @@ export const InteractiveCodeStudio: React.FC<InteractiveCodeStudioProps> = ({ on
               }}
               className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-all shrink-0 ${
                 activeSnippetId === snippet.id
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-xs'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                  ? 'bg-white text-cyan-900 border border-cyan-500/50 shadow-xs font-semibold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/60'
               }`}
             >
               {snippet.tabLabel}
@@ -153,40 +153,40 @@ export const InteractiveCodeStudio: React.FC<InteractiveCodeStudioProps> = ({ on
         {/* Copy snippet button */}
         <button
           onClick={handleCopyCode}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
           title="Copy Code"
         >
-          {copied ? <Check size={13} className="text-emerald-400" /> : <Copy size={13} />}
+          {copied ? <Check size={13} className="text-emerald-600" /> : <Copy size={13} />}
         </button>
       </div>
 
       {/* File Name & Benchmark Header */}
-      <div className="px-4 py-2 bg-slate-950/60 border-b border-white/[0.05] flex items-center justify-between text-[11px] font-mono">
-        <span className="text-slate-400 flex items-center gap-1.5">
-          <span className="text-cyan-400">λ</span>
-          <span>{activeSnippet.fileName}</span>
+      <div className="px-4 py-2 bg-slate-100/70 border-b border-slate-200/70 flex items-center justify-between text-[11px] font-mono">
+        <span className="text-slate-600 flex items-center gap-1.5">
+          <span className="text-cyan-600 font-bold">λ</span>
+          <span className="font-medium text-slate-700">{activeSnippet.fileName}</span>
         </span>
-        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold text-[10px]">
+        <span className="px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold text-[10px]">
           {activeSnippet.benchmark}
         </span>
       </div>
 
-      {/* Code Editor Body */}
-      <div className="p-4 sm:p-5 font-mono text-[12px] sm:text-[13px] leading-relaxed text-slate-300 overflow-x-auto bg-slate-950/95 max-h-[260px] scrollbar-thin">
+      {/* Code Editor Body (High-Contrast Obsidian IDE Display inside White Chassis) */}
+      <div className="p-4 sm:p-5 font-mono text-[12px] sm:text-[13px] leading-relaxed text-slate-200 overflow-x-auto bg-[#0d1117] max-h-[260px] scrollbar-thin">
         <pre className="text-left font-mono">
           <code>
             {activeSnippet.code.split('\n').map((line, idx) => (
               <div key={idx} className="table-row">
-                <span className="table-cell pr-3 text-slate-600 select-none text-[11px] text-right w-6">
+                <span className="table-cell pr-3 text-slate-500 select-none text-[11px] text-right w-6">
                   {idx + 1}
                 </span>
                 <span className="table-cell">
                   {line.startsWith('//') || line.startsWith('#') ? (
-                    <span className="text-slate-500 italic">{line}</span>
+                    <span className="text-slate-400 italic">{line}</span>
                   ) : line.includes('import') || line.includes('from') || line.includes('export') || line.includes('class') || line.includes('async') || line.includes('def') ? (
-                    <span className="text-cyan-400">{line}</span>
+                    <span className="text-cyan-300 font-semibold">{line}</span>
                   ) : line.includes('return') || line.includes('const') || line.includes('final') ? (
-                    <span className="text-purple-400">{line}</span>
+                    <span className="text-purple-300">{line}</span>
                   ) : line.includes('"') || line.includes("'") ? (
                     <span className="text-emerald-300">{line}</span>
                   ) : (
@@ -199,10 +199,10 @@ export const InteractiveCodeStudio: React.FC<InteractiveCodeStudioProps> = ({ on
         </pre>
       </div>
 
-      {/* Interactive Runtime Terminal Console (collapsible or toggled by Run) */}
+      {/* Interactive Runtime Terminal Console */}
       {showTerminal && (
-        <div className="border-t border-cyan-500/30 bg-slate-900/95 p-3.5 text-left font-mono text-[11px] text-emerald-400 space-y-1 animate-in fade-in duration-300">
-          <div className="flex items-center justify-between text-slate-400 text-[10px] pb-1 border-b border-white/5 uppercase tracking-wider">
+        <div className="border-t border-slate-800 bg-[#090d16] p-3.5 text-left font-mono text-[11px] text-emerald-400 space-y-1 animate-in fade-in duration-300">
+          <div className="flex items-center justify-between text-slate-400 text-[10px] pb-1 border-b border-white/10 uppercase tracking-wider">
             <span className="flex items-center gap-1.5 text-cyan-300">
               <Terminal size={12} />
               <span>Live Runtime Output</span>
@@ -222,19 +222,19 @@ export const InteractiveCodeStudio: React.FC<InteractiveCodeStudioProps> = ({ on
         </div>
       )}
 
-      {/* Interactive Actions & Metrics Footer */}
-      <div className="px-4 py-3 bg-slate-900/90 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
+      {/* Interactive Actions & Metrics Footer (White Theme Shell) */}
+      <div className="px-4 py-3 bg-slate-50/95 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
         {/* Run Code Button */}
         <button
           type="button"
           onClick={handleRunCode}
           disabled={isRunning}
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs flex items-center gap-2 transition-all shadow-[0_0_20px_rgba(6,182,212,0.35)] active:scale-95 disabled:opacity-50"
+          className="px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs flex items-center gap-2 transition-all shadow-sm active:scale-95 disabled:opacity-50"
         >
           {isRunning ? (
-            <RefreshCw size={13} className="animate-spin text-slate-950" />
+            <RefreshCw size={13} className="animate-spin text-cyan-400" />
           ) : (
-            <Play size={13} className="fill-slate-950" />
+            <Play size={13} className="fill-cyan-400 text-cyan-400" />
           )}
           <span>{isRunning ? 'Compiling...' : 'Run Architecture'}</span>
         </button>
@@ -244,9 +244,9 @@ export const InteractiveCodeStudio: React.FC<InteractiveCodeStudioProps> = ({ on
           <button
             type="button"
             onClick={onPlayShowcase}
-            className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center gap-1.5 border border-white/15 transition-all shadow-sm active:scale-95"
+            className="px-4 py-2 rounded-xl bg-white text-slate-800 hover:text-slate-950 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1.5 border border-slate-200/90 transition-all shadow-xs active:scale-95"
           >
-            <Sparkles size={13} className="text-cyan-400" />
+            <Sparkles size={13} className="text-cyan-600" />
             <span>Launch Live Preview</span>
           </button>
         )}

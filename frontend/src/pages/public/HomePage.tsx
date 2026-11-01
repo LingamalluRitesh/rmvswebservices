@@ -269,29 +269,29 @@ export const HomePage: React.FC = () => {
     <div className="bg-white min-h-screen text-slate-900 overflow-x-hidden">
 
       {/* ─────────────────────────────────────────
-          1. HERO STAGE (AI & Enterprise IT Software Engineering)
+          1. HERO STAGE (Luminous White AI Software Engineering Lab)
       ───────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] sm:min-h-[96vh] pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] shadow-2xl flex flex-col justify-between px-4 sm:px-8 bg-slate-950">
+      <section className="relative min-h-[92vh] sm:min-h-[96vh] pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] shadow-sm border-b border-slate-200/80 flex flex-col justify-between px-4 sm:px-8 bg-white">
         
-        {/* Background Image Container with AI IT Backdrop */}
+        {/* Background Image Container with Luminous White AI Backdrop */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/hero-tech-bg.jpg"
-            alt="AI & Cloud Software Engineering Lab"
-            className="w-full h-full object-cover object-center brightness-[0.85] contrast-[1.12]"
+            src="/hero-white-tech-bg.jpg"
+            alt="AI & Cloud Software Engineering Lab (White Theme)"
+            className="w-full h-full object-cover object-center brightness-[0.98] contrast-[1.03]"
             loading="eager"
             decoding="async"
           />
-          {/* Multi-stop cinematic gradients for depth & legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/60 to-transparent" />
-          {/* Subtle cyber grid glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(6,182,212,0.12),transparent_60%)]" />
+          {/* Multi-stop clean ambient light gradients for high contrast & legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/45 to-white/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/75 to-white/20" />
+          {/* Subtle cyan ambient glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(6,182,212,0.08),transparent_60%)]" />
         </div>
 
-        {/* Massive Translucent Watermark Brand Typography ("RMVS") */}
+        {/* Subtle Watermark Brand Typography ("RMVS") */}
         <div className="absolute top-8 sm:top-14 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-10 overflow-hidden">
-          <span className="text-[clamp(5.5rem,19vw,16rem)] font-black tracking-tighter text-white/[0.07] uppercase leading-none font-sans block whitespace-nowrap blur-[0.4px]">
+          <span className="text-[clamp(5.5rem,19vw,16rem)] font-black tracking-tighter text-slate-900/[0.04] uppercase leading-none font-sans block whitespace-nowrap blur-[0.3px]">
             RMVS
           </span>
         </div>
@@ -307,12 +307,12 @@ export const HomePage: React.FC = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass bg-white/10 backdrop-blur-md text-white text-xs font-mono tracking-widest uppercase border border-cyan-500/30 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 backdrop-blur-md text-slate-800 text-xs font-mono tracking-widest uppercase border border-slate-200/90 shadow-2xs"
             >
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_#22d3ee]" />
-              <span className="text-cyan-200">AI & Cloud Software Engineering</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/70 text-[10px]">{tagline}</span>
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_8px_#06b6d4]" />
+              <span className="text-cyan-800 font-semibold">AI & Cloud Software Engineering</span>
+              <span className="text-slate-300">•</span>
+              <span className="text-slate-500 text-[10px]">{tagline}</span>
             </motion.div>
 
             {/* Main Headline */}
@@ -320,9 +320,9 @@ export const HomePage: React.FC = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.1 }}
-              className="font-sans font-extrabold text-white text-[clamp(2.5rem,5.2vw,4.6rem)] leading-[1.08] tracking-tight drop-shadow-lg"
+              className="font-sans font-extrabold text-slate-950 text-[clamp(2.5rem,5.2vw,4.6rem)] leading-[1.08] tracking-tight drop-shadow-xs"
             >
-              Engineering Autonomous Systems & <span className="bg-gradient-to-r from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent">Modern Software.</span>
+              Engineering Autonomous Systems & <span className="bg-gradient-to-r from-slate-950 via-cyan-800 to-blue-700 bg-clip-text text-transparent">Modern Software.</span>
             </motion.h1>
 
             {/* Subhead */}
@@ -330,7 +330,7 @@ export const HomePage: React.FC = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2 }}
-              className="text-white/85 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed drop-shadow-sm font-normal"
+              className="text-slate-600 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed font-normal"
             >
               Architecting full-stack enterprise web portals, cross-platform mobile apps, and distributed cloud microservices. Directly built and verified by India's premier software engineering squad.
             </motion.p>
@@ -345,17 +345,17 @@ export const HomePage: React.FC = () => {
               {/* Signature Stadium Pill Button with circular arrow */}
               <Link
                 to="/projects"
-                className="px-7 py-3.5 rounded-full bg-gradient-to-r from-white via-slate-100 to-slate-200 text-slate-950 text-sm font-semibold hover:brightness-105 shadow-[0_10px_30px_rgba(255,255,255,0.25)] transition-all flex items-center gap-2.5 group active:scale-95"
+                className="px-7 py-3.5 rounded-full bg-slate-950 text-white text-sm font-semibold hover:bg-slate-850 shadow-[0_10px_25px_rgba(15,23,42,0.18)] transition-all flex items-center gap-2.5 group active:scale-95"
               >
                 <span>Explore Live Systems</span>
-                <span className="w-5 h-5 rounded-full bg-slate-950 text-white flex items-center justify-center text-xs group-hover:translate-x-0.5 transition-transform">
+                <span className="w-5 h-5 rounded-full bg-white text-slate-950 flex items-center justify-center text-xs group-hover:translate-x-0.5 transition-transform">
                   ›
                 </span>
               </Link>
 
               <Link
                 to="/register"
-                className="px-6 py-3.5 rounded-full liquid-glass bg-white/10 text-white border border-white/25 hover:bg-white/20 text-sm font-medium transition-all shadow-sm"
+                className="px-6 py-3.5 rounded-full bg-white/90 text-slate-800 border border-slate-200/90 hover:bg-slate-50 text-sm font-medium transition-all shadow-xs"
               >
                 Hire Engineering Squad
               </Link>
@@ -366,14 +366,14 @@ export const HomePage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.9, delay: 0.4 }}
-              className="pt-2 flex flex-wrap items-center gap-6 text-xs text-slate-300 font-mono"
+              className="pt-2 flex flex-wrap items-center gap-6 text-xs text-slate-600 font-mono"
             >
               <div className="flex items-center gap-2">
-                <ShieldCheck size={14} className="text-cyan-400" />
+                <ShieldCheck size={14} className="text-cyan-600" />
                 <span>100% Verified Creators</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                 <span>Zero Intermediary Markup</span>
               </div>
             </motion.div>
@@ -398,7 +398,7 @@ export const HomePage: React.FC = () => {
               const el = document.getElementById('disciplines-section');
               el?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-xs font-mono tracking-widest uppercase cursor-pointer transition-colors animate-bounce"
+            className="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-900 text-xs font-mono tracking-widest uppercase cursor-pointer transition-colors animate-bounce"
           >
             <span>Scroll to Explore</span>
             <ChevronDown size={14} />
