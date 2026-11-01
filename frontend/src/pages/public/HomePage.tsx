@@ -4,7 +4,8 @@ import { motion, useInView } from 'framer-motion';
 import {
   ArrowRight, Globe, Smartphone, Code2, TrendingUp,
   ShieldCheck, FolderGit2, CheckCircle2,
-  Sparkles, Check, UserCheck, LayoutGrid, SlidersHorizontal, Search, Eye, ExternalLink
+  Sparkles, Check, UserCheck, LayoutGrid, SlidersHorizontal, Search, Eye, ExternalLink,
+  ChevronDown, Zap
 } from 'lucide-react';
 import api from '../../api/client';
 import type { Project, DeveloperProfile } from '../../types';
@@ -266,151 +267,205 @@ export const HomePage: React.FC = () => {
     <div className="bg-white min-h-screen text-slate-900 overflow-x-hidden">
 
       {/* ─────────────────────────────────────────
-          1. HERO SECTION (White Theme Luxury Glass)
+          1. HERO STAGE (Atmospheric Cinematic Nature-Tech - Wattbank Inspired)
       ───────────────────────────────────────── */}
-      <section className="relative pt-12 sm:pt-20 pb-20 sm:pb-28 overflow-hidden bg-white flex flex-col items-center justify-center text-center px-4 sm:px-6">
+      <section className="relative min-h-[90vh] sm:min-h-[94vh] pt-24 sm:pt-32 pb-20 sm:pb-24 overflow-hidden rounded-b-[40px] sm:rounded-b-[56px] shadow-2xl flex flex-col justify-between px-4 sm:px-8 bg-slate-950">
         
-        {/* Hardware-Accelerated Ambient Backlight (Zero scroll lag) */}
-        <div 
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse at center, rgba(238, 242, 255, 0.75) 0%, rgba(248, 250, 252, 0.35) 50%, transparent 70%)',
-            transform: 'translateZ(0)'
-          }}
-        />
+        {/* Background Image Container */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/hero-nature-bg.jpg"
+            alt="Cinematic Nature Tech Background"
+            className="w-full h-full object-cover object-center brightness-[0.88] contrast-[1.05]"
+            loading="eager"
+            decoding="async"
+          />
+          {/* Multi-stop cinematic gradients for depth & legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-slate-950/65" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/40 to-transparent" />
+        </div>
 
-        <div className="max-w-5xl mx-auto z-10 flex flex-col items-center">
+        {/* Massive Translucent Watermark Brand Typography ("RMVS" / "Wattbank" style) */}
+        <div className="absolute top-8 sm:top-14 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-10 overflow-hidden">
+          <span className="text-[clamp(5.5rem,19vw,16rem)] font-black tracking-tighter text-white/[0.13] uppercase leading-none font-sans block whitespace-nowrap blur-[0.4px]">
+            RMVS
+          </span>
+        </div>
+
+        {/* Main Hero Content Grid (2 Columns: Value Proposition + Monolithic Hardware Card) */}
+        <div className="max-w-6xl mx-auto w-full z-20 my-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-4 sm:pt-6">
           
-          {/* Pill Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass text-slate-700 text-xs font-mono tracking-widest uppercase mb-8 border border-black/[0.08] shadow-sm"
-          >
-            <img src="/logo-icon.png" alt={companyName} className="w-4 h-4 object-contain" />
-            <span>Websites</span>
-            <span className="text-slate-300">•</span>
-            <span>Apps</span>
-            <span className="text-slate-300">•</span>
-            <span>Software</span>
-            <span className="text-slate-300">•</span>
-            <span>Digital Solutions</span>
-          </motion.div>
-
-          {/* Majestic Instrument Serif Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2 }}
-            className="font-instrument text-[clamp(2.8rem,7vw,5.5rem)] leading-[1.08] text-slate-950 tracking-tight mb-4 max-w-4xl"
-          >
-            Engineering <em>Digital Legacies.</em>
-          </motion.h1>
-
-          {/* Small, refined tagline badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25 }}
-            className="mb-6"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100/90 border border-black/[0.08] text-slate-600 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] font-medium shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-              <span>{tagline}</span>
-            </span>
-          </motion.div>
-
-          {/* Subtitle with clean max-width */}
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3 }}
-            className="max-w-2xl mx-auto text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed mb-10"
-          >
-            {companyName} bridges visionary enterprises with India's premier verified software engineers.
-            Zero middleman markup, direct collaboration, and transparent creator attribution for every line of code.
-          </motion.p>
-
-          {/* Hero Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-14"
-          >
-            <Link
-              to="/register"
-              className="px-8 py-3.5 rounded-full bg-black text-white text-sm font-semibold hover:bg-slate-800 shadow-md transition-all flex items-center gap-2"
+          {/* Left Column: Bold Headline & Stadium Pill CTA */}
+          <div className="lg:col-span-7 text-left space-y-6">
+            
+            {/* Top refined badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass bg-white/10 backdrop-blur-md text-white text-xs font-mono tracking-widest uppercase border border-white/20 shadow-sm"
             >
-              Start a Project <ArrowRight size={15} />
-            </Link>
-            <Link
-              to="/projects"
-              className="px-8 py-3.5 rounded-full liquid-glass text-slate-800 hover:text-black text-sm hover:bg-black/[0.04] border border-black/10 transition-all flex items-center gap-2"
-            >
-              Explore Projects
-            </Link>
-          </motion.div>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+              <span>Next-Gen Cloud Engineering</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/80">{tagline}</span>
+            </motion.div>
 
-          {/* ── Floating Command & Filter Toolbar (Light Glass) ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="w-full max-w-4xl mx-auto"
-          >
-            <div className="liquid-glass rounded-3xl sm:rounded-full p-2.5 sm:p-3 border border-black/[0.08] shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur-2xl">
-              <div className="flex flex-wrap items-center justify-between gap-2 px-2 sm:px-4">
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.1 }}
+              className="font-sans font-extrabold text-white text-[clamp(2.5rem,5.5vw,4.8rem)] leading-[1.08] tracking-tight drop-shadow-lg"
+            >
+              Get More Value <br />
+              From Your Tech Stack.
+            </motion.h1>
+
+            {/* Subhead */}
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.2 }}
+              className="text-white/85 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed drop-shadow-sm font-normal"
+            >
+              Architecting enterprise websites, high-concurrency mobile apps, and autonomous cloud software.
+              Design • Develop • Grow Together with India's premier verified engineering squad.
+            </motion.p>
+
+            {/* Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-3.5 pt-2"
+            >
+              {/* Signature Stadium Pill Button with circular arrow */}
+              <Link
+                to="/projects"
+                className="px-7 py-3.5 rounded-full bg-white text-slate-950 text-sm font-semibold hover:bg-slate-100 shadow-[0_10px_30px_rgba(255,255,255,0.2)] transition-all flex items-center gap-2.5 group active:scale-95"
+              >
+                <span>Start Exploring</span>
+                <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-xs group-hover:translate-x-0.5 transition-transform">
+                  ›
+                </span>
+              </Link>
+
+              <Link
+                to="/register"
+                className="px-6 py-3.5 rounded-full liquid-glass bg-white/10 text-white border border-white/25 hover:bg-white/20 text-sm font-medium transition-all shadow-sm"
+              >
+                Hire Engineers
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Monolithic Hardware / Cloud Engine Card (WattBank style) */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.25 }}
+              className="relative w-full max-w-[320px] sm:max-w-[360px]"
+            >
+              {/* Monolithic Device Chassis */}
+              <div className="rounded-3xl bg-white/[0.94] backdrop-blur-2xl p-6 sm:p-7 border border-white/60 shadow-[0_35px_80px_rgba(0,0,0,0.55)] text-slate-900 transition-transform duration-500 hover:scale-[1.01]">
                 
-                {/* Category Pills */}
-                <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 py-1">
-                  {['All', 'Websites', 'Apps', 'Software', 'Digital Solutions'].map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setSelectedPillar(cat)}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
-                        selectedPillar === cat
-                          ? 'bg-black text-white shadow-sm'
-                          : 'text-slate-600 hover:text-black hover:bg-black/[0.04]'
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
+                {/* Hardware Header with Brand Mark & Status */}
+                <div className="flex items-center justify-between pb-4 border-b border-black/[0.06] mb-5">
+                  <div className="flex items-center gap-2">
+                    <img src="/logo-icon.png" alt="RMVS" className="w-5 h-5 object-contain" />
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-slate-800">
+                      RMVS WebEngine
+                    </span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-mono bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200">
+                    Online 99.9%
+                  </span>
                 </div>
 
-                {/* Specs / Guarantees Tag */}
-                <div className="hidden sm:flex items-center gap-4 text-[11px] text-slate-500 font-mono py-1 pr-2">
-                  <span className="flex items-center gap-1.5 text-slate-800 font-medium">
-                    <ShieldCheck size={13} className="text-slate-700" />
-                    <span>Verified Attribution</span>
-                  </span>
-                  <span className="text-slate-300">|</span>
-                  <span className="text-slate-800 font-medium">Production Engineering</span>
+                {/* Glowing Emerald Vertical LED Indicator Line (Exact Wattbank style) */}
+                <div className="py-4 flex flex-col items-center justify-center">
+                  <div className="w-1.5 h-14 rounded-full bg-emerald-400 shadow-[0_0_20px_#34d399,0_0_8px_#10b981] animate-pulse" />
+                  <p className="mt-3 text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                    Live Production Core
+                  </p>
                 </div>
+
+                {/* Real-time System Specs & Telemetry */}
+                <div className="space-y-2.5 pt-2 pb-3">
+                  <div className="p-2.5 rounded-2xl bg-slate-50 border border-black/[0.05] flex items-center justify-between text-xs">
+                    <span className="text-slate-500 font-medium">Architecture</span>
+                    <span className="font-mono font-semibold text-slate-900">FastAPI & React</span>
+                  </div>
+                  <div className="p-2.5 rounded-2xl bg-slate-50 border border-black/[0.05] flex items-center justify-between text-xs">
+                    <span className="text-slate-500 font-medium">Cloud Database</span>
+                    <span className="font-mono font-semibold text-emerald-700">PostgreSQL (Neon)</span>
+                  </div>
+                  <div className="p-2.5 rounded-2xl bg-slate-50 border border-black/[0.05] flex items-center justify-between text-xs">
+                    <span className="text-slate-500 font-medium flex items-center gap-1.5">
+                      <ShieldCheck size={13} className="text-slate-700" />
+                      <span>Engineering Squad</span>
+                    </span>
+                    <span className="font-mono font-semibold text-slate-900">100% Verified</span>
+                  </div>
+                </div>
+
+                {/* Floating Glass "Play Showcase" Pill Button (Matches the reference "Play" button) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const topProject = projects[0] || fallbackInitialProjects[0];
+                    setQuickViewProject(topProject);
+                    setIsQuickViewOpen(true);
+                  }}
+                  className="absolute -bottom-4 -right-2 sm:-right-4 px-5 py-2.5 rounded-full liquid-glass bg-white text-slate-900 border border-black/10 shadow-[0_12px_30px_rgba(0,0,0,0.25)] flex items-center gap-2 hover:scale-105 active:scale-95 transition-all text-xs font-semibold cursor-pointer z-30"
+                >
+                  <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-[10px] pl-0.5">
+                    ▶
+                  </span>
+                  <span>Play Showcase</span>
+                </button>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Centered Scroll Down Cue (Exact Wattbank style) */}
+        <div className="z-20 text-center pt-6 pb-2">
+          <div 
+            onClick={() => {
+              const el = document.getElementById('disciplines-section');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-xs font-mono tracking-widest uppercase cursor-pointer transition-colors animate-bounce"
+          >
+            <span>Scroll down</span>
+            <ChevronDown size={14} />
+          </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────
-          2. THE 4 PILLARS OF RMVS WEB SERVICES (From Official Logo)
+          2. THE 4 PILLARS & EDITORIAL HEADER (Wattbank Aesthetic)
       ───────────────────────────────────────── */}
-      <section className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+      <section id="disciplines-section" className="py-20 sm:py-28 px-4 sm:px-6 max-w-6xl mx-auto">
         <FadeIn>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 pb-4 border-b border-black/[0.08]">
-            <div>
-              <p className="text-slate-500 text-xs tracking-widest uppercase font-mono mb-2">Core Engineering Disciplines</p>
-              <h2 className="font-instrument italic text-3xl sm:text-4xl text-slate-900">
-                Four Pillars of Innovation
-              </h2>
-            </div>
-            <p className="text-slate-600 text-xs sm:text-sm max-w-md sm:text-right">
-              Direct engineering partnerships in India. Zero intermediary fees, total creator ownership.
-            </p>
+          {/* Centered Small Pill Badge */}
+          <div className="text-center mb-4">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-black/10 text-slate-800 text-xs font-mono uppercase tracking-widest shadow-2xs">
+              <Zap size={13} className="text-amber-600" />
+              <span>CORE CAPABILITIES</span>
+            </span>
           </div>
+
+          {/* Two-Tone Editorial Headline */}
+          <h2 className="font-sans font-bold text-3xl sm:text-5xl text-slate-950 text-center max-w-3xl mx-auto leading-tight mb-4">
+            Turn every digital requirement into <span className="text-slate-400 font-medium">high-performing reality.</span>
+          </h2>
+          <p className="text-slate-600 text-sm sm:text-base text-center max-w-2xl mx-auto mb-14 leading-relaxed">
+            Direct collaboration with India's premier software engineers. Zero intermediary markup, total transparency, and verified creator attribution.
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
             {[
