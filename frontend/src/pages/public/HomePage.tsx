@@ -277,37 +277,37 @@ export const HomePage: React.FC = () => {
           <img
             src="/hero-office-bg.jpg"
             alt="Modern Executive Tech Office with Glass Walls and City Skyline View"
-            className="w-full h-full object-cover object-center brightness-[0.94] contrast-[1.05]"
+            className="w-full h-full object-cover object-center brightness-[0.98] contrast-[1.03]"
             loading="eager"
             decoding="async"
           />
-          {/* Multi-stop cinematic gradients for rich depth & high legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-slate-950/50" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/50 to-transparent" />
+          {/* Subtle natural gradients for maximum scene visibility & crisp typography contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/35" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/55 via-slate-950/15 to-transparent" />
         </div>
 
-        {/* Massive Translucent Watermark Brand Typography ("RMVS" / "Wattbank" style) */}
+        {/* Subtle Translucent Watermark Brand Typography ("RMVS") */}
         <div className="absolute top-8 sm:top-14 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-10 overflow-hidden">
-          <span className="text-[clamp(5.5rem,19vw,16rem)] font-black tracking-tighter text-white/[0.13] uppercase leading-none font-sans block whitespace-nowrap blur-[0.4px]">
+          <span className="text-[clamp(5.5rem,19vw,16rem)] font-black tracking-tighter text-white/[0.08] uppercase leading-none font-sans block whitespace-nowrap blur-[0.4px]">
             RMVS
           </span>
         </div>
 
-        {/* Main Hero Content Grid (2 Columns: Value Proposition + Monolithic Hardware Card) */}
-        <div className="max-w-6xl mx-auto w-full z-20 my-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center pt-4 sm:pt-6">
+        {/* Main Hero Content Area (Open Panorama Layout - Unobstructed Office & Skyline Visibility) */}
+        <div className="max-w-7xl mx-auto w-full z-20 my-auto flex flex-col items-start pt-6 sm:pt-10">
           
-          {/* Left Column: Bold Headline & Stadium Pill CTA */}
-          <div className="lg:col-span-7 text-left space-y-6">
+          {/* Left Column: Glassmorphic Value Proposition Card for Maximum Text Visibility */}
+          <div className="max-w-2xl text-left space-y-6 p-6 sm:p-9 rounded-3xl bg-slate-950/50 backdrop-blur-md border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             
             {/* Top refined badge */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass bg-white/10 backdrop-blur-md text-white text-xs font-mono tracking-widest uppercase border border-white/20 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass bg-white/10 backdrop-blur-md text-white text-xs font-mono tracking-widest uppercase border border-white/20 shadow-xs"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
-              <span>Next-Gen Cloud Engineering</span>
+              <span className="text-emerald-300 font-semibold">Cloud & Software Engineering</span>
               <span className="text-white/40">•</span>
               <span className="text-white/80">{tagline}</span>
             </motion.div>
@@ -317,10 +317,10 @@ export const HomePage: React.FC = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.1 }}
-              className="font-sans font-extrabold text-white text-[clamp(2.5rem,5.5vw,4.8rem)] leading-[1.08] tracking-tight drop-shadow-lg"
+              className="font-sans font-extrabold text-white text-[clamp(2.4rem,5vw,4.5rem)] leading-[1.08] tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]"
             >
               Get More Value <br />
-              From Your Tech Stack.
+              <span className="bg-gradient-to-r from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent">From Your Tech Stack.</span>
             </motion.h1>
 
             {/* Subhead */}
@@ -328,7 +328,7 @@ export const HomePage: React.FC = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2 }}
-              className="text-white/85 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed drop-shadow-sm font-normal"
+              className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed font-normal drop-shadow-sm"
             >
               Architecting enterprise websites, high-concurrency mobile apps, and autonomous cloud software.
               Design • Develop • Grow Together with India's premier verified engineering squad.
@@ -344,13 +344,29 @@ export const HomePage: React.FC = () => {
               {/* Signature Stadium Pill Button with circular arrow */}
               <Link
                 to="/projects"
-                className="px-7 py-3.5 rounded-full bg-white text-slate-950 text-sm font-semibold hover:bg-slate-100 shadow-[0_10px_30px_rgba(255,255,255,0.2)] transition-all flex items-center gap-2.5 group active:scale-95"
+                className="px-7 py-3.5 rounded-full bg-white text-slate-950 text-sm font-semibold hover:bg-slate-100 shadow-[0_10px_30px_rgba(255,255,255,0.25)] transition-all flex items-center gap-2.5 group active:scale-95"
               >
                 <span>Start Exploring</span>
                 <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-xs group-hover:translate-x-0.5 transition-transform">
                   ›
                 </span>
               </Link>
+
+              {/* Live Showcase Drawer Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  const topProject = projects[0] || fallbackInitialProjects[0];
+                  setQuickViewProject(topProject);
+                  setIsQuickViewOpen(true);
+                }}
+                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/25 text-sm font-medium transition-all shadow-sm flex items-center gap-2 active:scale-95 cursor-pointer backdrop-blur-sm"
+              >
+                <span className="w-5 h-5 rounded-full bg-white/20 text-emerald-300 flex items-center justify-center text-[10px] pl-0.5">
+                  ▶
+                </span>
+                <span>Play Showcase</span>
+              </button>
 
               <Link
                 to="/register"
@@ -359,74 +375,25 @@ export const HomePage: React.FC = () => {
                 Hire Engineers
               </Link>
             </motion.div>
-          </div>
 
-          {/* Right Column: Monolithic Hardware / Cloud Engine Card (Exact WattBank style) */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            {/* Trust Highlights */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.25 }}
-              className="relative w-full max-w-[320px] sm:max-w-[360px]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.4 }}
+              className="pt-2 flex flex-wrap items-center gap-6 text-xs text-white/80 font-mono"
             >
-              {/* Monolithic Device Chassis */}
-              <div className="rounded-3xl bg-white/[0.95] backdrop-blur-2xl p-6 sm:p-7 border border-white/60 shadow-[0_35px_80px_rgba(0,0,0,0.55)] text-slate-900 transition-transform duration-500 hover:scale-[1.01]">
-                
-                {/* Hardware Header with Brand Mark & Status */}
-                <div className="flex items-center justify-between pb-4 border-b border-black/[0.06] mb-5">
-                  <div className="flex items-center gap-2">
-                    <img src="/logo-icon.png" alt="RMVS" className="w-5 h-5 object-contain" />
-                    <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-slate-800">
-                      RMVS WebEngine
-                    </span>
-                  </div>
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-mono bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200">
-                    Online 99.9%
-                  </span>
-                </div>
-
-                {/* Glowing Emerald Vertical LED Indicator Line (Exact Wattbank style) */}
-                <div className="py-4 flex flex-col items-center justify-center">
-                  <div className="w-1.5 h-16 rounded-full bg-emerald-400 shadow-[0_0_20px_#34d399,0_0_8px_#10b981] animate-pulse" />
-                  <p className="mt-3 text-[10px] font-mono uppercase tracking-widest text-slate-400">
-                    Live Production Core
-                  </p>
-                </div>
-
-                {/* Real-time System Specs & Telemetry */}
-                <div className="space-y-2.5 pt-2 pb-3">
-                  <div className="p-2.5 rounded-2xl bg-slate-50 border border-black/[0.05] flex items-center justify-between text-xs">
-                    <span className="text-slate-500 font-medium">Architecture</span>
-                    <span className="font-mono font-semibold text-slate-900">FastAPI & React</span>
-                  </div>
-                  <div className="p-2.5 rounded-2xl bg-slate-50 border border-black/[0.05] flex items-center justify-between text-xs">
-                    <span className="text-slate-500 font-medium">Cloud Database</span>
-                    <span className="font-mono font-semibold text-emerald-700">PostgreSQL (Neon)</span>
-                  </div>
-                  <div className="p-2.5 rounded-2xl bg-slate-50 border border-black/[0.05] flex items-center justify-between text-xs">
-                    <span className="text-slate-500 font-medium flex items-center gap-1.5">
-                      <ShieldCheck size={13} className="text-slate-700" />
-                      <span>Engineering Squad</span>
-                    </span>
-                    <span className="font-mono font-semibold text-slate-900">100% Verified</span>
-                  </div>
-                </div>
-
-                {/* Floating Glass "Play Showcase" Pill Button (Matches the reference "Play" button) */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    const topProject = projects[0] || fallbackInitialProjects[0];
-                    setQuickViewProject(topProject);
-                    setIsQuickViewOpen(true);
-                  }}
-                  className="absolute -bottom-4 -right-2 sm:-right-4 px-5 py-2.5 rounded-full liquid-glass bg-white text-slate-900 border border-black/10 shadow-[0_12px_30px_rgba(0,0,0,0.25)] flex items-center gap-2 hover:scale-105 active:scale-95 transition-all text-xs font-semibold cursor-pointer z-30"
-                >
-                  <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-[10px] pl-0.5">
-                    ▶
-                  </span>
-                  <span>Play Showcase</span>
-                </button>
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={14} className="text-emerald-400" />
+                <span>100% Verified Creators</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span>Zero Intermediary Markup</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                <span>FastAPI & React & Neon DB</span>
               </div>
             </motion.div>
           </div>
