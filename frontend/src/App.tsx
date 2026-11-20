@@ -34,17 +34,17 @@ const DirectMessagesPage = lazy(() => import('./pages/dashboard/DirectMessagesPa
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
 
 const PageLoader: React.FC = () => (
-  <div className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center bg-[#060b19]">
-    <div className="w-7 h-7 rounded-full border-2 border-blue-500/20 border-t-cyan-400 animate-spin mb-3 shadow-[0_0_12px_#38bdf8]" />
-    <span className="text-cyan-400 font-mono text-xs uppercase tracking-widest">Loading...</span>
+  <div className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center bg-[#f8fafc]">
+    <div className="w-8 h-8 rounded-full border-3 border-blue-600/20 border-t-blue-600 animate-spin mb-3 shadow-md" />
+    <span className="text-blue-600 font-mono text-xs uppercase tracking-widest font-semibold">Loading...</span>
   </div>
 );
 
 const AppShell: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-[#060b19] text-slate-100 selection:bg-blue-600 selection:text-white">
+    <div className="flex flex-col min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-blue-600 selection:text-white">
       <Navbar />
-      <main className="flex-1 bg-[#060b19]">
+      <main className="flex-1 bg-[#f8fafc]">
         <Suspense fallback={<PageLoader />}>
           <Routes>
             {/* Public Routes */}

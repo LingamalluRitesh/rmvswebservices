@@ -338,6 +338,25 @@ DEFAULT_TEMPLATES: List[Dict[str, Any]] = [
         "variables": ["customer_name", "customer_email", "service_type", "message_snippet", "inquiry_url"],
         "approval_status": "APPROVED",
         "is_active": True
+    },
+    {
+        "template_name": "website_activity_alert",
+        "display_name": "Live Website Activity Alert",
+        "category": "UTILITY",
+        "language": "en_US",
+        "event_trigger": "website_activity",
+        "header_text": "RMVS Platform • Real-time Alert",
+        "body_text": (
+            "🔔 RMVS Website Notification!\n\n"
+            "Event: {{service_type}}\n"
+            "Actor/User: {{customer_name}} (Phone: {{customer_phone}} | Email: {{customer_email}})\n"
+            "Details: {{message_snippet}}\n"
+            "Time: {{timestamp}}\n\n"
+            "Manage in CEO Command Suite: {{inquiry_url}}"
+        ),
+        "variables": ["service_type", "customer_name", "customer_phone", "customer_email", "message_snippet", "timestamp", "inquiry_url"],
+        "approval_status": "APPROVED",
+        "is_active": True
     }
 ]
 

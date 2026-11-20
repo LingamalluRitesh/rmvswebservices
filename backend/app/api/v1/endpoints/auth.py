@@ -15,6 +15,7 @@ from app.schemas import (
 )
 from app.api.deps import get_current_user
 from app.services.image_service import optimize_avatar_image, decode_avatar_data_uri
+from app.services.phone_alerts import notify_ceo_phone
 
 from sqlalchemy.orm import selectinload
 
@@ -100,6 +101,18 @@ async def register_developer(payload: RegisterDeveloperRequest, db: AsyncSession
     )
     db.add(user_notif)
 
+    # Automatic alert to CEO's phone
+    await notify_ceo_phone(
+        db=db,
+        event_type="developer_registered",
+        title="New Developer Application",
+        details=f"Developer {new_user.full_name} (@{new_user.username}) registered with title '{payload.title}'. Location: {payload.location or 'N/A'}",
+        customer_name=new_user.full_name,
+        customer_phone=new_user.phone,
+        customer_email=new_user.email,
+        action_url="https://rmvswebservices.onrender.com/ceo"
+    )
+
     await db.commit()
     user_loaded = await _get_user_with_profiles(new_user.id, db)
     access_token = create_access_token(subject=new_user.id)
@@ -137,6 +150,19 @@ async def register_client(payload: RegisterClientRequest, db: AsyncSession = Dep
         industry=payload.industry
     )
     db.add(client_profile)
+
+    # Automatic alert to CEO's phone
+    await notify_ceo_phone(
+        db=db,
+        event_type="client_registered",
+        title="New Client Account Created",
+        details=f"Client {new_user.full_name} (@{new_user.username}) registered. Company: {payload.company_name or 'Independent'}, Industry: {payload.industry or 'N/A'}",
+        customer_name=new_user.full_name,
+        customer_phone=new_user.phone,
+        customer_email=new_user.email,
+        action_url="https://rmvswebservices.onrender.com/ceo"
+    )
+
     await db.commit()
     user_loaded = await _get_user_with_profiles(new_user.id, db)
 

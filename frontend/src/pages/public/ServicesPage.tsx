@@ -77,17 +77,17 @@ export const ServicesPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#060b19] text-slate-100 selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
       {/* Hero */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-12">
         <div className="flex items-center gap-3 mb-6">
           <img src={logoUrl} alt={companyName} className="h-8 w-auto object-contain" />
-          <p className="text-cyan-400 text-xs tracking-widest uppercase font-mono">{companyName} Digital Solutions</p>
+          <p className="text-blue-600 text-xs tracking-widest uppercase font-mono font-semibold">{companyName} Digital Solutions</p>
         </div>
-        <h1 className="font-sans font-extrabold text-[clamp(2.5rem,6vw,5rem)] leading-[1.05] text-white mb-6 max-w-3xl">
-          Services engineered <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent">for scale.</span>
+        <h1 className="font-sans font-extrabold text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] text-slate-900 mb-6 max-w-3xl">
+          Services engineered <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">for scale.</span>
         </h1>
-        <p className="text-slate-300 text-base leading-relaxed max-w-2xl">
+        <p className="text-slate-600 text-base leading-relaxed max-w-2xl">
           From early-stage MVPs to complex distributed enterprise platforms, {companyName} verified developer network
           delivers clean, maintainable software with production-grade engineering excellence.
         </p>
@@ -99,21 +99,21 @@ export const ServicesPage: React.FC = () => {
           {services.map((svc) => (
             <div
               key={svc.num}
-              className="rounded-3xl p-8 flex flex-col justify-between group bg-[#0a1228]/85 border border-blue-500/25 hover:border-cyan-400/40 shadow-xl hover:shadow-[0_10px_30px_rgba(37,99,235,0.25)] transition-all"
+              className="rounded-3xl p-8 flex flex-col justify-between group bg-white border border-slate-200/90 hover:border-blue-400 shadow-[0_4px_25px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_30px_rgba(37,99,235,0.12)] transition-all lag-free"
             >
               <div>
                 <div className="flex items-start justify-between mb-6">
-                  <span className="font-mono text-cyan-400/60 text-2xl font-bold tracking-wider">{svc.num}</span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase bg-blue-950/80 border border-blue-500/30 text-cyan-300">
+                  <span className="font-mono text-blue-600/70 text-2xl font-bold tracking-wider">{svc.num}</span>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase bg-blue-50 border border-blue-200 text-blue-700 font-semibold">
                     Production Tier
                   </span>
                 </div>
-                <h2 className="font-sans font-bold text-white text-2xl mb-2">{svc.title}</h2>
-                <p className="text-slate-400 text-sm mb-6">{svc.tagline}</p>
+                <h2 className="font-sans font-bold text-slate-900 text-2xl mb-2">{svc.title}</h2>
+                <p className="text-slate-500 text-sm mb-6">{svc.tagline}</p>
                 <ul className="space-y-2.5">
                   {svc.deliverables.map((d) => (
-                    <li key={d} className="flex items-start gap-2.5 text-sm text-slate-300">
-                      <span className="w-4 h-4 rounded-full bg-blue-950/80 border border-blue-500/40 flex items-center justify-center shrink-0 mt-0.5 text-cyan-400 shadow-sm">
+                    <li key={d} className="flex items-start gap-2.5 text-sm text-slate-700">
+                      <span className="w-4 h-4 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 mt-0.5 text-blue-600 shadow-2xs">
                         <Check size={10} />
                       </span>
                       <span>{d}</span>
@@ -121,16 +121,16 @@ export const ServicesPage: React.FC = () => {
                   ))}
                 </ul>
               </div>
-              <div className="pt-6 border-t border-blue-500/15 flex items-center justify-between mt-6">
+              <div className="pt-6 border-t border-slate-100 flex items-center justify-between mt-6">
                 <Link
                   to="/developers"
-                  className="inline-flex items-center gap-1.5 text-xs text-cyan-400 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 font-semibold transition-colors"
                 >
                   Find engineers <ArrowRight size={11} />
                 </Link>
                 <Link
                   to="/contact"
-                  className="px-4 py-1.5 rounded-full bg-blue-600/20 hover:bg-blue-600 text-xs text-cyan-300 hover:text-white border border-blue-500/30 transition-all shadow-sm"
+                  className="px-4 py-1.5 rounded-full bg-blue-50 hover:bg-blue-600 text-xs text-blue-600 hover:text-white border border-blue-200 transition-all font-semibold shadow-2xs"
                 >
                   Inquire now
                 </Link>
@@ -142,23 +142,23 @@ export const ServicesPage: React.FC = () => {
 
       {/* CTA */}
       <div className="max-w-6xl mx-auto px-6 pb-24">
-        <div className="rounded-3xl p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border border-blue-500/30 shadow-2xl bg-[#0a1228]/90">
+        <div className="rounded-3xl p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border border-slate-200 shadow-sm bg-gradient-to-br from-white via-blue-50/30 to-slate-50">
           <div>
-            <h2 className="font-sans font-bold text-white text-3xl mb-2">
-              Ready to build <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent">your project?</span>
+            <h2 className="font-sans font-bold text-slate-900 text-3xl mb-2">
+              Ready to build <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">your project?</span>
             </h2>
-            <p className="text-slate-300 text-sm">Talk to our technical leadership directly.</p>
+            <p className="text-slate-600 text-sm">Talk to our technical leadership directly.</p>
           </div>
           <div className="flex gap-3 shrink-0">
             <Link
               to="/contact"
-              className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm font-semibold hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] transition-all shadow-sm"
+              className="px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-sm transition-all"
             >
               Contact us
             </Link>
             <Link
               to="/projects"
-              className="px-6 py-3 rounded-full bg-[#070e22] text-slate-200 hover:text-white border border-blue-500/30 hover:border-cyan-400/50 text-sm transition-colors shadow-sm"
+              className="px-6 py-3 rounded-full bg-white text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 text-sm font-semibold transition-colors shadow-2xs"
             >
               See projects
             </Link>

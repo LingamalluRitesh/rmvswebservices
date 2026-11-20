@@ -8,6 +8,7 @@ from app.models import ClientInquiry, DeveloperProfile, User, Notification, Conv
 from app.schemas import ClientInquiryCreate, ClientInquiryUpdate, ClientInquiryOut
 from app.api.deps import get_current_user, get_current_user_optional
 from app.services.whatsapp.dispatcher import dispatch_whatsapp_event, get_or_create_whatsapp_config
+from app.services.phone_alerts import notify_ceo_phone
 
 router = APIRouter()
 
@@ -72,23 +73,17 @@ async def create_inquiry(
     await db.commit()
     await db.refresh(new_inquiry)
 
-    # AUTOMATED WHATSAPP NOTIFICATION: Alert configured business WhatsApp number
-    config = await get_or_create_whatsapp_config(db)
-    if config.is_enabled and config.business_phone_number:
-        await dispatch_whatsapp_event(
-            db=db,
-            event_type="contact_inquiry",
-            recipient_phone=config.business_phone_number,
-            customer_name=sender_name,
-            variables={
-                "customer_name": sender_name,
-                "customer_email": sender_email,
-                "service_type": payload.project_type or payload.project_name,
-                "message_snippet": (payload.description or "")[:150],
-                "inquiry_url": "https://rmvswebservices.onrender.com/ceo"
-            },
-            idempotency_key=f"inq_lead_{new_inquiry.id}"
-        )
+    # AUTOMATED WHATSAPP NOTIFICATION: Alert CEO phone directly
+    await notify_ceo_phone(
+        db=db,
+        event_type="website_inquiry",
+        title=f"New Inquiry: {payload.project_name}",
+        details=f"Client: {sender_name} | Type: {payload.project_type or 'General'}\nMessage: {(payload.description or '')[:200]}",
+        customer_name=sender_name,
+        customer_phone=payload.phone,
+        customer_email=sender_email,
+        action_url="https://rmvswebservices.onrender.com/ceo"
+    )
 
     await db.commit()
     await db.refresh(new_inquiry)

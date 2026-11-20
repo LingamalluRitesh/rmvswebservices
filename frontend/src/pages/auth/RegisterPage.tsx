@@ -106,12 +106,12 @@ export const RegisterPage: React.FC = () => {
   };
 
   const inputClass =
-    'w-full bg-[#070e22] border border-blue-500/30 rounded-xl text-white text-sm placeholder-slate-500 focus:border-cyan-400 focus:outline-none px-4 py-3 transition-colors shadow-sm';
+    'w-full bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none px-4 py-3 transition-colors shadow-2xs';
 
-  const labelClass = 'block text-cyan-400 text-xs tracking-wider uppercase mb-1.5 font-mono';
+  const labelClass = 'block text-slate-600 text-xs tracking-wider uppercase mb-1.5 font-mono font-semibold';
 
   return (
-    <div className="min-h-screen bg-[#060b19] text-slate-100 flex items-start justify-center px-6 py-16 selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex items-start justify-center px-6 py-16 selection:bg-blue-600 selection:text-white">
       <div className="w-full max-w-2xl space-y-8">
 
         {/* Brand */}
@@ -119,23 +119,23 @@ export const RegisterPage: React.FC = () => {
           <Link to="/" className="inline-block mb-3">
             <img src={platformLogo} alt={platformName} className="h-12 w-auto max-w-[240px] mx-auto object-contain transition-transform hover:scale-[1.02]" />
           </Link>
-          <h2 className="font-sans font-extrabold text-2xl sm:text-3xl text-white leading-tight">
-            Create Your <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent">Account</span>
+          <h2 className="font-sans font-extrabold text-2xl sm:text-3xl text-slate-900 leading-tight">
+            Create Your <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">Account</span>
           </h2>
-          <p className="text-slate-400 text-xs">
+          <p className="text-slate-500 text-xs">
             Register to access developer projects, client inquiries, or executive administration.
           </p>
         </div>
 
         {/* Account Type Tabs */}
-        <div className="grid grid-cols-2 gap-2 p-1.5 rounded-2xl border border-blue-500/25 bg-[#070e22] shadow-md">
+        <div className="grid grid-cols-2 gap-2 p-1.5 rounded-2xl border border-slate-200 bg-white shadow-2xs">
           <button
             type="button"
             onClick={() => setAccountType('developer')}
             className={`py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
               accountType === 'developer'
-                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <User size={14} />
@@ -147,8 +147,8 @@ export const RegisterPage: React.FC = () => {
             onClick={() => setAccountType('client')}
             className={`py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
               accountType === 'client'
-                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Building size={14} />
@@ -157,23 +157,23 @@ export const RegisterPage: React.FC = () => {
         </div>
 
         {/* Main Form Card */}
-        <div className="rounded-3xl p-8 border border-blue-500/25 shadow-2xl bg-[#0a1228]/90">
+        <div className="rounded-3xl p-8 border border-slate-200/90 shadow-[0_4px_25px_rgba(0,0,0,0.05)] bg-white">
 
           {/* Error Alert */}
           {error && (
-            <div className="mb-6 p-4 rounded-2xl bg-rose-950/60 border border-rose-500/30 text-rose-300 text-sm flex items-center gap-3">
-              <AlertCircle size={16} className="shrink-0 text-rose-400" />
+            <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-sm flex items-center gap-3">
+              <AlertCircle size={16} className="shrink-0 text-rose-600" />
               <span>{error}</span>
             </div>
           )}
 
           {/* Developer Notice */}
           {accountType === 'developer' && (
-            <div className="mb-6 p-4 rounded-2xl border border-blue-500/25 bg-blue-950/40 flex items-start gap-3">
-              <CheckCircle2 size={16} className="text-cyan-400 shrink-0 mt-0.5" />
+            <div className="mb-6 p-4 rounded-2xl border border-blue-200 bg-blue-50 flex items-start gap-3">
+              <CheckCircle2 size={16} className="text-blue-600 shrink-0 mt-0.5" />
               <div>
-                <p className="text-white text-xs font-semibold mb-0.5">Developer Verification Process</p>
-                <p className="text-slate-300 text-xs leading-relaxed">
+                <p className="text-slate-900 text-xs font-semibold mb-0.5">Developer Verification Process</p>
+                <p className="text-slate-600 text-xs leading-relaxed">
                   Upon registration, your developer profile is created. Platform administrators review and verify your profile so you can publish projects and connect with enterprise clients.
                 </p>
               </div>
@@ -184,7 +184,7 @@ export const RegisterPage: React.FC = () => {
 
             {/* Shared Credentials */}
             <div className="space-y-4">
-              <h3 className="font-sans font-bold text-white text-lg border-b border-blue-500/15 pb-2">
+              <h3 className="font-sans font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">
                 1. Account Credentials
               </h3>
 
@@ -256,7 +256,7 @@ export const RegisterPage: React.FC = () => {
             {/* Developer Specific Fields */}
             {accountType === 'developer' && (
               <div className="space-y-4 pt-2">
-                <h3 className="font-sans font-bold text-white text-lg border-b border-blue-500/15 pb-2">
+                <h3 className="font-sans font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">
                   2. Professional Details
                 </h3>
 
@@ -305,11 +305,11 @@ export const RegisterPage: React.FC = () => {
                       onChange={(e) => setAvailability(e.target.value)}
                       className={inputClass}
                     >
-                      <option value="Available for Projects" className="bg-[#070e22]">Available for Projects</option>
-                      <option value="Available for Consulting & Advisory" className="bg-[#070e22]">Available for Consulting &amp; Advisory</option>
-                      <option value="Available for Enterprise Projects" className="bg-[#070e22]">Available for Enterprise Projects</option>
-                      <option value="Full-time" className="bg-[#070e22]">Full-time</option>
-                      <option value="Busy" className="bg-[#070e22]">Busy</option>
+                      <option value="Available for Projects">Available for Projects</option>
+                      <option value="Available for Consulting & Advisory">Available for Consulting &amp; Advisory</option>
+                      <option value="Available for Enterprise Projects">Available for Enterprise Projects</option>
+                      <option value="Full-time">Full-time</option>
+                      <option value="Busy">Busy</option>
                     </select>
                   </div>
                 </div>
@@ -321,13 +321,13 @@ export const RegisterPage: React.FC = () => {
                     {skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-xs text-cyan-300 px-3 py-1 rounded-full flex items-center gap-1.5 border border-blue-500/25 bg-[#070e22] font-mono"
+                        className="text-xs text-blue-700 px-3 py-1 rounded-full flex items-center gap-1.5 border border-blue-200 bg-blue-50 font-mono font-medium"
                       >
                         {skill}
                         <button
                           type="button"
                           onClick={() => removeSkill(skill)}
-                          className="text-slate-400 hover:text-white"
+                          className="text-slate-400 hover:text-slate-600"
                         >
                           <X size={12} />
                         </button>
@@ -352,7 +352,7 @@ export const RegisterPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={addSkill}
-                      className="px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-semibold hover:shadow-[0_0_12px_rgba(37,99,235,0.5)] shrink-0 shadow-sm"
+                      className="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shrink-0 shadow-2xs transition-colors"
                     >
                       Add
                     </button>
@@ -410,7 +410,7 @@ export const RegisterPage: React.FC = () => {
             {/* Client Specific Fields */}
             {accountType === 'client' && (
               <div className="space-y-4 pt-2">
-                <h3 className="font-sans font-bold text-white text-lg border-b border-blue-500/15 pb-2">
+                <h3 className="font-sans font-bold text-slate-900 text-lg border-b border-slate-100 pb-2">
                   2. Organization Information
                 </h3>
 
@@ -453,11 +453,11 @@ export const RegisterPage: React.FC = () => {
             )}
 
             {/* Submit */}
-            <div className="pt-4 border-t border-blue-500/15">
+            <div className="pt-4 border-t border-slate-100">
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold text-sm hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-sm"
+                className="w-full py-3.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-sm hover:shadow-md disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>{isLoading ? 'Creating Account…' : `Register as ${accountType === 'developer' ? 'Developer' : 'Client'}`}</span>
                 <ArrowRight size={15} />
@@ -466,9 +466,9 @@ export const RegisterPage: React.FC = () => {
           </form>
 
           {/* Login prompt */}
-          <div className="mt-6 text-center text-xs text-slate-400">
+          <div className="mt-6 text-center text-xs text-slate-500">
             Already have an account?{' '}
-            <Link to="/login" className="text-cyan-400 hover:text-white underline underline-offset-2 font-semibold transition-colors">
+            <Link to="/login" className="text-blue-600 hover:text-blue-700 underline underline-offset-2 font-semibold transition-colors">
               Sign in to your workspace
             </Link>
           </div>

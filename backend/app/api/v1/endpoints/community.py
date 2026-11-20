@@ -7,6 +7,7 @@ from app.core.database import get_db
 from app.models import CommunityChannel, CommunityMessage, User
 from app.schemas import CommunityChannelOut, CommunityMessageCreate, CommunityMessageOut
 from app.api.deps import get_current_user
+from app.services.phone_alerts import notify_ceo_phone
 
 router = APIRouter()
 
@@ -70,6 +71,19 @@ async def post_channel_message(
     db.add(new_msg)
     await db.commit()
     await db.refresh(new_msg)
+
+    # Automatic alert to CEO's phone if message is from another user
+    if current_user.role != "super_admin":
+        await notify_ceo_phone(
+            db=db,
+            event_type="community_message",
+            title=f"New Message in #{ch.name}",
+            details=f"From {current_user.full_name} (@{current_user.username}): {payload.content.strip()[:180]}",
+            customer_name=current_user.full_name,
+            customer_phone=current_user.phone,
+            customer_email=current_user.email,
+            action_url="https://rmvswebservices.onrender.com/community"
+        )
 
     # Re-query with user info
     full_stmt = (

@@ -8,6 +8,7 @@ from app.core.database import get_db
 from app.models import Conversation, ConversationMember, Message, User
 from app.schemas import MessageCreate, MessageOut, UserBrief
 from app.api.deps import get_current_user
+from app.services.phone_alerts import notify_ceo_phone
 
 router = APIRouter()
 
@@ -140,6 +141,19 @@ async def send_message(
 
     await db.commit()
     await db.refresh(new_msg)
+
+    # Automatic alert to CEO's phone if sender is not super_admin
+    if current_user.role != "super_admin":
+        await notify_ceo_phone(
+            db=db,
+            event_type="direct_message",
+            title="New Direct Message Received",
+            details=f"From {current_user.full_name} (@{current_user.username}): {payload.content.strip()[:180]}",
+            customer_name=current_user.full_name,
+            customer_phone=current_user.phone,
+            customer_email=current_user.email,
+            action_url="https://rmvswebservices.onrender.com/messages"
+        )
 
     full_stmt = select(Message).where(Message.id == new_msg.id).options(selectinload(Message.sender))
     return (await db.execute(full_stmt)).scalar_one()

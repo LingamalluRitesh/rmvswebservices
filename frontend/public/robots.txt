@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /ceo
+Disallow: /admin
+Disallow: /dashboard
+
+Sitemap: https://rmvswebservices.com/sitemap.xml

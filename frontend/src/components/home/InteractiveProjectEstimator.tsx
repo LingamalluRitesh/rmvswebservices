@@ -4,6 +4,7 @@ import {
   Cpu, Smartphone, Globe, Bot, ShieldCheck, Zap,
   Users, ArrowRight, CheckCircle2, Layers
 } from 'lucide-react';
+import api from '../../api/client';
 
 interface PlatformOption {
   id: string;
@@ -57,19 +58,29 @@ export const InteractiveProjectEstimator: React.FC = () => {
   const totalDays = Math.round((platform.defaultDays + addonDays) * tier.multiplier);
   const weeks = (totalDays / 7).toFixed(1);
 
+  const notifyEstimateLead = () => {
+    // Send automatic phone alert to CEO
+    api.post('/notifications/phone-alert', {
+      event_type: 'estimator_lead',
+      title: `Scope Estimator: ${platform.label} (${tier.label})`,
+      details: `Platform: ${platform.label}\nTier: ${tier.label}\nTimeline: ${totalDays} Days (~${weeks} wks)\nAddons: ${selectedAddons.join(', ')}\nSquad: ${tier.squadDesc}`,
+      action_url: 'https://rmvswebservices.onrender.com/ceo'
+    }).catch(() => {});
+  };
+
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-[#091124]/90 backdrop-blur-2xl border border-blue-500/25 shadow-[0_25px_70px_rgba(0,0,0,0.7)] p-6 sm:p-9 text-slate-100">
+    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-white border border-slate-200/90 shadow-[0_20px_60px_rgba(0,0,0,0.06)] p-6 sm:p-9 text-slate-800 lag-free">
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-8">
-        <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-600/20 border border-blue-500/30 text-cyan-300 text-[11px] font-mono uppercase tracking-widest mb-3 shadow-xs">
-          <Zap size={12} className="text-cyan-400" />
+        <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-[11px] font-mono uppercase tracking-widest mb-3 shadow-2xs font-semibold">
+          <Zap size={12} className="text-blue-600" />
           <span>Interactive Architecture Calculator</span>
         </span>
-        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2 font-sans">
+        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mb-2 font-sans">
           Design Your Architecture & Engineering Scope
         </h3>
-        <p className="text-slate-400 text-xs sm:text-sm">
+        <p className="text-slate-600 text-xs sm:text-sm">
           Select your requirements below to instantly model recommended technologies, engineering timeline, and squad allocation.
         </p>
       </div>
@@ -81,7 +92,7 @@ export const InteractiveProjectEstimator: React.FC = () => {
           
           {/* Step 1: Platform */}
           <div>
-            <label className="block text-slate-400 text-xs font-mono uppercase tracking-wider mb-2.5">
+            <label className="block text-slate-500 text-xs font-mono uppercase tracking-wider mb-2.5 font-semibold">
               1. Primary Platform
             </label>
             <div className="grid grid-cols-2 gap-2.5">
@@ -95,14 +106,14 @@ export const InteractiveProjectEstimator: React.FC = () => {
                     onClick={() => setSelectedPlatform(p.id)}
                     className={`p-3.5 rounded-2xl border text-left transition-all flex items-start gap-3 ${
                       isSelected
-                        ? 'bg-blue-600/25 border-cyan-400 text-white shadow-[0_0_20px_rgba(56,189,248,0.25)] ring-1 ring-cyan-400/40'
-                        : 'bg-[#060c1d] border-blue-500/15 hover:border-blue-500/30 text-slate-300'
+                        ? 'bg-blue-50 border-blue-500 text-blue-900 shadow-sm ring-1 ring-blue-500'
+                        : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-700'
                     }`}
                   >
-                    <Icon size={18} className={isSelected ? 'text-cyan-400' : 'text-slate-400'} />
+                    <Icon size={18} className={isSelected ? 'text-blue-600' : 'text-slate-400'} />
                     <div>
-                      <p className="text-xs font-semibold leading-none mb-1">{p.label}</p>
-                      <p className="text-[10px] text-slate-400 font-mono truncate max-w-[130px]">{p.stack}</p>
+                      <p className="text-xs font-bold leading-none mb-1 text-slate-900">{p.label}</p>
+                      <p className="text-[10px] text-slate-500 font-mono truncate max-w-[130px]">{p.stack}</p>
                     </div>
                   </button>
                 );
@@ -112,7 +123,7 @@ export const InteractiveProjectEstimator: React.FC = () => {
 
           {/* Step 2: Scale Tier */}
           <div>
-            <label className="block text-slate-400 text-xs font-mono uppercase tracking-wider mb-2.5">
+            <label className="block text-slate-500 text-xs font-mono uppercase tracking-wider mb-2.5 font-semibold">
               2. Deployment Scale
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -123,8 +134,8 @@ export const InteractiveProjectEstimator: React.FC = () => {
                   onClick={() => setSelectedTier(t.id)}
                   className={`py-2.5 px-3 rounded-xl border text-xs font-medium text-center transition-all ${
                     selectedTier === t.id
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-cyan-300 text-white font-semibold shadow-[0_0_15px_rgba(37,99,235,0.4)]'
-                      : 'bg-[#060c1d] border-blue-500/15 hover:border-blue-500/30 text-slate-400'
+                      ? 'bg-blue-600 border-blue-600 text-white font-semibold shadow-sm'
+                      : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-700'
                   }`}
                 >
                   {t.label}
@@ -135,7 +146,7 @@ export const InteractiveProjectEstimator: React.FC = () => {
 
           {/* Step 3: Add-on Capabilities */}
           <div>
-            <label className="block text-slate-400 text-xs font-mono uppercase tracking-wider mb-2.5">
+            <label className="block text-slate-500 text-xs font-mono uppercase tracking-wider mb-2.5 font-semibold">
               3. Advanced Capabilities
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -148,12 +159,12 @@ export const InteractiveProjectEstimator: React.FC = () => {
                     onClick={() => toggleAddon(addon.id)}
                     className={`py-2 px-3 rounded-xl border text-[11px] font-mono flex items-center justify-between transition-all ${
                       checked
-                        ? 'bg-blue-600/20 border-cyan-400 text-cyan-300 font-semibold shadow-xs'
-                        : 'bg-[#060c1d] border-blue-500/15 hover:border-blue-500/30 text-slate-400'
+                        ? 'bg-blue-50 border-blue-500 text-blue-700 font-semibold shadow-2xs'
+                        : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-700'
                     }`}
                   >
                     <span>{addon.label}</span>
-                    {checked && <CheckCircle2 size={13} className="text-cyan-400 shrink-0" />}
+                    {checked && <CheckCircle2 size={13} className="text-blue-600 shrink-0" />}
                   </button>
                 );
               })}
@@ -162,54 +173,55 @@ export const InteractiveProjectEstimator: React.FC = () => {
         </div>
 
         {/* Live Estimate Card (Clean Studio Box) */}
-        <div className="lg:col-span-5 bg-[#060c1d] border border-blue-500/30 rounded-3xl p-6 text-left space-y-5 shadow-2xl">
+        <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-3xl p-6 text-left space-y-5 shadow-sm">
           
-          <div className="flex items-center justify-between pb-3 border-b border-blue-500/20">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-semibold">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-bold">
               Live Architecture Model
             </span>
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#38bdf8]" />
+            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse shadow-[0_0_8px_#2563eb]" />
           </div>
 
           {/* Delivery & Timeline */}
           <div>
-            <p className="text-slate-400 text-xs font-mono uppercase">Estimated Delivery Timeline</p>
+            <p className="text-slate-500 text-xs font-mono uppercase font-semibold">Estimated Delivery Timeline</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-3xl font-extrabold text-white tracking-tight">{totalDays}</span>
-              <span className="text-slate-400 text-sm">Days (~{weeks} Weeks)</span>
+              <span className="text-3xl font-extrabold text-slate-900 tracking-tight">{totalDays}</span>
+              <span className="text-slate-600 text-sm">Days (~{weeks} Weeks)</span>
             </div>
           </div>
 
           {/* Architecture Spec */}
           <div className="space-y-2 pt-2 text-xs">
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-blue-950/40 border border-blue-500/20 shadow-2xs">
-              <span className="text-slate-400 flex items-center gap-1.5 font-medium">
-                <Cpu size={13} className="text-cyan-400" /> Core Tech
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+              <span className="text-slate-600 flex items-center gap-1.5 font-medium">
+                <Cpu size={13} className="text-blue-600" /> Core Tech
               </span>
-              <span className="font-mono text-cyan-300 font-semibold">{platform.stack}</span>
+              <span className="font-mono text-blue-700 font-semibold">{platform.stack}</span>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-blue-950/40 border border-blue-500/20 shadow-2xs">
-              <span className="text-slate-400 flex items-center gap-1.5 font-medium">
-                <Users size={13} className="text-emerald-400" /> Squad Scale
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+              <span className="text-slate-600 flex items-center gap-1.5 font-medium">
+                <Users size={13} className="text-emerald-600" /> Squad Scale
               </span>
-              <span className="font-mono text-emerald-300 text-[11px] font-semibold truncate max-w-[170px]">
+              <span className="font-mono text-emerald-700 text-[11px] font-semibold truncate max-w-[170px]">
                 {tier.squadDesc}
               </span>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-blue-950/40 border border-blue-500/20 shadow-2xs">
-              <span className="text-slate-400 flex items-center gap-1.5 font-medium">
-                <ShieldCheck size={13} className="text-purple-400" /> Attribution
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+              <span className="text-slate-600 flex items-center gap-1.5 font-medium">
+                <ShieldCheck size={13} className="text-purple-600" /> Attribution
               </span>
-              <span className="font-mono text-white font-semibold">100% Direct & Transparent</span>
+              <span className="font-mono text-slate-900 font-semibold">100% Direct & Transparent</span>
             </div>
           </div>
 
           {/* Proceed CTA */}
           <Link
             to={`/contact?platform=${selectedPlatform}&tier=${selectedTier}`}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:brightness-110 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(37,99,235,0.5)] active:scale-95"
+            onClick={notifyEstimateLead}
+            className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-95"
           >
             <span>Lock In This Scope</span>
             <ArrowRight size={14} />

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight, Layers, Users, ShieldCheck, Eye } from 'lucide-react';
 import type { Project } from '../../types';
@@ -11,9 +11,9 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
 
-  const fallbackUrl = 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80';
+  // High-resolution real-life engineering fallback
+  const fallbackUrl = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80';
   const [imgSrc, setImgSrc] = useState(() => {
     if (project.image_url && !project.image_url.includes('1drv.ms')) {
       return project.image_url;
@@ -26,144 +26,126 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
   const leadUser = leadDev?.user;
   const contributorCount = project.developer_associations?.length || 1;
 
-  // Mouse spotlight tracking for interactive glow without layout repaints
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    cardRef.current.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-    cardRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-  };
-
   return (
     <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ transform: 'translateZ(0)' }}
-      className="relative group rounded-3xl overflow-hidden bg-[#081026] border border-blue-500/25 hover:border-cyan-400/50 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.3)] transition-all duration-300 flex flex-col justify-end h-[420px] sm:h-[460px]"
+      className="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_4px_25px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_35px_rgba(37,99,235,0.12)] hover:border-blue-400 transition-all duration-300 flex flex-col justify-between lag-free"
     >
-      {/* Interactive Cursor Spotlight Glow */}
-      <div 
-        className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-        style={{
-          background: 'radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 102, 255, 0.22), transparent 40%)'
-        }}
-      />
-
-      {/* Background Image Container */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* Real-Life Imagery Showcase Container */}
+      <div className="relative w-full h-52 sm:h-56 overflow-hidden bg-slate-100">
         <img
           src={imgSrc}
-          alt={project.name}
+          alt={`${project.name} - ${project.client_name || 'RMVS Project'}`}
           loading="lazy"
           decoding="async"
           onError={() => setImgSrc(fallbackUrl)}
-          className={`w-full h-full object-cover transition-transform duration-700 ease-out ${
-            isHovered ? 'scale-105 brightness-[0.70]' : 'scale-100 brightness-[0.78]'
+          className={`w-full h-full object-cover object-center transition-transform duration-500 ease-out ${
+            isHovered ? 'scale-105' : 'scale-100'
           }`}
         />
-        {/* Multi-stop Midnight Blue Vignette Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#060b19] via-[#060b19]/75 to-transparent" />
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent pointer-events-none" />
 
-      {/* Top Header / Badges Bar */}
-      <div className="absolute top-5 left-5 right-5 z-20 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-1 rounded-full text-[10px] tracking-widest uppercase font-mono bg-[#070e22]/90 text-cyan-300 font-semibold border border-blue-500/30 shadow-sm backdrop-blur-md">
-            {project.category || 'Platform'}
-          </span>
-          {project.demo_url && (
-            <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-emerald-500/90 text-white font-medium shadow-sm backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              Live
+        {/* Top Badges */}
+        <div className="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-[10px] tracking-widest uppercase font-mono bg-white/95 text-blue-700 font-bold border border-blue-200/80 shadow-xs backdrop-blur-md">
+              {project.category || 'Platform'}
             </span>
-          )}
-        </div>
+            {project.demo_url && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-emerald-600 text-white font-medium shadow-xs backdrop-blur-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                Live
+              </span>
+            )}
+          </div>
 
-        {/* Action Pills */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          {onQuickView && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onQuickView(project);
-              }}
-              className="p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/40 text-cyan-200 hover:text-white border border-blue-500/30 shadow-sm transition-all flex items-center gap-1.5 text-xs font-medium backdrop-blur-md hover:scale-105"
-              title="Quick Preview"
-            >
-              <Eye size={13} />
-              <span className="hidden md:inline text-[11px]">Quick View</span>
-            </button>
-          )}
+          {/* Action Pills */}
+          <div className="flex items-center gap-1.5">
+            {onQuickView && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onQuickView(project);
+                }}
+                className="p-2 sm:px-3 sm:py-1.5 rounded-full bg-white/95 hover:bg-blue-50 text-slate-700 hover:text-blue-600 border border-slate-200 shadow-xs transition-all flex items-center gap-1.5 text-xs font-medium backdrop-blur-md hover:scale-105"
+                title="Quick Preview"
+              >
+                <Eye size={13} />
+                <span className="hidden md:inline text-[11px]">Preview</span>
+              </button>
+            )}
 
-          {project.demo_url && (
-            <a
-              href={project.demo_url}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="p-2 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/40 text-cyan-200 hover:text-white border border-blue-500/30 shadow-sm transition-all backdrop-blur-md hover:scale-105"
-              title="Launch Live Website"
-            >
-              <ExternalLink size={13} />
-            </a>
-          )}
+            {project.demo_url && (
+              <a
+                href={project.demo_url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="p-2 rounded-full bg-white/95 hover:bg-blue-50 text-slate-700 hover:text-blue-600 border border-slate-200 shadow-xs transition-all backdrop-blur-md hover:scale-105"
+                title="Launch Live Website"
+              >
+                <ExternalLink size={13} />
+              </a>
+            )}
 
-          {project.repo_url && (
-            <a
-              href={project.repo_url}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="p-2 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/40 text-cyan-200 hover:text-white border border-blue-500/30 shadow-sm transition-all backdrop-blur-md hover:scale-105"
-              title="View Repository"
-            >
-              <GithubIcon size={13} />
-            </a>
-          )}
+            {project.repo_url && (
+              <a
+                href={project.repo_url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="p-2 rounded-full bg-white/95 hover:bg-blue-50 text-slate-700 hover:text-blue-600 border border-slate-200 shadow-xs transition-all backdrop-blur-md hover:scale-105"
+                title="View Repository"
+              >
+                <GithubIcon size={13} />
+              </a>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 p-6 sm:p-7">
-        <p className="text-cyan-400 text-[10px] tracking-widest uppercase font-mono mb-1.5">
-          {project.client_name ? `Client · ${project.client_name}` : 'Engineered Platform'}
-        </p>
+      <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+        <div>
+          <p className="text-blue-600 text-[11px] tracking-widest uppercase font-mono font-semibold mb-1">
+            {project.client_name ? `Client · ${project.client_name}` : 'Engineered Platform'}
+          </p>
 
-        <Link to={`/projects/${project.slug}`}>
-          <h3 className="font-instrument italic text-2xl sm:text-3xl text-white group-hover:text-cyan-300 transition-colors leading-snug mb-2 drop-shadow-sm flex items-center gap-2">
-            <span>{project.name}</span>
-          </h3>
-        </Link>
+          <Link to={`/projects/${project.slug}`}>
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug mb-2 flex items-center gap-2">
+              <span>{project.name}</span>
+            </h3>
+          </Link>
 
-        <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 leading-relaxed mb-4 max-w-xl">
-          {project.short_description || project.description}
-        </p>
+          <p className="text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed mb-4">
+            {project.short_description || project.description}
+          </p>
 
-        {/* Technology Pills Directly on Card */}
-        {project.technologies && project.technologies.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5 mb-4">
-            {project.technologies.slice(0, 3).map((tech) => (
-              <span
-                key={tech.id || tech.name}
-                className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#070e22]/90 text-cyan-300 border border-blue-500/25 backdrop-blur-md"
-              >
-                {tech.name}
-              </span>
-            ))}
-            {project.technologies.length > 3 && (
-              <span className="text-[10px] font-mono text-cyan-400/60">+{project.technologies.length - 3}</span>
-            )}
-          </div>
-        )}
+          {/* Technology Pills */}
+          {project.technologies && project.technologies.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 mb-4">
+              {project.technologies.slice(0, 3).map((tech) => (
+                <span
+                  key={tech.id || tech.name}
+                  className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-slate-100 text-slate-700 border border-slate-200"
+                >
+                  {tech.name}
+                </span>
+              ))}
+              {project.technologies.length > 3 && (
+                <span className="text-[10px] font-mono text-slate-400">+{project.technologies.length - 3}</span>
+              )}
+            </div>
+          )}
+        </div>
 
         {/* Action Bar */}
-        <div className="flex items-center justify-between pt-3 border-t border-blue-500/20">
+        <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-2">
           <Link
             to={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-white transition-colors group/cta"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors group/cta"
           >
             <span>Explore details</span>
             <ArrowRight size={13} className="group-hover/cta:translate-x-1 transition-transform" />
@@ -173,17 +155,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
             <Link
               to={`/developers/${leadUser.username}`}
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0a142e]/90 hover:bg-blue-600/30 border border-blue-500/30 shadow-sm transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200 shadow-xs transition-all hover:scale-105"
             >
               {leadUser.avatar_url ? (
                 <img src={leadUser.avatar_url} alt={leadUser.full_name} className="w-4 h-4 rounded-full object-cover" />
               ) : (
-                <div className="w-4 h-4 rounded-full bg-blue-950 text-cyan-300 text-[9px] flex items-center justify-center font-instrument italic">
+                <div className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 text-[9px] flex items-center justify-center font-instrument italic">
                   {leadUser.full_name.charAt(0)}
                 </div>
               )}
-              <span className="text-[11px] text-slate-300 font-medium">
-                By <span className="text-white font-semibold">{leadUser.full_name.split(' ')[0]}</span>
+              <span className="text-[11px] text-slate-600 font-medium">
+                By <span className="text-slate-900 font-semibold">{leadUser.full_name.split(' ')[0]}</span>
               </span>
             </Link>
           )}
@@ -191,18 +173,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
       </div>
 
       {/* Bottom Spec Strip */}
-      <div className="relative z-10 px-6 py-3 grid grid-cols-3 gap-2 bg-[#070e22]/95 backdrop-blur-md border-t border-blue-500/20 text-[10px] text-slate-300 font-mono">
+      <div className="px-6 py-3 grid grid-cols-3 gap-2 bg-slate-50 border-t border-slate-200 text-[10px] text-slate-600 font-mono">
         <div className="flex items-center gap-1.5 truncate">
-          <Layers size={11} className="text-cyan-400 shrink-0" />
+          <Layers size={11} className="text-blue-600 shrink-0" />
           <span className="truncate">{project.category || 'Web Application'}</span>
         </div>
-        <div className="flex items-center justify-center gap-1.5 border-x border-blue-500/20">
-          <Users size={11} className="text-cyan-400 shrink-0" />
+        <div className="flex items-center justify-center gap-1.5 border-x border-slate-200">
+          <Users size={11} className="text-blue-600 shrink-0" />
           <span>{contributorCount} {contributorCount === 1 ? 'Developer' : 'Squad'}</span>
         </div>
         <div className="flex items-center justify-end gap-1.5">
-          <ShieldCheck size={11} className="text-cyan-400 shrink-0" />
-          <span className="text-white font-semibold">Verified</span>
+          <ShieldCheck size={11} className="text-blue-600 shrink-0" />
+          <span className="text-slate-900 font-semibold">Verified</span>
         </div>
       </div>
     </div>
