@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, X, Plus, LayoutGrid, SlidersHorizontal, Eye, ExternalLink } from 'lucide-react';
+import { Search, X, Plus, LayoutGrid, SlidersHorizontal, Eye, ExternalLink, Activity, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
@@ -31,14 +31,20 @@ export const ProjectsDirectory: React.FC = () => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const categories = ['All', 'Websites', 'Apps', 'Software', 'Digital Solutions'];
+  const categories = ['All', '⚡ Ongoing Works', 'Websites', 'Apps', 'Software', 'Digital Solutions'];
 
   useEffect(() => { fetchProjects(); }, [selectedCategory]);
 
   const fetchProjects = async () => {
     try {
       const params: Record<string, string> = {};
-      if (selectedCategory && selectedCategory !== 'All') params.category = selectedCategory;
+      if (selectedCategory && selectedCategory !== 'All') {
+        if (selectedCategory === '⚡ Ongoing Works') {
+          params.status = 'Ongoing';
+        } else {
+          params.category = selectedCategory;
+        }
+      }
       if (searchQuery) params.query = searchQuery;
       const res = await api.get('/projects', { params });
       if (Array.isArray(res.data) && res.data.length > 0) {
@@ -55,6 +61,26 @@ export const ProjectsDirectory: React.FC = () => {
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => { e.preventDefault(); fetchProjects(); };
+
+  const displayedProjects = projects.filter((p) => {
+    let matchesCategory = true;
+    if (selectedCategory === '⚡ Ongoing Works') {
+      matchesCategory =
+        p.status?.toLowerCase() === 'ongoing' ||
+        p.status?.toLowerCase() === 'in progress' ||
+        p.status?.toLowerCase() === 'in development';
+    } else if (selectedCategory !== 'All') {
+      matchesCategory = p.category?.toLowerCase() === selectedCategory.toLowerCase();
+    }
+    const q = searchQuery.trim().toLowerCase();
+    const matchesSearch =
+      !q ||
+      p.name.toLowerCase().includes(q) ||
+      (p.short_description && p.short_description.toLowerCase().includes(q)) ||
+      (p.client_name && p.client_name.toLowerCase().includes(q)) ||
+      (p.technologies && p.technologies.some((t) => t.name.toLowerCase().includes(q)));
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 selection:bg-blue-600 selection:text-white">
@@ -173,20 +199,20 @@ export const ProjectsDirectory: React.FC = () => {
               <div key={i} className="h-72 rounded-3xl animate-pulse bg-slate-100 border border-slate-200" />
             ))}
           </div>
-        ) : projects.length === 0 ? (
+        ) : displayedProjects.length === 0 ? (
           <div className="text-center py-20 rounded-3xl border border-slate-200 shadow-sm bg-white">
             <p className="font-sans font-bold text-slate-900 text-2xl mb-2">No projects found</p>
             <p className="text-slate-500 text-sm mb-6 max-w-sm mx-auto">Try adjusting your search query or switching categories.</p>
             <button
               onClick={() => { setSelectedCategory('All'); setSearchQuery(''); fetchProjects(); }}
-              className="px-5 py-2.5 rounded-full bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-all shadow-sm"
+              className="px-5 py-2.5 rounded-full bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-all shadow-sm cursor-pointer"
             >
               Reset filters
             </button>
           </div>
         ) : viewMode === 'grid' ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {projects.map((proj) => (
+            {displayedProjects.map((proj) => (
               <ProjectCard
                 key={proj.id}
                 project={proj}
@@ -199,12 +225,16 @@ export const ProjectsDirectory: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-6">
-            {projects.map((p) => {
+            {displayedProjects.map((p) => {
               const leadAssoc = p.developer_associations?.find((d) => d.is_lead) || p.developer_associations?.[0];
               const leadDev = leadAssoc?.developer;
               const leadUser = leadDev?.user;
               const fallbackImg = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80';
               const imgSrc = p.image_url && !p.image_url.includes('1drv.ms') ? p.image_url : fallbackImg;
+              const isOngoing =
+                p.status?.toLowerCase() === 'ongoing' ||
+                p.status?.toLowerCase() === 'in progress' ||
+                p.status?.toLowerCase() === 'in development';
 
               return (
                 <div
@@ -223,12 +253,17 @@ export const ProjectsDirectory: React.FC = () => {
                       <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/95 text-blue-600 border border-slate-200 font-semibold shadow-xs backdrop-blur-md">
                         {p.category || 'Platform'}
                       </span>
-                      {p.demo_url && (
+                      {isOngoing ? (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-amber-500 text-white font-semibold shadow-xs backdrop-blur-md">
+                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                          Ongoing Sprint
+                        </span>
+                      ) : p.demo_url ? (
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-emerald-600 text-white font-medium shadow-xs backdrop-blur-md">
                           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                           Live
                         </span>
-                      )}
+                      ) : null}
                     </div>
                     <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                       <button
@@ -237,7 +272,7 @@ export const ProjectsDirectory: React.FC = () => {
                           setQuickViewProject(p);
                           setIsQuickViewOpen(true);
                         }}
-                        className="px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-slate-200 text-xs font-semibold shadow-xs transition-transform hover:scale-105 flex items-center gap-1.5 backdrop-blur-md"
+                        className="px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white text-slate-800 border border-slate-200 text-xs font-semibold shadow-xs transition-transform hover:scale-105 flex items-center gap-1.5 backdrop-blur-md cursor-pointer"
                       >
                         <Eye size={13} className="text-blue-600" />
                         <span>Quick Preview</span>
@@ -262,10 +297,49 @@ export const ProjectsDirectory: React.FC = () => {
                         <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 font-medium">
                           {p.client_name ? `Client • ${p.client_name}` : 'Engineered Platform'}
                         </span>
-                        <span className="text-[10px] font-mono text-blue-700 font-semibold px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200">
-                          Verified Production
+                        <span className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full border ${
+                          isOngoing ? 'text-amber-800 bg-amber-50 border-amber-200' : 'text-blue-700 bg-blue-50 border-blue-200'
+                        }`}>
+                          {isOngoing ? 'Active Sprint' : 'Verified Production'}
                         </span>
                       </div>
+
+                      <Link to={`/projects/${p.slug}`}>
+                        <h3 className="font-sans font-bold text-2xl sm:text-3xl text-slate-900 hover:text-blue-600 transition-colors leading-snug mb-2">
+                          {p.name}
+                        </h3>
+                      </Link>
+
+                      <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+                        {p.short_description || p.description}
+                      </p>
+
+                      {/* Ongoing Development Sprint Progress Telemetry */}
+                      {isOngoing && (
+                        <div className="mb-4 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/90 shadow-2xs">
+                          <div className="flex items-center justify-between text-[11px] font-mono mb-1.5">
+                            <span className="text-amber-900 font-semibold flex items-center gap-1.5 truncate">
+                              <Activity size={12} className="text-amber-600 shrink-0" />
+                              <span className="truncate">{p.current_stage || 'In Active Development'}</span>
+                            </span>
+                            <span className="text-amber-950 font-bold font-mono ml-2">
+                              {p.progress_percentage ?? 60}%
+                            </span>
+                          </div>
+                          <div className="w-full bg-amber-200/60 rounded-full h-1.5 overflow-hidden">
+                            <div
+                              className="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full transition-all duration-500"
+                              style={{ width: `${Math.min(100, Math.max(5, p.progress_percentage ?? 60))}%` }}
+                            />
+                          </div>
+                          {p.completion_date && (
+                            <div className="mt-2 flex items-center gap-1.5 text-[10px] text-amber-800 font-mono">
+                              <Calendar size={11} className="text-amber-600 shrink-0" />
+                              <span>Target Launch: <strong className="text-amber-950 font-semibold">{p.completion_date}</strong></span>
+                            </div>
+                          )}
+                        </div>
+                      )}
 
                       <Link to={`/projects/${p.slug}`}>
                         <h3 className="font-sans font-bold text-2xl sm:text-3xl text-slate-900 hover:text-blue-600 transition-colors leading-snug mb-2">

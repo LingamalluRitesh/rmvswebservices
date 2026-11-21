@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   X, ExternalLink, ShieldCheck, Layers, Users, 
-  ArrowRight, CheckCircle2, Globe, Sparkles 
+  ArrowRight, CheckCircle2, Globe, Sparkles, Activity, Calendar
 } from 'lucide-react';
 import type { Project } from '../../types';
 import { GithubIcon } from '../common/Icons';
@@ -33,6 +33,11 @@ export const ProjectQuickViewModal: React.FC<ProjectQuickViewModalProps> = ({
   }, [isOpen, onClose]);
 
   if (!isOpen || !project) return null;
+
+  const isOngoing =
+    project.status?.toLowerCase() === 'ongoing' ||
+    project.status?.toLowerCase() === 'in progress' ||
+    project.status?.toLowerCase() === 'in development';
 
   const leadAssoc = project.developer_associations?.find((d) => d.is_lead) || project.developer_associations?.[0];
   const leadDev = leadAssoc?.developer;
@@ -80,12 +85,17 @@ export const ProjectQuickViewModal: React.FC<ProjectQuickViewModalProps> = ({
             <span className="px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider bg-white/95 text-blue-700 font-bold backdrop-blur-md shadow-xs border border-blue-200">
               {project.category || 'Web Application'}
             </span>
-            {project.demo_url && (
+            {isOngoing ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider bg-amber-500 text-white font-semibold backdrop-blur-md shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                Active Engineering Sprint
+              </span>
+            ) : project.demo_url ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono tracking-wider bg-emerald-600 text-white font-medium backdrop-blur-md shadow-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 Live Production
               </span>
-            )}
+            ) : null}
           </div>
 
           <div className="absolute bottom-5 left-5 right-5 text-white">
@@ -100,6 +110,31 @@ export const ProjectQuickViewModal: React.FC<ProjectQuickViewModalProps> = ({
 
         {/* Modal Body */}
         <div className="p-6 sm:p-8 space-y-6 max-h-[60vh] overflow-y-auto">
+          {/* Ongoing Sprint Telemetry */}
+          {isOngoing && (
+            <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200 space-y-2.5">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-amber-900 font-bold flex items-center gap-1.5">
+                  <Activity size={14} className="text-amber-600" />
+                  Sprint Stage: {project.current_stage || 'In Active Development'}
+                </span>
+                <span className="text-amber-950 font-extrabold">{project.progress_percentage ?? 60}% Completed</span>
+              </div>
+              <div className="w-full bg-amber-200/60 rounded-full h-2 overflow-hidden">
+                <div
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${Math.min(100, Math.max(5, project.progress_percentage ?? 60))}%` }}
+                />
+              </div>
+              {project.completion_date && (
+                <div className="flex items-center gap-1.5 text-[11px] text-amber-800 font-mono">
+                  <Calendar size={12} className="text-amber-600" />
+                  <span>Target Launch / Release Window: <strong className="text-amber-950 font-bold">{project.completion_date}</strong></span>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Description */}
           <div>
             <h4 className="text-xs font-mono uppercase tracking-wider text-blue-600 font-bold mb-2">Project Overview</h4>
@@ -146,8 +181,8 @@ export const ProjectQuickViewModal: React.FC<ProjectQuickViewModalProps> = ({
                 <span className="font-semibold text-slate-900 font-mono">100% Verified</span>
               </div>
               <div className="flex items-center justify-between text-xs text-slate-600">
-                <span className="flex items-center gap-1.5"><Layers size={14} className="text-blue-600" /> Tier</span>
-                <span className="font-semibold text-slate-900 font-mono">Production Grade</span>
+                <span className="flex items-center gap-1.5"><Layers size={14} className="text-blue-600" /> Status</span>
+                <span className="font-semibold text-slate-900 font-mono">{isOngoing ? 'Active Sprint' : 'Production Grade'}</span>
               </div>
               <div className="flex items-center justify-between text-xs text-slate-600">
                 <span className="flex items-center gap-1.5"><Users size={14} className="text-blue-600" /> Squad</span>
@@ -181,7 +216,7 @@ export const ProjectQuickViewModal: React.FC<ProjectQuickViewModalProps> = ({
             onClick={onClose}
             className="px-5 py-2.5 rounded-full text-xs font-semibold text-slate-700 hover:text-blue-600 border border-slate-300 bg-white hover:bg-slate-50 transition-colors flex items-center gap-1.5 shadow-2xs"
           >
-            <span>View Complete Specifications</span>
+            <span>{isOngoing ? 'Full Sprint Roadmap & Specs' : 'View Complete Specifications'}</span>
             <ArrowRight size={13} />
           </Link>
 

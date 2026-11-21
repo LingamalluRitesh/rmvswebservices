@@ -276,5 +276,105 @@ export const fallbackProjects: Project[] = [
       { id: 2, name: 'FastAPI' },
       { id: 15, name: 'LLM Orchestration' }
     ]
+  },
+  {
+    id: 9,
+    name: 'Zenith TeleHealth & Clinical EHR Suite',
+    slug: 'zenith-telehealth-ehr',
+    short_description: 'HIPAA-compliant WebRTC telemedicine consultation portal with real-time biometric vitals monitoring and automated clinical patient scheduling.',
+    description: 'Currently in active development: High-security healthcare platform engineered with end-to-end encrypted video channels, live doctor-patient chat, digital prescription issuance, and direct electronic health records (EHR) synchronization.',
+    category: 'Websites',
+    demo_url: 'https://rmvswebservices.onrender.com/projects/zenith-telehealth-ehr',
+    repo_url: undefined,
+    image_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
+    status: 'Ongoing',
+    visibility: 'Public',
+    client_name: 'Zenith Health Systems',
+    start_date: '2026-10-01',
+    completion_date: 'Dec 2026',
+    progress_percentage: 65,
+    current_stage: 'Sprint 3: HIPAA WebRTC Video & EHR Integration',
+    created_at: '2026-11-15T12:00:00.000000Z',
+    developer_associations: [
+      {
+        id: 10,
+        role_in_project: 'Full Stack Architect',
+        is_lead: true,
+        developer: {
+          id: 1,
+          title: 'Full Stack Engineer',
+          availability: 'Available',
+          years_experience: 3,
+          user: {
+            id: 1,
+            username: 'tharunlingamallu',
+            full_name: 'Lingamallu Tharun Manikanta',
+            role: 'developer',
+            avatar_url: 'https://media.licdn.com/dms/image/v2/D5603AQF0tS01bO8vPQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1715424911762?e=1743638400&v=beta&t=3ZqU1sC-gV08h5vj3qU1sC-gV08h5vj3qU1sC-gV08',
+            is_verified: true,
+          },
+          skills: [
+            { id: 4, name: 'React' },
+            { id: 5, name: 'TypeScript' },
+            { id: 2, name: 'FastAPI' }
+          ]
+        }
+      }
+    ],
+    technologies: [
+      { id: 4, name: 'React' },
+      { id: 5, name: 'TypeScript' },
+      { id: 2, name: 'FastAPI' }
+    ]
+  },
+  {
+    id: 10,
+    name: 'Apex Fleet Autonomous Telematics Hub',
+    slug: 'apex-fleet-telematics',
+    short_description: 'Edge IoT fleet telemetry streaming vehicle diagnostics, temperature sensors, automated route optimization, and driver performance telemetry.',
+    description: 'Currently in active development: High-throughput telemetry and cold-chain monitoring hub. Ingests MQTT streams from 5,000+ connected vehicle hardware sensors with sub-second latency, map geospatial routing, and emergency alert dispatches.',
+    category: 'Software',
+    demo_url: 'https://rmvswebservices.onrender.com/projects/apex-fleet-telematics',
+    repo_url: undefined,
+    image_url: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80',
+    status: 'Ongoing',
+    visibility: 'Public',
+    client_name: 'Apex Global Logistics',
+    start_date: '2026-09-15',
+    completion_date: 'Jan 2027',
+    progress_percentage: 80,
+    current_stage: 'Sprint 4: Edge IoT Sensor Telemetry & Map Routing',
+    created_at: '2026-11-18T10:00:00.000000Z',
+    developer_associations: [
+      {
+        id: 11,
+        role_in_project: 'Chief Systems Architect',
+        is_lead: true,
+        developer: {
+          id: 3,
+          title: 'Chief Executive Officer (CEO)',
+          availability: 'Available for Advisory',
+          years_experience: 5,
+          user: {
+            id: 3,
+            username: 'riteshlingamallu8',
+            full_name: 'Ritesh Lingamallu',
+            role: 'super_admin',
+            avatar_url: 'https://media.licdn.com/dms/image/v2/D4D35AQFckrBvrwWh-Q/profile-framedphoto-shrink_800_800/B4DaAWMSiVJIAI-/0/1787078715771?e=1791622800&v=beta&t=5EVFRjqZKuo7-6gVsyWdAueZFzhaO5w9XV2TTdU5TmA',
+            is_verified: true,
+          },
+          skills: [
+            { id: 1, name: 'Python' },
+            { id: 10, name: 'Docker' },
+            { id: 6, name: 'PostgreSQL' }
+          ]
+        }
+      }
+    ],
+    technologies: [
+      { id: 1, name: 'Python' },
+      { id: 10, name: 'Docker' },
+      { id: 6, name: 'PostgreSQL' }
+    ]
   }
 ];

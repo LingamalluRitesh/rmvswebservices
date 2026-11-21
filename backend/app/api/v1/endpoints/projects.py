@@ -28,6 +28,7 @@ def slugify(text: str) -> str:
 @router.get("", response_model=List[ProjectOut])
 async def list_projects(
     category: Optional[str] = Query(None, description="Filter by category"),
+    status: Optional[str] = Query(None, description="Filter by status (e.g. Published, Ongoing, All)"),
     technology: Optional[str] = Query(None, description="Filter by technology"),
     query: Optional[str] = Query(None, description="Search name or description"),
     developer_username: Optional[str] = Query(None, description="Filter by developer username"),
@@ -35,7 +36,8 @@ async def list_projects(
 ):
     stmt = (
         select(Project)
-        .where(Project.status == "Published")
+        .where(Project.visibility == "Public")
+        .where(Project.status != "Archived")
         .options(
             selectinload(Project.developer_associations).selectinload(ProjectDeveloper.developer).selectinload(DeveloperProfile.user),
             selectinload(Project.developer_associations).selectinload(ProjectDeveloper.developer).selectinload(DeveloperProfile.skills),
@@ -43,6 +45,15 @@ async def list_projects(
         )
         .order_by(Project.created_at.desc())
     )
+
+    if status and status != "All":
+        clean_status = status.strip().lower()
+        if clean_status in ["ongoing", "in progress", "in development", "active"]:
+            stmt = stmt.where(Project.status.in_(["Ongoing", "In Progress", "In Development", "Active Sprint"]))
+        elif clean_status in ["published", "live", "completed"]:
+            stmt = stmt.where(Project.status.in_(["Published", "Live", "Completed"]))
+        else:
+            stmt = stmt.where(Project.status.ilike(status))
 
     if category and category != "All":
         stmt = stmt.where(Project.category == category)
@@ -149,7 +160,10 @@ async def create_project(
             client_name=payload.client_name,
             start_date=payload.start_date,
             completion_date=payload.completion_date,
-            status="Published",
+            status=payload.status or "Published",
+            progress_percentage=payload.progress_percentage if payload.progress_percentage is not None else (70 if (payload.status and payload.status.lower() in ["ongoing", "in progress"]) else 100),
+            current_stage=payload.current_stage or ("In Development" if (payload.status and payload.status.lower() in ["ongoing", "in progress"]) else "Production Live"),
+            visibility=payload.visibility or "Public",
             technologies=techs_to_assign
         )
         db.add(new_project)
@@ -228,6 +242,26 @@ async def create_project(
 
         await db.commit()
 
+        # Instant phone notification to CEO for new project posting
+        try:
+            from app.services.phone_alerts import notify_ceo_phone
+            await notify_ceo_phone(
+                db=db,
+                event_type="project_posted",
+                summary=f"New {'Ongoing' if new_project.status in ['Ongoing', 'In Progress'] else 'Published'} Project: {new_project.name}",
+                details={
+                    "project_name": new_project.name,
+                    "status": new_project.status,
+                    "stage": new_project.current_stage or "Active Sprint",
+                    "progress": f"{new_project.progress_percentage}%",
+                    "category": new_project.category,
+                    "client": new_project.client_name or "Internal",
+                    "posted_by": current_user.full_name
+                }
+            )
+        except Exception as alert_err:
+            logger.warning("Could not dispatch project phone alert: %s", alert_err)
+
         # Re-query with full options
         full_stmt = (
             select(Project)
@@ -297,6 +331,12 @@ async def update_project(
         project.status = payload.status
     if payload.client_name is not None:
         project.client_name = payload.client_name
+    if payload.progress_percentage is not None:
+        project.progress_percentage = payload.progress_percentage
+    if payload.current_stage is not None:
+        project.current_stage = payload.current_stage
+    if payload.completion_date is not None:
+        project.completion_date = payload.completion_date
 
     if payload.technologies is not None:
         project.technologies.clear()

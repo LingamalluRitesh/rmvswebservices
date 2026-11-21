@@ -4,7 +4,7 @@ import {
   ArrowLeft, ExternalLink, CheckCircle2,
   ShieldCheck, Building, MessageSquare,
   Edit3, Trash2, X, AlertCircle, Camera, Image as ImageIcon,
-  RefreshCw, Upload, Check, Globe, Sparkles
+  RefreshCw, Upload, Check, Globe, Sparkles, Activity, Calendar
 } from 'lucide-react';
 import api from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
@@ -43,6 +43,9 @@ export const ProjectDetailPage: React.FC = () => {
   const [editImageUrl, setEditImageUrl] = useState('');
   const [editClientName, setEditClientName] = useState('');
   const [editStatus, setEditStatus] = useState('Published');
+  const [editProgressPercentage, setEditProgressPercentage] = useState<number>(65);
+  const [editCurrentStage, setEditCurrentStage] = useState('Sprint 3: Core Implementation');
+  const [editCompletionDate, setEditCompletionDate] = useState('');
   const [editTechnologies, setEditTechnologies] = useState<string[]>([]);
   const [editNewTech, setEditNewTech] = useState('');
   const [editError, setEditError] = useState<string | null>(null);
@@ -191,6 +194,9 @@ export const ProjectDetailPage: React.FC = () => {
     setEditImageUrl(project.image_url || '');
     setEditClientName(project.client_name || '');
     setEditStatus(project.status || 'Published');
+    setEditProgressPercentage(project.progress_percentage ?? 65);
+    setEditCurrentStage(project.current_stage || 'Sprint 3: Core Implementation');
+    setEditCompletionDate(project.completion_date || '');
     setEditTechnologies(project.technologies?.map((t) => t.name) || []);
     setEditNewTech('');
     setEditError(null);
@@ -226,6 +232,9 @@ export const ProjectDetailPage: React.FC = () => {
         image_url: editImageUrl || null,
         client_name: editClientName || null,
         status: editStatus,
+        progress_percentage: editStatus === 'Ongoing' || editStatus === 'In Progress' ? Number(editProgressPercentage) : 100,
+        current_stage: editCurrentStage,
+        completion_date: editCompletionDate || null,
         technologies: editTechnologies.map((t) => ({ name: t })),
       };
 
@@ -296,6 +305,11 @@ export const ProjectDetailPage: React.FC = () => {
     (user.role === 'super_admin' ||
       project.developer_associations.some((a) => a.developer.user?.id === user.id));
 
+  const isOngoing =
+    project.status?.toLowerCase() === 'ongoing' ||
+    project.status?.toLowerCase() === 'in progress' ||
+    project.status?.toLowerCase() === 'in development';
+
   const leadDeveloper =
     project.developer_associations.find((d) => d.is_lead)?.developer ||
     project.developer_associations[0]?.developer;
@@ -321,14 +335,14 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={openEditModal}
-                className="px-4 py-2 rounded-full bg-white text-xs font-semibold text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 transition-colors flex items-center gap-1.5 shadow-2xs"
+                className="px-4 py-2 rounded-full bg-white text-xs font-semibold text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
               >
                 <Edit3 size={13} />
                 <span>Modify Project</span>
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 rounded-full bg-rose-50 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-2xs"
+                className="px-4 py-2 rounded-full bg-rose-50 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
               >
                 <Trash2 size={13} />
                 <span>Delete</span>
@@ -356,7 +370,7 @@ export const ProjectDetailPage: React.FC = () => {
               <button
                 type="button"
                 onClick={openCoverModal}
-                className="absolute top-5 right-5 z-20 px-4 py-2 rounded-full bg-white/95 hover:bg-white backdrop-blur-md text-slate-800 text-xs font-semibold border border-slate-200 hover:border-blue-400 transition-all flex items-center gap-1.5 shadow-md hover:scale-105"
+                className="absolute top-5 right-5 z-20 px-4 py-2 rounded-full bg-white/95 hover:bg-white backdrop-blur-md text-slate-800 text-xs font-semibold border border-slate-200 hover:border-blue-400 transition-all flex items-center gap-1.5 shadow-md hover:scale-105 cursor-pointer"
               >
                 <Camera size={14} className="text-blue-600" />
                 <span>Change Cover Image</span>
@@ -368,9 +382,22 @@ export const ProjectDetailPage: React.FC = () => {
           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
               <div>
-                <span className="bg-white/95 text-blue-600 font-semibold text-xs tracking-widest uppercase rounded-full px-3 py-1 inline-block mb-3 border border-slate-200 shadow-xs">
-                  {project.category}
-                </span>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-white/95 text-blue-600 font-semibold text-xs tracking-widest uppercase rounded-full px-3 py-1 border border-slate-200 shadow-xs">
+                    {project.category}
+                  </span>
+                  {isOngoing ? (
+                    <span className="inline-flex items-center gap-1.5 bg-amber-500 text-white font-semibold text-xs tracking-widest uppercase rounded-full px-3 py-1 border border-amber-300 shadow-xs backdrop-blur-md">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                      Active Sprint · In Development
+                    </span>
+                  ) : project.demo_url ? (
+                    <span className="inline-flex items-center gap-1.5 bg-emerald-600 text-white font-medium text-xs tracking-wider rounded-full px-3 py-1 shadow-xs backdrop-blur-md">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                      Live Production
+                    </span>
+                  ) : null}
+                </div>
                 <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-white tracking-tight leading-tight drop-shadow-md">
                   {project.name}
                 </h1>
@@ -429,6 +456,51 @@ export const ProjectDetailPage: React.FC = () => {
 
           {/* Main content */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Active Engineering Sprint Tracker & Roadmap for Ongoing Works */}
+            {isOngoing && (
+              <div className="rounded-3xl p-6 sm:p-7 border border-amber-200/90 bg-gradient-to-br from-amber-50/90 via-white to-amber-50/40 shadow-sm space-y-4">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <Activity size={16} className="text-amber-600" />
+                    <span className="text-xs font-mono uppercase tracking-widest font-bold text-amber-900">
+                      Active Sprint Telemetry &amp; Roadmap
+                    </span>
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500 text-white shadow-2xs">
+                    {project.progress_percentage ?? 65}% Completed
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">
+                    Current Milestone: {project.current_stage || 'In Active Development'}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    This platform is under active development sprints by our verified engineering squad. System architecture, component milestones, and code commits are continually updated.
+                  </p>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="w-full bg-amber-200/70 rounded-full h-2.5 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-amber-500 to-orange-500 h-2.5 rounded-full transition-all duration-700 shadow-xs"
+                    style={{ width: `${Math.min(100, Math.max(5, project.progress_percentage ?? 65))}%` }}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-amber-200/60 text-xs font-mono">
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Calendar size={13} className="text-amber-600" />
+                    <span>Target Launch: <strong className="text-slate-900 font-bold">{project.completion_date || 'Target: Q4 2026'}</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <ShieldCheck size={13} className="text-blue-600" />
+                    <span>Attributed Squad: <strong className="text-slate-900 font-bold">{project.developer_associations?.length || 1} Engineer(s)</strong></span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="rounded-3xl p-8 border border-slate-200/90 shadow-[0_4px_25px_rgba(0,0,0,0.05)] bg-white space-y-6">
               <div>
                 <span className="text-blue-600 text-xs tracking-widest uppercase font-mono font-semibold block mb-2">Project Brief</span>
@@ -624,7 +696,9 @@ export const ProjectDetailPage: React.FC = () => {
                       onChange={(e) => setEditStatus(e.target.value)}
                       className={inputCls}
                     >
-                      <option value="Published">Published</option>
+                      <option value="Published">Published (Live Production)</option>
+                      <option value="Ongoing">Ongoing (Active Sprint)</option>
+                      <option value="In Progress">In Progress (Engineering)</option>
                       <option value="Draft">Draft</option>
                       <option value="Archived">Archived</option>
                     </select>
@@ -639,6 +713,54 @@ export const ProjectDetailPage: React.FC = () => {
                     />
                   </div>
                 </div>
+
+                {/* Ongoing Sprint Configuration */}
+                {(editStatus === 'Ongoing' || editStatus === 'In Progress') && (
+                  <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/90 space-y-4">
+                    <p className="text-xs font-mono uppercase tracking-wider text-amber-900 font-bold flex items-center gap-1.5">
+                      <Activity size={13} className="text-amber-600" />
+                      Ongoing Sprint Configuration
+                    </p>
+
+                    <div>
+                      <label className="block text-slate-700 text-xs tracking-widest uppercase mb-1 font-mono font-semibold">Current Sprint / Milestone Stage</label>
+                      <input
+                        type="text"
+                        value={editCurrentStage}
+                        onChange={(e) => setEditCurrentStage(e.target.value)}
+                        placeholder="e.g. Sprint 3: WebRTC Video & EHR Integration"
+                        className={inputCls}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-slate-700 text-xs tracking-widest uppercase font-mono font-semibold">Progress Percentage</label>
+                          <span className="text-xs font-bold font-mono text-amber-900">{editProgressPercentage}%</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={editProgressPercentage}
+                          onChange={(e) => setEditProgressPercentage(Number(e.target.value))}
+                          className="w-full h-2 bg-amber-200 rounded-lg appearance-none cursor-pointer accent-amber-600"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-slate-700 text-xs tracking-widest uppercase mb-1 font-mono font-semibold">Target Launch Date</label>
+                        <input
+                          type="text"
+                          value={editCompletionDate}
+                          onChange={(e) => setEditCompletionDate(e.target.value)}
+                          placeholder="e.g. Dec 2026 or Q1 2027"
+                          className={inputCls}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-slate-600 text-xs tracking-widest uppercase mb-1.5 font-mono font-semibold">Short Summary</label>

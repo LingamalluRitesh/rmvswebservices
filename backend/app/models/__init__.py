@@ -113,6 +113,8 @@ class Project(Base):
     client_name = Column(String(255), nullable=True)
     start_date = Column(String(50), nullable=True)
     completion_date = Column(String(50), nullable=True)
+    progress_percentage = Column(Integer, default=0, nullable=True)
+    current_stage = Column(String(100), default="In Development", nullable=True)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ArrowRight, Layers, Users, ShieldCheck, Eye } from 'lucide-react';
+import { ExternalLink, ArrowRight, Layers, Users, ShieldCheck, Eye, Activity, Calendar } from 'lucide-react';
 import type { Project } from '../../types';
 import { GithubIcon } from '../common/Icons';
 
@@ -20,6 +20,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
     }
     return fallbackUrl;
   });
+
+  const isOngoing =
+    project.status?.toLowerCase() === 'ongoing' ||
+    project.status?.toLowerCase() === 'in progress' ||
+    project.status?.toLowerCase() === 'in development';
 
   const leadAssoc = project.developer_associations?.find((d) => d.is_lead) || project.developer_associations?.[0];
   const leadDev = leadAssoc?.developer;
@@ -52,12 +57,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
             <span className="px-3 py-1 rounded-full text-[10px] tracking-widest uppercase font-mono bg-white/95 text-blue-700 font-bold border border-blue-200/80 shadow-xs backdrop-blur-md">
               {project.category || 'Platform'}
             </span>
-            {project.demo_url && (
+            {isOngoing ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-amber-500 text-white font-semibold shadow-xs backdrop-blur-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                Ongoing Sprint
+              </span>
+            ) : project.demo_url ? (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-emerald-600 text-white font-medium shadow-xs backdrop-blur-md">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 Live
               </span>
-            )}
+            ) : null}
           </div>
 
           {/* Action Pills */}
@@ -123,6 +133,33 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
             {project.short_description || project.description}
           </p>
 
+          {/* Ongoing Development Sprint Progress Telemetry */}
+          {isOngoing && (
+            <div className="mb-4 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/90 shadow-2xs">
+              <div className="flex items-center justify-between text-[11px] font-mono mb-1.5">
+                <span className="text-amber-900 font-semibold flex items-center gap-1.5 truncate">
+                  <Activity size={12} className="text-amber-600 shrink-0" />
+                  <span className="truncate">{project.current_stage || 'In Active Development'}</span>
+                </span>
+                <span className="text-amber-950 font-bold font-mono shrink-0 ml-2">
+                  {project.progress_percentage ?? 60}%
+                </span>
+              </div>
+              <div className="w-full bg-amber-200/60 rounded-full h-1.5 overflow-hidden">
+                <div
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full transition-all duration-500"
+                  style={{ width: `${Math.min(100, Math.max(5, project.progress_percentage ?? 60))}%` }}
+                />
+              </div>
+              {project.completion_date && (
+                <div className="mt-2 flex items-center gap-1.5 text-[10px] text-amber-800 font-mono">
+                  <Calendar size={11} className="text-amber-600 shrink-0" />
+                  <span>Target Launch: <strong className="text-amber-950 font-semibold">{project.completion_date}</strong></span>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Technology Pills */}
           {project.technologies && project.technologies.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5 mb-4">
@@ -147,7 +184,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
             to={`/projects/${project.slug}`}
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors group/cta"
           >
-            <span>Explore details</span>
+            <span>{isOngoing ? 'Track progress & specs' : 'Explore details'}</span>
             <ArrowRight size={13} className="group-hover/cta:translate-x-1 transition-transform" />
           </Link>
 
@@ -184,7 +221,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onQuickView }
         </div>
         <div className="flex items-center justify-end gap-1.5">
           <ShieldCheck size={11} className="text-blue-600 shrink-0" />
-          <span className="text-slate-900 font-semibold">Verified</span>
+          <span className="text-slate-900 font-semibold">{isOngoing ? 'Active Sprint' : 'Verified'}</span>
         </div>
       </div>
     </div>

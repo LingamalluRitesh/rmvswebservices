@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, text
 from app.core.database import engine, Base, AsyncSessionLocal
 from app.core.security import get_password_hash
 from app.models import (
@@ -10,6 +10,15 @@ async def seed_data():
     async with engine.begin() as conn:
         # Create all tables (including newly added CompanySettings, ActivityLog, etc.)
         await conn.run_sync(Base.metadata.create_all)
+        # Safe migration for ongoing project telemetry columns
+        try:
+            await conn.execute(text("ALTER TABLE projects ADD COLUMN progress_percentage INTEGER DEFAULT 0"))
+        except Exception:
+            pass
+        try:
+            await conn.execute(text("ALTER TABLE projects ADD COLUMN current_stage VARCHAR(100) DEFAULT 'In Development'"))
+        except Exception:
+            pass
 
     async with AsyncSessionLocal() as db:
         # 1. Ensure Core Skills & Technologies exist
@@ -337,7 +346,41 @@ async def seed_data():
                     "image_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
                     "status": "Published",
                     "visibility": "Public",
+                    "progress_percentage": 100,
+                    "current_stage": "Production Live",
                     "techs": ["Python", "FastAPI", "AI/ML"]
+                },
+                {
+                    "name": "Zenith TeleHealth & Clinical EHR Suite",
+                    "slug": "zenith-telehealth-ehr",
+                    "short_description": "HIPAA-compliant WebRTC telemedicine consultation portal with real-time biometric vitals monitoring and automated clinical patient scheduling.",
+                    "description": "Currently in active development: High-security healthcare platform engineered with end-to-end encrypted video channels, live doctor-patient chat, digital prescription issuance, and direct electronic health records (EHR) synchronization.",
+                    "category": "Websites",
+                    "client_name": "Zenith Health Systems",
+                    "demo_url": "https://rmvswebservices.onrender.com/projects/zenith-telehealth-ehr",
+                    "image_url": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80",
+                    "status": "Ongoing",
+                    "visibility": "Public",
+                    "progress_percentage": 65,
+                    "current_stage": "Sprint 3: HIPAA WebRTC Video & EHR Integration",
+                    "completion_date": "Dec 2026",
+                    "techs": ["React", "TypeScript", "FastAPI", "WebRTC", "PostgreSQL"]
+                },
+                {
+                    "name": "Apex Fleet Autonomous Telematics Hub",
+                    "slug": "apex-fleet-telematics",
+                    "short_description": "Edge IoT fleet telemetry streaming vehicle diagnostics, temperature sensors, automated route optimization, and driver performance telemetry.",
+                    "description": "Currently in active development: High-throughput telemetry and cold-chain monitoring hub. Ingests MQTT streams from 5,000+ connected vehicle hardware sensors with sub-second latency, map geospatial routing, and emergency alert dispatches.",
+                    "category": "Software",
+                    "client_name": "Apex Global Logistics",
+                    "demo_url": "https://rmvswebservices.onrender.com/projects/apex-fleet-telematics",
+                    "image_url": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80",
+                    "status": "Ongoing",
+                    "visibility": "Public",
+                    "progress_percentage": 80,
+                    "current_stage": "Sprint 4: Edge IoT Sensor Telemetry & Map Routing",
+                    "completion_date": "Jan 2027",
+                    "techs": ["Python", "Docker", "Redis", "Kafka", "PostgreSQL"]
                 }
             ]
 
@@ -365,6 +408,9 @@ async def seed_data():
                     image_url=p_info["image_url"],
                     status=p_info["status"],
                     visibility=p_info["visibility"],
+                    progress_percentage=p_info.get("progress_percentage", 100),
+                    current_stage=p_info.get("current_stage", "Production Live"),
+                    completion_date=p_info.get("completion_date"),
                     technologies=tech_objs
                 )
                 db.add(proj_obj)

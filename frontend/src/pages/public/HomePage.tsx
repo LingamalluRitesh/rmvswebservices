@@ -5,7 +5,7 @@ import {
   ArrowRight, Globe, Smartphone, Code2, TrendingUp,
   FolderGit2, CheckCircle2,
   Sparkles, Check, UserCheck, LayoutGrid, SlidersHorizontal, Search, Eye, ExternalLink,
-  ChevronDown, Zap
+  ChevronDown, Zap, Activity, Calendar
 } from 'lucide-react';
 import api from '../../api/client';
 import type { Project, DeveloperProfile } from '../../types';
@@ -14,6 +14,7 @@ import { ProjectQuickViewModal } from '../../components/projects/ProjectQuickVie
 import { DeveloperCard } from '../../components/developers/DeveloperCard';
 import { useSettings } from '../../context/SettingsContext';
 import { InteractiveProjectEstimator } from '../../components/home/InteractiveProjectEstimator';
+import { fallbackProjects } from '../../data/fallbackProjects';
 
 /* ─────────────────────────────────────────
    Reusable FadeIn wrapper
@@ -337,7 +338,7 @@ export const HomePage: React.FC = () => {
         // fallback
       }
     }
-    return fallbackInitialProjects;
+    return fallbackProjects;
   });
 
   const [developers, setDevelopers] = useState<DeveloperProfile[]>(() => {
@@ -376,8 +377,8 @@ export const HomePage: React.FC = () => {
   const [isSubmittingInquiry, setIsSubmittingInquiry] = useState(false);
 
   useEffect(() => {
-    // Background refresh
-    api.get('/projects?visibility=Public&status=Published')
+    // Background refresh: retrieve all public projects (published & ongoing active sprints)
+    api.get('/projects?visibility=Public')
       .then((res) => {
         if (Array.isArray(res.data) && res.data.length > 0) {
           setProjects(res.data);
@@ -432,8 +433,23 @@ export const HomePage: React.FC = () => {
     }
   };
 
+  const ongoingProjects = projects.filter(
+    (p) =>
+      p.status?.toLowerCase() === 'ongoing' ||
+      p.status?.toLowerCase() === 'in progress' ||
+      p.status?.toLowerCase() === 'in development'
+  );
+
   const filteredProjects = projects.filter((p) => {
-    const matchesCategory = selectedPillar === 'All' || p.category?.toLowerCase() === selectedPillar.toLowerCase();
+    let matchesCategory = true;
+    if (selectedPillar === 'Ongoing' || selectedPillar === '⚡ Ongoing Works') {
+      matchesCategory =
+        p.status?.toLowerCase() === 'ongoing' ||
+        p.status?.toLowerCase() === 'in progress' ||
+        p.status?.toLowerCase() === 'in development';
+    } else if (selectedPillar !== 'All') {
+      matchesCategory = p.category?.toLowerCase() === selectedPillar.toLowerCase();
+    }
     const query = projectSearchQuery.trim().toLowerCase();
     const matchesSearch = !query ||
       p.name.toLowerCase().includes(query) ||
@@ -857,12 +873,126 @@ export const HomePage: React.FC = () => {
             </div>
           </div>
 
+          {/* Active Engineering Sprints Callout Banner if ongoing projects exist */}
+          {ongoingProjects.length > 0 && selectedPillar === 'All' && !projectSearchQuery && (
+            <div className="mb-10 p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-white border border-amber-200/90 shadow-[0_4px_25px_rgba(245,158,11,0.08)]">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-amber-200/60">
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping" />
+                    <span className="text-[11px] font-mono uppercase tracking-widest font-bold text-amber-800">
+                      Live Sprint Lab · In Active Development
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                    <span>Ongoing Client Builds &amp; Active Sprints</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
+                    Discover software systems our engineers are building right now. Live sprint progress, architectural roadmaps, and target deployment dates.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedPillar('⚡ Ongoing Works')}
+                  className="px-4 py-2 rounded-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-2 shrink-0 self-start md:self-auto cursor-pointer"
+                >
+                  <span>Filter {ongoingProjects.length} Ongoing Works</span>
+                  <ArrowRight size={13} />
+                </button>
+              </div>
+
+              {/* Ongoing Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {ongoingProjects.slice(0, 2).map((op) => {
+                  const fallbackImg = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80';
+                  const posterUrl = op.image_url && !op.image_url.includes('1drv.ms') ? op.image_url : fallbackImg;
+                  return (
+                    <div
+                      key={op.id}
+                      className="group rounded-2xl bg-white border border-amber-200/80 p-5 shadow-xs hover:shadow-md hover:border-amber-400 transition-all flex flex-col sm:flex-row gap-4 items-center"
+                    >
+                      <div className="relative w-full sm:w-44 h-36 rounded-xl overflow-hidden shrink-0 bg-slate-100 border border-slate-100">
+                        <img
+                          src={posterUrl}
+                          alt={op.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
+                        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-amber-500 text-white">
+                          ⚡ Ongoing
+                        </span>
+                      </div>
+
+                      <div className="flex-1 w-full flex flex-col justify-between">
+                        <div>
+                          <p className="text-[10px] font-mono uppercase tracking-wider text-amber-700 font-semibold mb-1">
+                            {op.client_name ? `Client · ${op.client_name}` : 'Engineered System'}
+                          </p>
+                          <Link to={`/projects/${op.slug}`}>
+                            <h4 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                              {op.name}
+                            </h4>
+                          </Link>
+                          <p className="text-xs text-slate-600 line-clamp-1 mt-1 mb-3">
+                            {op.short_description || op.description}
+                          </p>
+
+                          {/* Progress bar */}
+                          <div className="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200/70 mb-3">
+                            <div className="flex items-center justify-between text-[10px] font-mono mb-1">
+                              <span className="text-amber-900 font-semibold truncate">{op.current_stage || 'In Development'}</span>
+                              <span className="text-amber-950 font-bold ml-1">{op.progress_percentage ?? 60}%</span>
+                            </div>
+                            <div className="w-full bg-amber-200/60 rounded-full h-1.5 overflow-hidden">
+                              <div
+                                className="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full"
+                                style={{ width: `${Math.min(100, Math.max(5, op.progress_percentage ?? 60))}%` }}
+                              />
+                            </div>
+                            {op.completion_date && (
+                              <p className="text-[9px] text-amber-800 font-mono mt-1">
+                                Launch: <span className="font-semibold">{op.completion_date}</span>
+                              </p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                          <Link
+                            to={`/projects/${op.slug}`}
+                            className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                          >
+                            <span>Sprint Details</span>
+                            <ArrowRight size={11} />
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setQuickViewProject(op);
+                              setIsQuickViewOpen(true);
+                            }}
+                            className="text-[11px] font-medium text-slate-600 hover:text-slate-900 px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+                          >
+                            Quick View
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Interactive Filter Pills & Live Search Bar */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-8">
             <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
-              {['All', 'Websites', 'Apps', 'Software', 'Digital Solutions'].map((cat) => {
+              {['All', '⚡ Ongoing Works', 'Websites', 'Apps', 'Software', 'Digital Solutions'].map((cat) => {
                 const count = cat === 'All'
                   ? projects.length
+                  : cat === '⚡ Ongoing Works'
+                  ? projects.filter((p) => p.status?.toLowerCase() === 'ongoing' || p.status?.toLowerCase() === 'in progress' || p.status?.toLowerCase() === 'in development').length
                   : projects.filter((p) => p.category?.toLowerCase() === cat.toLowerCase()).length;
                 return (
                   <button
@@ -957,6 +1087,10 @@ export const HomePage: React.FC = () => {
                 const leadUser = leadDev?.user;
                 const fallbackImg = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80';
                 const imgSrc = p.image_url && !p.image_url.includes('1drv.ms') ? p.image_url : fallbackImg;
+                const isOngoing =
+                  p.status?.toLowerCase() === 'ongoing' ||
+                  p.status?.toLowerCase() === 'in progress' ||
+                  p.status?.toLowerCase() === 'in development';
 
                 return (
                   <div
@@ -978,12 +1112,17 @@ export const HomePage: React.FC = () => {
                         <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/95 text-blue-600 font-semibold shadow-xs backdrop-blur-md border border-slate-200">
                           {p.category || 'Platform'}
                         </span>
-                        {p.demo_url && (
+                        {isOngoing ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-amber-500 text-white font-semibold shadow-xs backdrop-blur-md">
+                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+                            Ongoing Sprint
+                          </span>
+                        ) : p.demo_url ? (
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider bg-emerald-600 text-white font-medium shadow-xs backdrop-blur-md">
                             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                             Live
                           </span>
-                        )}
+                        ) : null}
                       </div>
 
                       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
@@ -1019,8 +1158,10 @@ export const HomePage: React.FC = () => {
                           <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 font-medium">
                             {p.client_name ? `Client · ${p.client_name}` : 'Engineered Platform'}
                           </span>
-                          <span className="text-[10px] font-mono text-blue-700 font-semibold px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200">
-                            Verified Production
+                          <span className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full border ${
+                            isOngoing ? 'text-amber-800 bg-amber-50 border-amber-200' : 'text-blue-700 bg-blue-50 border-blue-200'
+                          }`}>
+                            {isOngoing ? 'Active Sprint' : 'Verified Production'}
                           </span>
                         </div>
 
@@ -1033,6 +1174,33 @@ export const HomePage: React.FC = () => {
                         <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
                           {p.short_description || p.description}
                         </p>
+
+                        {/* Ongoing Development Sprint Progress Telemetry */}
+                        {isOngoing && (
+                          <div className="mb-4 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/90 shadow-2xs">
+                            <div className="flex items-center justify-between text-[11px] font-mono mb-1.5">
+                              <span className="text-amber-900 font-semibold flex items-center gap-1.5 truncate">
+                                <Activity size={12} className="text-amber-600 shrink-0" />
+                                <span className="truncate">{p.current_stage || 'In Active Development'}</span>
+                              </span>
+                              <span className="text-amber-950 font-bold font-mono ml-2">
+                                {p.progress_percentage ?? 60}%
+                              </span>
+                            </div>
+                            <div className="w-full bg-amber-200/60 rounded-full h-1.5 overflow-hidden">
+                              <div
+                                className="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full transition-all duration-500"
+                                style={{ width: `${Math.min(100, Math.max(5, p.progress_percentage ?? 60))}%` }}
+                              />
+                            </div>
+                            {p.completion_date && (
+                              <div className="mt-2 flex items-center gap-1.5 text-[10px] text-amber-800 font-mono">
+                                <Calendar size={11} className="text-amber-600 shrink-0" />
+                                <span>Target Launch: <strong className="text-amber-950 font-semibold">{p.completion_date}</strong></span>
+                              </div>
+                            )}
+                          </div>
+                        )}
 
                         {/* Technology Capsules */}
                         {p.technologies && p.technologies.length > 0 && (

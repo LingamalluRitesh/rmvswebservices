@@ -96,6 +96,8 @@ export interface Project {
   client_name?: string;
   start_date?: string;
   completion_date?: string;
+  progress_percentage?: number;
+  current_stage?: string;
   created_at: string;
   developer_associations: ProjectDeveloper[];
   technologies: Technology[];

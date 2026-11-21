@@ -241,6 +241,8 @@ class ProjectOut(BaseModel):
     client_name: Optional[str] = None
     start_date: Optional[str] = None
     completion_date: Optional[str] = None
+    progress_percentage: Optional[int] = 0
+    current_stage: Optional[str] = "In Development"
     created_at: Optional[datetime] = None
     developer_associations: List[ProjectDeveloperOut] = []
     technologies: List[TechnologyOut] = []
@@ -256,11 +258,13 @@ class ProjectCreate(BaseModel):
     repo_url: Optional[str] = None
     image_url: Optional[str] = None
     gallery_urls: Optional[str] = None
-    status: str = "Live"
+    status: str = "Published" # Published, Ongoing, In Progress, Draft
     visibility: str = "Public"
     client_name: Optional[str] = None
     start_date: Optional[str] = None
     completion_date: Optional[str] = None
+    progress_percentage: Optional[int] = 0
+    current_stage: Optional[str] = "In Development"
     technologies: List[str] = []
     team_members: Optional[List[dict]] = None # [{"developer_id": int, "role_in_project": str, "is_lead": bool}]
 
@@ -278,6 +282,8 @@ class ProjectUpdate(BaseModel):
     client_name: Optional[str] = None
     start_date: Optional[str] = None
     completion_date: Optional[str] = None
+    progress_percentage: Optional[int] = None
+    current_stage: Optional[str] = None
     technologies: Optional[List[str]] = None
     team_members: Optional[List[dict]] = None
 
